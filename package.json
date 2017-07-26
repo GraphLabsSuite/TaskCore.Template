@@ -1,0 +1,14 @@
+{
+  "name": "GraphLabs.Core.Template",
+  "description": "Task template for GraphLabs web project",
+  "version": "0.0.1",
+  "dependencies": {
+
+  },
+  "devDependencies": {
+
+  },
+  "scripts": {
+
+  }
+}

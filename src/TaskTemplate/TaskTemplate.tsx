@@ -1,6 +1,6 @@
 import React from "react";
 
-export class TaskTemplate extends React {
+export class TaskTemplate extends React.Component {
 
   private _graph;
 

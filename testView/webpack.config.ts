@@ -2,7 +2,7 @@ import * as path from "path";
 export default {
   entry: [
     'webpack-hot-middleware/client',
-    path.join(__dirname, '../src/index.tsx'),
+    path.join(__dirname, '../src/index.tsx')
   ],
   output: {
     path: path.join(__dirname, '../client/public'),
@@ -28,12 +28,12 @@ export default {
               cacheDirectory: true,
             },
           },
-          // {
-          //   loader: 'eslint-loader',
-          //   options: {
-          //     failOnError: true,
-          //   },
-          // },
+          {
+            loader: 'eslint-loader',
+            options: {
+              failOnError: true,
+            },
+          },
         ],
       },
       {

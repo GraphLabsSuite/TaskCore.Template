@@ -10,6 +10,6 @@ export class TaskTemplate extends React.Component {
   }
 
   render() {
-    return '<div></div>';
+    return '<div>Something in your mouth</div>';
   }
 }

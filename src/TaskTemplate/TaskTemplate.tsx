@@ -1,8 +1,11 @@
-export class TaskTemplate {
+import React from "react";
+
+export class TaskTemplate extends React {
 
   private _graph;
 
   public constructor() {
+    super();
     this._graph = null;
   }
 

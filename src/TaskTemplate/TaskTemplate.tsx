@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 export class TaskTemplate extends React.Component {
 
@@ -10,6 +10,6 @@ export class TaskTemplate extends React.Component {
   }
 
   render() {
-    return '<div>Something in your mouth</div>';
+    return <div>Something in your mouth</div>;
   }
 }

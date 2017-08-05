@@ -1,39 +1,48 @@
 import * as express from "express";
 import * as path from "path";
-import * as webpack from "webpack";
 import * as webpackMiddleware from "webpack-dev-middleware";
 import * as webpackHotMiddleware from "webpack-hot-middleware";
 
 import webpackConfig from "./webpack.config";
-const app = express();
+import webpack = require("webpack");
+import {Compiler} from "webpack";
 
-function initWebpack(): void {
-  const compiler = webpack(webpackConfig);
-  app.use(webpackMiddleware(compiler, {
-    publicPath: webpackConfig.output.publicPath,
-    noInfo: true,
-    headers: {
-      "Access-Control-Allow-Origin": "http://localhost",
-    },
-  }));
-  app.use(webpackHotMiddleware(compiler));
-}
+const start = () => {
+  const server: Server = new Server();
+  server.initWebpack();
+};
 
-function initExpress(): void {
-  app.use(express.static(path.join(__dirname, "../public"))); // serve static files from public folder
-}
+class Server {
+  public app; //Why express.Application does not work with app.get properly?
 
-function start(): void {
-  initWebpack();
-  initExpress();
+  public constructor() {
+    this.app = express();
+    this.config();
+  }
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
-  });
+  private config(): void {
+    this.app.use(express.static(path.resolve("public"))); // serve static files from public folde
 
-  app.listen(3000, () => {
-    console.log("Server is listening on the port 3000...")
-  });
+    this.app.get('*', (req: express.Request, res: express.Response) => {
+      res.sendFile(path.resolve("public/index.html"));
+    });
+
+    this.app.listen(3000, () => {
+      console.log("Server is listening on the port 3000...")
+    });
+  }
+
+  public initWebpack(): void {
+    const compiler: Compiler = webpack(webpackConfig);
+    this.app.use(webpackMiddleware(compiler, {
+      publicPath: webpackConfig.output.publicPath,
+      noInfo: true,
+      headers: {
+        "Access-Control-Allow-Origin": "http://localhost",
+      },
+    }));
+    this.app.use(webpackHotMiddleware(compiler));
+  }
 }
 
 /** Starting module of the server

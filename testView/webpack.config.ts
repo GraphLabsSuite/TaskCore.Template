@@ -1,9 +1,10 @@
 import * as path from "path";
 import webpack = require("webpack");
-export default {
-  entry: path.join(__dirname, '../src/index.tsx'),
+import {Configuration} from "webpack";
+const webpackConfig: Configuration = {
+  entry: path.resolve('src/index.tsx'),
   output: {
-    path: path.join(__dirname, '../public'),
+    path: path.resolve('public'),
     filename: 'bundle.js',
     publicPath: '/',
   },
@@ -12,11 +13,6 @@ export default {
   },
   module: {
     rules: [
-      // {
-      //   test: /\.(ts|tsx)$/,
-      //   use: 'ts-loader',
-      //   exclude: /node_modules/
-      // },
       {
         test: /\.(ts|tsx)$/,
         loader: "awesome-typescript-loader"
@@ -35,4 +31,6 @@ export default {
   plugins: [
     new webpack.HotModuleReplacementPlugin()
   ]
-}
+};
+
+export default webpackConfig;

@@ -1,21 +1,21 @@
-import * as path from "path";
-import webpack = require("webpack");
-import {Configuration} from "webpack";
-const webpackConfig: Configuration = {
+const path = require('path');
+const webpack = require('webpack');
+
+module.exports = {
   entry: {
     bundle: [
       'webpack-hot-middleware/client',
       'react-hot-loader/patch',
-      path.resolve('src/index.tsx')
-      ]
+      path.join(__dirname, './src/index.tsx')
+    ]
   },
   output: {
-    path: path.resolve('public'),
-    filename: 'bundle.js',
-    publicPath: '/',
+    path: path.join(__dirname, './public'),
+    filename: "bundle.js",
+    publicPath: "/"
   },
   resolve: {
-    extensions: ['*', '.ts', '.tsx'],
+    extensions: ["*", ".ts", ".tsx", ".js", ".jsx"]
   },
   devtool: "source-map",
   module: {
@@ -25,18 +25,16 @@ const webpackConfig: Configuration = {
         use: [
           "react-hot-loader/webpack",
           "awesome-typescript-loader"
-          ]
+        ]
       },
       {
         enforce: "pre",
         test: /\.js$/,
         loader: "source-map-loader"
-      }
-    ],
+      },
+    ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
   ]
 };
-
-export default webpackConfig;

@@ -1,6 +1,8 @@
 import * as React from "react";
 
-export class TaskTemplate extends React.Component {
+export interface AppProperties {}
+
+export class TaskTemplate extends React.Component<AppProperties, React.ComponentState> {
 
   private _graph;
 

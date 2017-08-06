@@ -1,13 +1,25 @@
 import * as React from "react";
-import ReactDOM from "react-dom";
+import * as ReactDOM from "react-dom";
+import {AppContainer} from "react-hot-loader";
 import {Provider} from "react-redux";
 
-import store from "./store";
+import {configureStore} from "./redux/store";
 import {TaskTemplate} from "./TaskTemplate/TaskTemplate";
 
-ReactDOM.render(
-  <Provider store={store} key="provider">
-    <TaskTemplate />
-  </Provider>,
-  document.getElementById("root"),
-);
+const store = configureStore();
+
+const updateRender = () => {
+  ReactDOM.render(
+    <AppContainer>
+      <Provider store={store} key="provider">
+        <TaskTemplate />
+      </Provider>
+    </AppContainer>,
+    document.getElementById("root"),
+  );
+};
+
+updateRender();
+if ((module as any).hot) {
+  (module as any).hot.accept();
+}

@@ -1,4 +1,7 @@
 import * as React from "react";
+import {TaskConsole} from "../components/TaskConsole";
+import {GraphVisualizer} from "../components/GraphVisualizer";
+import {TaskToolbar} from "../components/TaskToolbar";
 
 export interface AppProperties {}
 
@@ -12,6 +15,12 @@ export class TaskTemplate extends React.Component<AppProperties, React.Component
   }
 
   render() {
-    return <div>Something in your mouth</div>;
+    return (<div id="wrap">
+      <div className="row">
+        <GraphVisualizer/>
+        {/*<TaskToolbar/>*/}
+      </div>
+      <TaskConsole/>
+    </div>);
   }
 }

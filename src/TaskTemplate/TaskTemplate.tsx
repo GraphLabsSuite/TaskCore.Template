@@ -18,7 +18,7 @@ export class TaskTemplate extends React.Component<AppProperties, React.Component
     return (<div id="wrap">
       <div className="row">
         <GraphVisualizer/>
-        {/*<TaskToolbar/>*/}
+        <TaskToolbar/>
       </div>
       <TaskConsole/>
     </div>);

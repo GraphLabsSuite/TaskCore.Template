@@ -20,7 +20,7 @@ module.exports = {
   resolve: {
     extensions: ["*", ".ts", ".tsx", ".js", ".jsx"]
   },
-  devtool: "source-map",
+  devtool: "cheap-module-eval-source-map",
   module: {
     rules: [
       {

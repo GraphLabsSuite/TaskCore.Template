@@ -21,7 +21,7 @@ module.exports = {
   resolve: {
     extensions: ["*", ".ts", ".tsx", ".js", ".jsx"]
   },
-  devtool: "source-map",
+  devtool: "cheap-module-source-map",
   module: {
     rules: [
       {
@@ -69,6 +69,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Graphs',
       template: path.join(__dirname, './public/index.html')
-    })
+    }),
   ]
 };

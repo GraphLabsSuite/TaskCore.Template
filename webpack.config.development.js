@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const bootstrapEntryPoints = require('./webpack.bootstrap.config.js');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -71,6 +72,10 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Graphs',
+      template: path.join(__dirname, './public/index.html')
     })
   ]
 };

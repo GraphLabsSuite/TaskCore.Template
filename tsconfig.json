@@ -10,11 +10,5 @@
     "sourceMap": true,
     "allowJs": false,
     "moduleResolution": "node"
-  },
-  "exclude": [
-    "node_modules",
-    "server.js",
-    "webpack.config.js",
-    "webpack.config.development.js"
-  ]
+  }
 }

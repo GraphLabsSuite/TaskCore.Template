@@ -5,7 +5,9 @@ export interface TaskConsoleProperties {}
 export class TaskConsole extends React.Component<TaskConsoleProperties, React.ComponentState> {
   public render() {
     return (<div className="row">
-      This is console
+      <div className="gl-template-div">
+        This is console
+      </div>
     </div>);
   }
 }

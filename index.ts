@@ -1,1 +1,1 @@
-export * from './src/TaskTemplate/TaskTemplate';
+export * from './src/components/TaskTemplate/TaskTemplate';

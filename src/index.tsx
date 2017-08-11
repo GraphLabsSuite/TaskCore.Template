@@ -6,7 +6,7 @@ import {AppContainer} from "react-hot-loader";
 import {Provider} from "react-redux";
 
 import {configureStore} from "./redux/store";
-import {TaskTemplate} from "./TaskTemplate/TaskTemplate";
+import {TaskTemplate} from "./components/TaskTemplate/TaskTemplate";
 
 const store = configureStore();
 

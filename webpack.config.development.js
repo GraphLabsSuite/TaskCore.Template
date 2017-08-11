@@ -1,11 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
+const bootstrapEntryPoints = require('./webpack.bootstrap.config.js');
 
 module.exports = {
   entry: {
     bundle: [
       'webpack-hot-middleware/client',
       'react-hot-loader/patch',
+      bootstrapEntryPoints.dev,
       path.join(__dirname, './src/index.tsx')
     ]
   },
@@ -13,7 +15,6 @@ module.exports = {
     path: path.join(__dirname, './public'),
     filename: "bundle.js",
     publicPath: "/",
-    library: '[name]'
   },
   resolve: {
     extensions: ["*", ".ts", ".tsx", ".js", ".jsx"]
@@ -34,18 +35,34 @@ module.exports = {
         loader: "source-map-loader"
       },
       {
-        test: /\.scss$/,
-        use: [{
-          loader: "style-loader" // creates style nodes from JS strings
-        }, {
-          loader: "css-loader" // translates CSS into CommonJS
-        }, {
-          loader: "sass-loader" // compiles Sass to CSS
-        }]
+        test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
+        loader: 'imports-loader?jQuery=jquery'
       },
       {
-        test: /\.woff2?$|\.ttf$|\.eot$|\.svg$|\.png|\.jpe?g|\.gif$/,
-        loader: 'file-loader'
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 1,
+              localIdentName: '[name]__[local]___[hash:base64:5]'
+            },
+          },
+          {
+            loader: 'sass-loader'
+          }]
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: 'url-loader?limit=10000',
+      },
+      {
+        test: /\.(jpg|png|gif)$/,
+        use: 'file-loader'
       }
     ]
   },

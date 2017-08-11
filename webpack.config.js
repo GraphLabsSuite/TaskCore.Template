@@ -9,7 +9,6 @@ module.exports = {
       'react-hot-loader/patch',
       path.join(__dirname, './src/index.tsx')
     ],
-    styles: path.join(__dirname, './src/main.scss')
   },
   output: {
     path: path.join(__dirname, './public'),

@@ -1,9 +1,9 @@
-import * as Redux from 'redux';
-import { counterReducer } from './counter';
-import { IStore } from '../IStore';
+import {combineReducers, Reducer} from 'redux';
+import {IStore} from "../IStore";
+import {counterReducer} from "./counter/index";
 
-const rootReducer: Redux.Reducer<IStore> = Redux.combineReducers<IStore>({
-  counter: counterReducer,
+const rootReducer: Reducer<IStore> = combineReducers<IStore>({
+  counter: counterReducer
 });
 
 export default rootReducer;

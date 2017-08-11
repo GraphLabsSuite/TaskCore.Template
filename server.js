@@ -6,7 +6,10 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 
 const app = express();
 const port = process.env.PORT || 3000;
-const webpackConfig = require('./webpack.config');
+const environment = process.env.NODE_ENV || "development";
+const webpackConfig = (environment === "production")
+  ? require('./webpack.config')
+  : require('./webpack.config.development');
 const compiler = webpack(webpackConfig);
 
 app.use(webpackDevMiddleware(compiler, {

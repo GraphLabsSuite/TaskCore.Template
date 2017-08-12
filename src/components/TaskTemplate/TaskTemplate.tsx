@@ -2,6 +2,7 @@ import * as React from "react";
 import {GraphVisualizer} from "../GraphVisualizer/GraphVisualizer";
 import {TaskToolbar} from "../TaskToolbar/TaskToolbar";
 import {TaskConsole} from "../TaskConsole/TaskConsole";
+import * as classnames from "classnames";
 
 import * as style from "./TaskTemplate.scss";
 
@@ -20,11 +21,13 @@ export class TaskTemplate extends React.Component<AppProperties, React.Component
     console.log(style);
     return (
       <div id="wrap" className={style.App}>
-        <div className="row">
+        <div className={classnames('row', style.MainRow)}>
           <GraphVisualizer/>
           <TaskToolbar/>
         </div>
-        <TaskConsole/>
+        <div className={style.LowRow}>
+          <TaskConsole/>
+        </div>
       </div>
     );
   }

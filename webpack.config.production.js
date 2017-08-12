@@ -1,14 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
+const cssnano = require('cssnano');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const bootstrapEntryPoints = require('./webpack.bootstrap.config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+const bootstrapEntryPoints = require('./webpack.bootstrap.config');
 
 module.exports = {
   entry: {
     bundle: [
-      'webpack-hot-middleware/client',
-      'react-hot-loader/patch',
       bootstrapEntryPoints.prod,
       path.join(__dirname, './src/index.tsx')
     ]
@@ -58,16 +59,25 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
     }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.optimize.UglifyJsPlugin(),
     new ExtractTextPlugin({
       filename: 'styles.css',
       allChunks: true
     }),
-    new webpack.optimize.UglifyJsPlugin(),
+    new OptimizeCSSAssetsPlugin({
+      cssProcessor: cssnano,
+      cssProcessorOptions: { discardComments: {removeAll: true } },
+    }),
     new HtmlWebpackPlugin({
       title: 'Title',
       template: path.join(__dirname, './public/index.html')

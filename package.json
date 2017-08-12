@@ -43,7 +43,8 @@
     "webpack-hot-middleware": "^2.18.2"
   },
   "scripts": {
-    "start": "set BOOTSTRAPRC_LOCATION=.bootstraprc&&node server.js",
-    "start:prod": "set NODE_ENV=production&&set BOOTSTRAPRC_LOCATION=.bootstraprc&&node server.js"
+    "start_dev": "set BOOTSTRAPRC_LOCATION=.bootstraprc&&node server.js",
+    "start_prod": "set BOOTSTRAPRC_LOCATION=.bootstraprc&&set NODE_ENV=production&&node server.js",
+    "start": "npm run start_dev"
   }
 }

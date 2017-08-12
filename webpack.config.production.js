@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
-const bootstrapEntryPoints = require('./webpack.bootstrap.config.js');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const bootstrapEntryPoints = require('./webpack.bootstrap.config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -11,17 +11,17 @@ module.exports = {
       'react-hot-loader/patch',
       bootstrapEntryPoints.prod,
       path.join(__dirname, './src/index.tsx')
-    ],
+    ]
   },
   output: {
     path: path.join(__dirname, './public'),
-    filename: "bundle.js",
-    publicPath: "/",
+    filename: "bundle.min.js",
+    publicPath: "/"
   },
   resolve: {
     extensions: ["*", ".ts", ".tsx", ".js", ".jsx"]
   },
-  devtool: "cheap-module-source-map",
+  devtool: "source-map",
   module: {
     rules: [
       {
@@ -42,8 +42,9 @@ module.exports = {
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]!sass-loader',
+          // use style-loader in development
+          fallback: "style-loader",
+          use: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]!sass-loader'
         })
       },
       {
@@ -63,12 +64,13 @@ module.exports = {
       jQuery: 'jquery'
     }),
     new ExtractTextPlugin({
-      filename: 'app.css',
+      filename: 'styles.css',
       allChunks: true
     }),
+    new webpack.optimize.UglifyJsPlugin(),
     new HtmlWebpackPlugin({
-      title: 'Graphs',
+      title: 'Title',
       template: path.join(__dirname, './public/index.html')
-    }),
+    })
   ]
 };

@@ -20,7 +20,7 @@ module.exports = {
   resolve: {
     extensions: ["*", ".ts", ".tsx", ".js", ".jsx"]
   },
-  devtool: "cheap-module-eval-source-map",
+  devtool: "source-map",
   module: {
     rules: [
       {
@@ -74,7 +74,7 @@ module.exports = {
       jQuery: 'jquery'
     }),
     new HtmlWebpackPlugin({
-      title: 'Graphs',
+      title: 'Title',
       template: path.join(__dirname, './public/index.html')
     })
   ]

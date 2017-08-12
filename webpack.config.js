@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const bootstrapEntryPoints = require('./webpack.bootstrap.config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -68,7 +67,7 @@ module.exports = {
       filename: 'styles.css',
       allChunks: true
     }),
-    new UglifyJSPlugin(),
+    new webpack.optimize.UglifyJsPlugin(),
     new HtmlWebpackPlugin({
       title: 'Title',
       template: path.join(__dirname, './public/index.html')

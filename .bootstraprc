@@ -35,7 +35,7 @@ extractStyles: false
 # bootstrapCustomizations: ./app/assets/styles/bootstrap/customizations.scss
 
 # With CSS Modules we load all application styles directly in React components
-# appStyles: ./src/main.scss
+# appStyles: ./public/styles.scss
 
 ### Bootstrap styles
 styles:

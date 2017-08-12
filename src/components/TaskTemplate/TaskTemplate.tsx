@@ -25,7 +25,6 @@ export class TaskTemplate extends React.Component<AppProperties, React.Component
           <TaskToolbar/>
         </div>
         <TaskConsole/>
-        <button className="btn-success">Test</button>
       </div>
     );
   }

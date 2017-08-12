@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es6",
+    "target": "es5",
     "jsx": "react",
     "rootDir": "src",
     "outDir": "build",
@@ -10,11 +10,5 @@
     "sourceMap": true,
     "allowJs": false,
     "moduleResolution": "node"
-  },
-  "exclude": [
-    "node_modules",
-    "server.js",
-    "webpack.config.js",
-    "webpack.config.development.js"
-  ]
+  }
 }

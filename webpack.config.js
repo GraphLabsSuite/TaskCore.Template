@@ -1,20 +1,23 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const bootstrapEntryPoints = require('./webpack.bootstrap.config');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: {
     bundle: [
       'webpack-hot-middleware/client',
       'react-hot-loader/patch',
+      bootstrapEntryPoints.prod,
       path.join(__dirname, './src/index.tsx')
-    ],
+    ]
   },
   output: {
     path: path.join(__dirname, './public'),
-    filename: "bundle.js",
-    publicPath: "/",
-    library: '[name]'
+    filename: "bundle.min.js",
+    publicPath: "/"
   },
   resolve: {
     extensions: ["*", ".ts", ".tsx", ".js", ".jsx"]
@@ -34,20 +37,24 @@ module.exports = {
         loader: "source-map-loader"
       },
       {
+        test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
+        loader: 'imports-loader?jQuery=jquery'
+      },
+      {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
-          use: [{
-            loader: "css-loader"
-          }, {
-            loader: "sass-loader"
-          }],
           // use style-loader in development
-          fallback: "style-loader"
+          fallback: "style-loader",
+          use: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]!sass-loader'
         })
       },
       {
-        test: /\.woff2?$|\.ttf$|\.eot$|\.svg$|\.png|\.jpe?g|\.gif$/,
-        loader: 'file-loader'
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: 'url-loader?limit=10000',
+      },
+      {
+        test: /\.(jpg|png|gif)$/,
+        use: 'file-loader'
       }
     ]
   },
@@ -57,8 +64,14 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery'
     }),
-    new ExtractTextPlugin("styles.css", {
+    new ExtractTextPlugin({
+      filename: 'styles.css',
       allChunks: true
+    }),
+    new UglifyJSPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'Title',
+      template: path.join(__dirname, './public/index.html')
     })
   ]
 };

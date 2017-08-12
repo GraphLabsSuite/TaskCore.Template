@@ -3,7 +3,7 @@ import {GraphVisualizer} from "../GraphVisualizer/GraphVisualizer";
 import {TaskToolbar} from "../TaskToolbar/TaskToolbar";
 import {TaskConsole} from "../TaskConsole/TaskConsole";
 
-const style = require('./TaskTemplate.scss');
+import * as style from "./TaskTemplate.scss";
 
 export interface AppProperties {}
 

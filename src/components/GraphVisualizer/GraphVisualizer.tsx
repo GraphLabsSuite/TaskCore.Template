@@ -1,10 +1,16 @@
 import * as React from "react";
 
-export interface GraphVisualizerProperties {}
+interface GraphVisualizerProperties {
+}
 
 export class GraphVisualizer extends React.Component<GraphVisualizerProperties, React.ComponentState> {
+
+  public constructor() {
+    super();
+  }
+
   public render() {
-    return (<div className="col-md-10">
+    return (<div>
       This is graph visualizer
     </div>);
   }

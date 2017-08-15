@@ -1,10 +1,11 @@
 import * as React from "react";
 
-export interface TaskToolbarProperties {}
+export interface TaskToolbarProperties {
+}
 
 export class TaskToolbar extends React.Component<TaskToolbarProperties, React.ComponentState> {
   public render() {
-    return (<div className="col-md-2">
+    return (<div>
       This is toolbar
     </div>);
   }

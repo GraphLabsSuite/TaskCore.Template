@@ -6,7 +6,7 @@ export interface TaskConsoleProperties {}
 export class TaskConsole extends React.Component<TaskConsoleProperties, React.ComponentState> {
   public render() {
     return (<div>
-      <StudentMark/>
+      <StudentMark />
         This is the rest of console
     </div>);
   }

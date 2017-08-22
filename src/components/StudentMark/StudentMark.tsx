@@ -2,7 +2,6 @@ import * as React from "react";
 import * as styles from "./StudentMark.scss";
 
 interface StudentMarkProperties {
-  defaultMark: number
 }
 
 interface StudentMarkState {
@@ -11,16 +10,12 @@ interface StudentMarkState {
 
 export class StudentMark extends React.Component<StudentMarkProperties, Partial<StudentMarkState>> {
 
-  public constructor(props: StudentMarkProperties) {
+  public constructor() {
     super();
     this.state = {
-      mark: props.defaultMark
+      mark: 100
     }
   }
-
-  public static defaultProps: Partial<StudentMarkProperties> = {
-    defaultMark: 100
-  };
 
   public render() {
     return (<div className={styles.StudentMark}>

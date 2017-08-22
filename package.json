@@ -1,7 +1,20 @@
 {
-  "name": "GraphLabs.Core.Template",
+  "name": "graphlabs.core.template",
   "description": "Task template for GraphLabs web project",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "author": "GraphLabs",
+  "keywords": [
+    "graphlabs",
+    "graphs",
+    "module",
+    "task",
+    "template"
+  ],
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eakarpov/GraphLabsSuite.Core.Template.git"
+  },
   "dependencies": {
     "bootstrap": "^3.3.7",
     "bootstrap-sass": "^3.3.7",

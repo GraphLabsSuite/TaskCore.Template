@@ -4,17 +4,23 @@
   float: left;
 }
 
-.MarkNegative {
+.Mark {
   font-size: x-large;
+  position	: absolute;
+  top		: 50%;
+}
+
+.MarkNegative {
+  @extend .Mark;
   color: red;
 }
 
 .MarkPositive {
-  font-size: x-large;
+  @extend .Mark;
   color: green;
 }
 
 .MarkNeutral {
-  font-size: x-large;
+  @extend .Mark;
   color: yellow;
 }

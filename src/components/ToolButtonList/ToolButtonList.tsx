@@ -1,6 +1,8 @@
 import * as React from "react";
 import {ToolButton} from "../ToolButton/ToolButton";
 
+import * as style from "./ToolButtonList.scss";
+
 interface ToolButtonListProperties {
 }
 
@@ -18,13 +20,15 @@ export class ToolButtonList extends React.Component<ToolButtonListProperties, Re
 
   private setDefaultButtonList(): string[] {
     const list: string[] = [];
-    list.push("../../images/Help");
+    list.push("/images/Help.png");
+    list.push("/images/Complete.png");
+
     return list;
   }
 
   private getList() {
-    return <div>{this.toolButtons.map(item => {
-      return <ToolButton path={item} />
+    return <div className={style.ButtonList}>{this.toolButtons.map(item => {
+      return <ToolButton key={item} path={item} />
     })}</div>;
   }
 

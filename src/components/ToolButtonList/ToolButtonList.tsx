@@ -2,13 +2,15 @@ import * as React from "react";
 import {ToolButton} from "../ToolButton/ToolButton";
 
 import * as style from "./ToolButtonList.scss";
+import {Dictionary} from "lodash";
 
 interface ToolButtonListProperties {
 }
 
 export class ToolButtonList extends React.Component<ToolButtonListProperties, React.ComponentState> {
 
-  public toolButtons: string[];
+  //TODO: Add normal types to these variables (maybe Dictionary)
+  public toolButtons;
 
   componentWillMount() {
     this.toolButtons = this.setDefaultButtonList();
@@ -18,18 +20,18 @@ export class ToolButtonList extends React.Component<ToolButtonListProperties, Re
     super();
   }
 
-  private setDefaultButtonList(): string[] {
-    const list: string[] = [];
-    list.push("/images/Help.png");
-    list.push("/images/Complete.png");
-
+  private setDefaultButtonList() {
+    let list = {};
+    list["/images/Help.png"] = () => { console.log("Help button!"); };
+    list["/images/Complete.png"] = () => { console.log("Complete button!"); };
     return list;
   }
 
   private getList() {
-    return <div className={style.ButtonList}>{this.toolButtons.map(item => {
-      return <ToolButton key={item} path={item} />
-    })}</div>;
+    const result = [];
+    const defaultList = this.setDefaultButtonList();
+    for (const key in defaultList) result.push(<ToolButton key={key} path={key} listener={defaultList[key]}/>);
+    return <div className={style.ButtonList}>{result}</div>;
   }
 
   render() {

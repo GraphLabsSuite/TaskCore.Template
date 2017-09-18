@@ -4,7 +4,8 @@ import * as classnames from "classnames";
 import * as style from "./ToolButton.scss";
 
 interface ToolButtonProperties {
-  path: string
+  path: string,
+  listener: () => void,
 }
 
 export class ToolButton extends React.Component<ToolButtonProperties, React.ComponentState> {
@@ -14,7 +15,7 @@ export class ToolButton extends React.Component<ToolButtonProperties, React.Comp
   }
 
   render() {
-    return (<button className={classnames("btn btn-success", style.ToolButton)}>
+    return (<button className={classnames("btn btn-success", style.ToolButton)} onClick={this.props.listener}>
       <img src={this.props.path}/>
     </button>);
   }

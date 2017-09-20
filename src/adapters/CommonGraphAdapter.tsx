@@ -16,8 +16,8 @@ export class CommonGraphAdapter extends React.Component<CommonGraphAdapterProper
   ref: SVGSVGElement;
   events: Event[];
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.events = [];
     this.updateGraph = this.updateGraph.bind(this);
   }
@@ -27,8 +27,8 @@ export class CommonGraphAdapter extends React.Component<CommonGraphAdapterProper
       .append('circle')
       .attr('cx', 200)
       .attr('cy', 200)
-      .attr('fill', 'red')
-      .attr('r', 10);
+      .attr('fill', 'black')
+      .attr('r', 50);
   }
 
   render() {

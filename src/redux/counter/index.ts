@@ -1,4 +1,4 @@
-import {ICounter, ICounterAction} from "../../../models/counter";
+import {ICounter, ICounterAction} from "../../models/counter";
 
 /** Action Types */
 export const INCREMENT: string = 'counter/INCREMENT';
@@ -6,6 +6,9 @@ export const DECREMENT: string = 'counter/DECREMENT';
 
 const initialState: ICounter = {
   count: 0,
+};
+
+export type State = {
 };
 
 export function counterReducer(state = initialState, action?: ICounterAction) {

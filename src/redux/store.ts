@@ -2,8 +2,8 @@ import {createStore, applyMiddleware, Middleware, Store} from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import rootReducer from './reducers/index';
-import {IStore} from "./IStore";
+import rootReducer from './rootReducer';
+import {IStore} from "../types/IStore";
 
 export function configureStore(initialState?: IStore): Store<IStore> {
 
@@ -17,7 +17,7 @@ export function configureStore(initialState?: IStore): Store<IStore> {
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
-    module.hot.accept('./reducers', () => {
+    module.hot.accept(['./counter', './graph'], () => {
       store.replaceReducer(rootReducer);
     });
   }

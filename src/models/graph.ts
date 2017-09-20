@@ -4,11 +4,10 @@ export interface IGraphView {
 }
 
 export interface IEdgeView {
-  vertexOne: number;
-  vertexTwo: number;
+  vertexOne: string;
+  vertexTwo: string;
 }
 
 export interface IVertexView {
-  id: number;
   name: string;
 }

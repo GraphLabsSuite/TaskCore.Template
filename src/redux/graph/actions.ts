@@ -37,13 +37,13 @@ export const actionsCreators = {
       vertex: { name } as IVertexView
     };
   },
-  addEdge(vertexOne: number, vertexTwo: number): IGraphActionEdge {
+  addEdge(vertexOne: string, vertexTwo: string): IGraphActionEdge {
     return {
       type: ADD_EDGE,
       edge: { vertexOne, vertexTwo } as IEdgeView
     };
   },
-  removeEdge(vertexOne: number, vertexTwo: number): IGraphActionEdge {
+  removeEdge(vertexOne: string, vertexTwo: string): IGraphActionEdge {
     return {
       type: REMOVE_EDGE,
       edge: { vertexOne, vertexTwo } as IEdgeView

@@ -2,16 +2,19 @@ import * as React from "react";
 import { select } from "d3-selection";
 
 import * as styles from "./CommonGraphAdapter.scss";
+import {RootState} from "../redux/rootReducer";
+import {connect} from "react-redux";
+import {IGraphView} from "../models/graph";
 
 interface CommonGraphAdapterProperties {
-  data: number[];
+  // graph: IGraphView;
 }
 
 interface CommonGraphAdapterState extends React.ComponentState {
   events: Event[]
 }
 
-export class CommonGraphAdapter extends React.Component<CommonGraphAdapterProperties, CommonGraphAdapterState> {
+class CommonGraphAdapter extends React.Component<CommonGraphAdapterProperties, CommonGraphAdapterState> {
 
   ref: SVGSVGElement;
   events: Event[];
@@ -23,12 +26,16 @@ export class CommonGraphAdapter extends React.Component<CommonGraphAdapterProper
   }
 
   updateGraph() {
-    select(this.ref)
-      .append('circle')
-      .attr('cx', 200)
-      .attr('cy', 200)
-      .attr('fill', 'black')
-      .attr('r', 50);
+    let i = 0;
+    // for (const elem of this.props.graph.vertices) {
+      select(this.ref)
+          .append('circle')
+          .attr('cx', 200 + 10 * i)
+          .attr('cy', 200)
+          .attr('fill', 'black')
+          .attr('r', 50);
+      i++;
+    // }
   }
 
   render() {
@@ -40,3 +47,12 @@ export class CommonGraphAdapter extends React.Component<CommonGraphAdapterProper
     </svg>;
   }
 }
+
+// const mapStateToProps = (state: RootState): CommonGraphAdapterProperties => {
+//   return {
+//     graph: state.graphState.graph
+//   };
+// };
+
+// export default connect<CommonGraphAdapterState, CommonGraphAdapterProperties, {}>(mapStateToProps)(CommonGraphAdapter);
+export default CommonGraphAdapter;

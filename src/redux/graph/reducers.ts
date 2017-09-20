@@ -21,7 +21,7 @@ export type State = {
 };
 
 export const reducer = combineReducers<RootState>({
-  graphReducer(state: IGraphView = initialState, action: IGraphAction): IGraphView {
+  graph(state: IGraphView = initialState, action: IGraphAction): IGraphView {
     switch (action.type) {
       case ADD_VERTEX:
         return {
@@ -36,10 +36,10 @@ export const reducer = combineReducers<RootState>({
       case REMOVE_VERTEX:
         return {
           vertices: [
-            ...state.vertices.filter(v => v.id != (<IGraphActionVertex> action).vertex.id),
+            ...state.vertices.filter(v => v.name != (<IGraphActionVertex> action).vertex.name),
           ],
           edges: [
-            ...state.edges.filter(e => e.vertexTwo != (<IGraphActionVertex> action).vertex.id && e.vertexOne != (<IGraphActionVertex> action).vertex.id)
+            ...state.edges.filter(e => e.vertexTwo != (<IGraphActionVertex> action).vertex.name && e.vertexOne != (<IGraphActionVertex> action).vertex.name)
           ]
         };
       case ADD_EDGE:

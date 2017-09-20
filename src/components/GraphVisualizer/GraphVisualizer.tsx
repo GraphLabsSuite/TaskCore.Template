@@ -1,5 +1,5 @@
 import * as React from "react";
-import {CommonGraphAdapter} from "../../adapters/CommonGraphAdapter";
+import CommonGraphAdapter from "../../adapters/CommonGraphAdapter";
 
 interface GraphVisualizerProperties {
 }
@@ -11,8 +11,6 @@ export class GraphVisualizer extends React.Component<GraphVisualizerProperties, 
   }
 
   public render() {
-    return <CommonGraphAdapter
-        data={[1,2,3,4,5]}
-      />;
+    return <CommonGraphAdapter />;
   }
 }

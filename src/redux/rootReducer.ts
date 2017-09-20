@@ -1,5 +1,4 @@
 import {combineReducers, Reducer} from 'redux';
-import {IStore} from "../types/IStore";
 import {counterReducer} from "./counter/index";
 import {reducer as graphReducer} from "./graph/reducers";
 import { State as GraphState } from "./graph/reducers";
@@ -13,7 +12,7 @@ export interface RootState {
 
 const rootReducer: Reducer<RootState> = combineReducers<RootState>({
   counter: counterReducer,
-  graph: graphReducer
+  graphReducer
 });
 
 export default rootReducer;

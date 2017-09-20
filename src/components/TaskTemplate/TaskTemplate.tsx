@@ -14,7 +14,7 @@ import {Dispatch} from "redux";
 
 export interface AppProperties {
   addVertex: (name: string) => void,
-  addEdge: (one: number, two: number) => void
+  addEdge: (one: string, two: string) => void
 }
 
 export interface AppState extends React.ComponentState {}
@@ -22,9 +22,11 @@ export interface AppState extends React.ComponentState {}
 class TaskTemplate extends React.Component<AppProperties, AppState> {
 
   componentWillMount() {
-    // const graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(5);
-    // graph.vertices.forEach(v => this.props.addVertex(v.name));
-    // graph.edges.forEach(e => this.props.addEdge(e.vertexOne.id.idValue, e.vertexTwo.id.idValue));
+    // Here you should comment if you do not want to get warning.
+    //TODO: understand why here are warnings
+    const graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(5);
+    graph.vertices.forEach(v => this.props.addVertex(v.name));
+    graph.edges.forEach(e => this.props.addEdge(e.vertexOne.name, e.vertexTwo.name));
   }
 
   public constructor(props: AppProperties) {
@@ -59,7 +61,7 @@ const mapStateToProps = (state: RootState): {}  => {
 const mapDispatchToProps = (dispatch: Dispatch<RootState>): AppProperties => {
   return {
     addVertex: (name: string) => dispatch(actionsCreators.addVertex(name)),
-    addEdge: (one: number, two: number) => dispatch(actionsCreators.addEdge(one, two))
+    addEdge: (one: string, two: string) => dispatch(actionsCreators.addEdge(one, two))
   };
 };
 

@@ -6,16 +6,13 @@ interface GraphVisualizerProperties {
 
 export class GraphVisualizer extends React.Component<GraphVisualizerProperties, React.ComponentState> {
 
-  private canvas_id: string = "graph";
-
   public constructor() {
     super();
-    CommonGraphAdapter.renderGraph(this.canvas_id);
   }
 
   public render() {
-    return (<div>
-      <canvas id={this.canvas_id} />
-    </div>);
+    return <CommonGraphAdapter
+        data={[1,2,3,4,5]}
+      />;
   }
 }

@@ -1,4 +1,5 @@
 // We use generic inference.
+import * as React from "react";
 import {RootState} from "../redux/rootReducer";
 import {Dispatch} from "redux";
 import { connect } from "react-redux";

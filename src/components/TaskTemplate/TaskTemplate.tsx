@@ -34,7 +34,6 @@ class TaskTemplate extends React.Component<AppProperties, AppState> {
   }
 
   render() {
-    console.log(style);
     return (
       <div id="wrap" className={style.App}>
         <div className={style.MainRow}>

@@ -1,18 +1,19 @@
 import {combineReducers, Reducer} from 'redux';
 import {counterReducer} from "./counter/index";
-import {reducer as graphReducer} from "./graph/reducers";
+import graphReducer from "./graph/reducers";
 import { State as GraphState } from "./graph/reducers";
 import { State as CounterState } from "./counter/index";
+import {IGraphView} from '../models/graph';
 
 export interface RootState {
-  graphState: GraphState,
+  readonly graph: IGraphView,
   counterState: CounterState
 }
 
 
 const rootReducer: Reducer<RootState> = combineReducers<RootState>({
   counter: counterReducer,
-  graphReducer
+  graph: graphReducer
 });
 
 export default rootReducer;

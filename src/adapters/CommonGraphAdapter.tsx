@@ -3,39 +3,53 @@ import { select } from "d3-selection";
 
 import * as styles from "./CommonGraphAdapter.scss";
 import {RootState} from "../redux/rootReducer";
-import {connect} from "react-redux";
+import {connect, MapStateToPropsParam,  } from "react-redux";
 import {IGraphView} from "../models/graph";
+import {Dispatch} from "redux";
+import {typedConnect} from "../utils/typedConnect";
+import {returnType} from "../utils/typeUtils";
 
-interface CommonGraphAdapterProperties {
-  // graph: IGraphView;
+interface CommonGraphAdapterOwnProps {
 }
 
 interface CommonGraphAdapterState extends React.ComponentState {
-  events: Event[]
+  events: Event[];
 }
 
-class CommonGraphAdapter extends React.Component<CommonGraphAdapterProperties, CommonGraphAdapterState> {
+const mapStateToProps = (state: RootState) => {
+    return {
+        graph: state.graph
+    };
+};
+
+const stateGeneric = returnType(mapStateToProps);
+type CommonGraphAdapterStateProps = typeof stateGeneric;
+type CommonGraphAdapterProps = CommonGraphAdapterStateProps & CommonGraphAdapterOwnProps;
+
+class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, CommonGraphAdapterState> {
 
   ref: SVGSVGElement;
-  events: Event[];
 
   constructor() {
     super();
-    this.events = [];
+    this.state = {
+      events: []
+    };
     this.updateGraph = this.updateGraph.bind(this);
   }
 
   updateGraph() {
     let i = 0;
-    // for (const elem of this.props.graph.vertices) {
+    console.log(this.props.graph);
+    for (const elem of this.props.graph.vertices) {
       select(this.ref)
           .append('circle')
-          .attr('cx', 200 + 10 * i)
+          .attr('cx', 200 + 100 * i)
           .attr('cy', 200)
           .attr('fill', 'black')
           .attr('r', 50);
       i++;
-    // }
+    }
   }
 
   render() {
@@ -48,11 +62,4 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProperties, C
   }
 }
 
-// const mapStateToProps = (state: RootState): CommonGraphAdapterProperties => {
-//   return {
-//     graph: state.graphState.graph
-//   };
-// };
-
-// export default connect<CommonGraphAdapterState, CommonGraphAdapterProperties, {}>(mapStateToProps)(CommonGraphAdapter);
-export default CommonGraphAdapter;
+export default connect<CommonGraphAdapterStateProps, {}, CommonGraphAdapterOwnProps>(mapStateToProps)(CommonGraphAdapter);

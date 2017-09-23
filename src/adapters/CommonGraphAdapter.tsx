@@ -6,7 +6,11 @@ import * as styles from "./CommonGraphAdapter.scss";
 import {RootState} from "../redux/rootReducer";
 import {connect, MapStateToPropsParam,  } from "react-redux";
 import {returnType} from "../utils/typeUtils";
-import {Point} from "graphlabs.core.visualizer/build/types/Point";
+import {GraphGenerator, GraphSerializer, IEdge, IGraph, IVertex} from "graphlabs.core.graphs";
+import {CircleGraphVisualizer} from "graphlabs.core.visualizer/build/visualizers/CircleGraphVisualizer";
+
+import {graphSerializer} from "../utils/serializers";
+import {GraphVisualizer} from "../components/GraphVisualizer/GraphVisualizer";
 
 interface CommonGraphAdapterOwnProps {
 }
@@ -28,17 +32,24 @@ type CommonGraphAdapterProps = CommonGraphAdapterStateProps & CommonGraphAdapter
 class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, CommonGraphAdapterState> {
 
   ref: SVGSVGElement;
+  graphVisualizer: CircleGraphVisualizer;
 
   componentDidMount() {
+      const graphInString: string = graphSerializer(this.props.graph);
+      const graph: IGraph<IVertex, IEdge> = GraphSerializer.deserialize(graphInString);
+      this.graphVisualizer = new CircleGraphVisualizer(graph);
+      this.graphVisualizer.width = this.ref.clientWidth;
+      this.graphVisualizer.height = this.ref.clientHeight;
+      this.graphVisualizer.calculate();
+      console.log(this.graphVisualizer);
       let i = 0;
-      console.log(this.props.graph);
-      for (const elem of this.props.graph.vertices) {
+      for (const elem of this.graphVisualizer.geometric.vertices) {
           select(this.ref)
               .append('circle')
-              .attr('cx', 200 + 100 * i)
-              .attr('cy', 200)
+              .attr('cx', elem.center.X)
+              .attr('cy', elem.center.Y)
               .attr('fill', 'black')
-              .attr('r', 50)
+              .attr('r', elem.radius)
               .classed("dragging", true)
               .call(d3.drag().on("start", started));
           i++;
@@ -50,7 +61,12 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
           d3.event.on("drag", dragged).on("end", ended);
 
           function dragged(d) {
-              circle.raise().attr("cx", d3.event.x).attr("cy", d3.event.y);
+              // if (d3.event.x < referrer.clientWidth - radius
+              //     && d3.event.x > radius && d3.event.y < referrer.clientHeight - radius && d3.event.y > radius) {
+                  circle.raise().attr("cx", d3.event.x).attr("cy", d3.event.y);
+              // } else {
+              //     console.log("ATTENTION!!!");
+              // }
           }
 
           function ended() {

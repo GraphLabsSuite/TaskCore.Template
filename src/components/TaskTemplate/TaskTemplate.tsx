@@ -22,8 +22,6 @@ export interface AppState extends React.ComponentState {}
 class TaskTemplate extends React.Component<AppProperties, AppState> {
 
   componentWillMount() {
-    // Here you should comment if you do not want to get warning.
-    //TODO: understand why here are warnings
     const graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(5);
     graph.vertices.forEach(v => this.props.addVertex(v.name));
     graph.edges.forEach(e => this.props.addEdge(e.vertexOne.name, e.vertexTwo.name));

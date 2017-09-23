@@ -1,4 +1,4 @@
-import {IEdgeView, IGraphView, IVertexView} from "../../models/graph";
+import {IGraphView} from "../../models/graph";
 
 import {
   ADD_VERTEX,
@@ -6,18 +6,11 @@ import {
   REMOVE_VERTEX,
   REMOVE_EDGE
 } from './actions';
-import {combineReducers} from "redux";
-import {IStore} from "../../types/IStore";
-import {RootState} from "../rootReducer";
 import {IGraphAction, IGraphActionEdge, IGraphActionVertex} from "../../types/IGraphAction";
 
 const initialState: IGraphView = {
   vertices: [],
   edges: []
-};
-
-export type State = {
-  readonly graph: IGraphView,
 };
 
 export default (state: IGraphView = initialState, action: IGraphAction): IGraphView => {

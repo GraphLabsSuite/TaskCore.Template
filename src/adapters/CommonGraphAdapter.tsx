@@ -50,7 +50,6 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
               .classed("dragging", true)
               .call(d3.drag().on("start", started));
       }
-      console.log(this.graphVisualizer);
       for (const elem of this.graphVisualizer.geometric.edges) {
           const data = [{x:elem.outPoint.X, y:elem.outPoint.Y}, {x:elem.inPoint.X, y:elem.inPoint.Y}];
           select(this.ref)
@@ -81,13 +80,11 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
               d3.selectAll('line').each(function(l, li) {
                   console.log(d3.select(this).attr("out"), name, d3.select(this).attr("in"));
                   if (`vertex_${d3.select(this).attr("out")}` == name) {
-                      console.log("asdasd");
                       d3.select(this)
                           .attr("x1", d3.event.x)
                           .attr("y1", d3.event.y);
                   }
                   if (`vertex_${d3.select(this).attr("in")}` == name) {
-                      console.log("asda");
                       d3.select(this)
                           .attr("x2", d3.event.x)
                           .attr("y2", d3.event.y);
@@ -117,7 +114,12 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
       }
 
       for (const elem of this.graphVisualizer.geometric.edges) {
-          select(``);
+          console.log(select(`#edge_${elem.edge.vertexOne.name}_${elem.edge.vertexTwo.name}`));
+          select(`#edge_${elem.edge.vertexOne.name}_${elem.edge.vertexTwo.name}`)
+              .attr("x1", elem.outPoint.X)
+              .attr("x2", elem.inPoint.X)
+              .attr("y1", elem.outPoint.Y)
+              .attr("y2", elem.inPoint.Y);
       }
   }
 

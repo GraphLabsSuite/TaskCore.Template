@@ -38,18 +38,16 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
       this.graphVisualizer.width = this.ref.clientWidth;
       this.graphVisualizer.height = this.ref.clientHeight;
       this.graphVisualizer.calculate();
-      console.log(this.graphVisualizer);
-      let i = 0;
       for (const elem of this.graphVisualizer.geometric.vertices) {
           select(this.ref)
               .append('circle')
+              .attr('id', `vertex_${elem.label}`)
               .attr('cx', elem.center.X)
               .attr('cy', elem.center.Y)
               .attr('fill', 'black')
               .attr('r', elem.radius)
               .classed("dragging", true)
               .call(d3.drag().on("start", started));
-          i++;
       }
 
       function started() {
@@ -72,14 +70,25 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
       }
   }
 
+  updateSvg() {
+      this.graphVisualizer.width = this.ref.clientWidth;
+      this.graphVisualizer.height = this.ref.clientHeight;
+      this.graphVisualizer.calculate();
+      for (const elem of this.graphVisualizer.geometric.vertices) {
+          select(`#vertex_${elem.label}`)
+              .attr('cx', elem.center.X)
+              .attr('cy', elem.center.Y)
+              .attr('fill', 'black')
+              .attr('r', elem.radius);
+      }
+  }
+
   componentDidMount() {
       const graphInString: string = graphSerializer(this.props.graph);
       const graph: IGraph<IVertex, IEdge> = GraphSerializer.deserialize(graphInString);
       this.graphVisualizer = new CircleGraphVisualizer(graph);
       this.renderSvg();
-      window.addEventListener('onresize', function() {
-          console.log("sth");
-      });
+      window.onresize = this.updateSvg.bind(this);
       // this.ref.addEventListener('SVGResize', this.renderSvg);
   }
 

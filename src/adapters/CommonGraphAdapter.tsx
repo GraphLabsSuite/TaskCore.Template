@@ -1,16 +1,16 @@
 import * as React from "react";
-import { select } from "d3-selection";
+import {select} from "d3-selection";
 import * as d3 from "d3";
 
 import * as styles from "./CommonGraphAdapter.scss";
 import {RootState} from "../redux/rootReducer";
-import {connect, MapStateToPropsParam,  } from "react-redux";
+import {connect} from "react-redux";
 import {returnType} from "../utils/typeUtils";
-import {GraphGenerator, GraphSerializer, IEdge, IGraph, IVertex} from "graphlabs.core.graphs";
+import {GraphSerializer, IEdge, IGraph, IVertex} from "graphlabs.core.graphs";
 import {CircleGraphVisualizer} from "graphlabs.core.visualizer/build/visualizers/CircleGraphVisualizer";
 
 import {graphSerializer} from "../utils/serializers";
-import {GraphVisualizer} from "../components/GraphVisualizer/GraphVisualizer";
+import {findDOMNode} from "react-dom";
 
 interface CommonGraphAdapterOwnProps {
 }
@@ -34,10 +34,7 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
   ref: SVGSVGElement;
   graphVisualizer: CircleGraphVisualizer;
 
-  componentDidMount() {
-      const graphInString: string = graphSerializer(this.props.graph);
-      const graph: IGraph<IVertex, IEdge> = GraphSerializer.deserialize(graphInString);
-      this.graphVisualizer = new CircleGraphVisualizer(graph);
+  renderSvg() {
       this.graphVisualizer.width = this.ref.clientWidth;
       this.graphVisualizer.height = this.ref.clientHeight;
       this.graphVisualizer.calculate();
@@ -63,7 +60,7 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
           function dragged(d) {
               // if (d3.event.x < referrer.clientWidth - radius
               //     && d3.event.x > radius && d3.event.y < referrer.clientHeight - radius && d3.event.y > radius) {
-                  circle.raise().attr("cx", d3.event.x).attr("cy", d3.event.y);
+              circle.raise().attr("cx", d3.event.x).attr("cy", d3.event.y);
               // } else {
               //     console.log("ATTENTION!!!");
               // }
@@ -75,7 +72,16 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
       }
   }
 
-
+  componentDidMount() {
+      const graphInString: string = graphSerializer(this.props.graph);
+      const graph: IGraph<IVertex, IEdge> = GraphSerializer.deserialize(graphInString);
+      this.graphVisualizer = new CircleGraphVisualizer(graph);
+      this.renderSvg();
+      window.addEventListener('onresize', function() {
+          console.log("sth");
+      });
+      // this.ref.addEventListener('SVGResize', this.renderSvg);
+  }
 
   constructor() {
     super();
@@ -86,13 +92,12 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
   }
 
   updateGraph() {
-
+      console.log("Here I am!");
   }
 
     render() {
     return <svg
       className={styles.svg}
-      onClick={this.updateGraph}
       ref={(ref: SVGSVGElement) => this.ref = ref}
     >
     </svg>;

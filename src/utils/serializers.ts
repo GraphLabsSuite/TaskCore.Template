@@ -14,11 +14,15 @@ function serializeEdge(e: IEdgeView, arr: IVertexView[]): string {
 
 export function graphSerializer(graph: IGraphView): string {
     let serializedGraph: string = '{"isUndirected": false, "weighted": false, "vertices": [';
-    graph.vertices.forEach(v => serializedGraph = serializedGraph + serializeVertex(v));
-    serializedGraph = serializedGraph.substring(0, serializedGraph.length - 1);
+    if (graph.vertices.length > 0) {
+        graph.vertices.forEach(v => serializedGraph = serializedGraph + serializeVertex(v));
+        serializedGraph = serializedGraph.substring(0, serializedGraph.length - 1);
+    }
     serializedGraph = serializedGraph + `], "edges": [`;
-    graph.edges.forEach(e => serializedGraph = serializedGraph + serializeEdge(e, graph.vertices));
-    serializedGraph = serializedGraph.substring(0, serializedGraph.length - 1);
+    if (graph.edges.length > 0) {
+        graph.edges.forEach(e => serializedGraph = serializedGraph + serializeEdge(e, graph.vertices));
+        serializedGraph = serializedGraph.substring(0, serializedGraph.length - 1);
+    }
     serializedGraph = serializedGraph + ']}';
     return serializedGraph;
 }

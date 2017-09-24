@@ -22,7 +22,7 @@ export interface AppState extends React.ComponentState {}
 class TaskTemplate extends React.Component<AppProperties, AppState> {
 
   componentWillMount() {
-    const graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(5);
+    const graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(0);
     graph.vertices.forEach(v => this.props.addVertex(v.name));
     graph.edges.forEach(e => this.props.addEdge(e.vertexOne.name, e.vertexTwo.name));
   }

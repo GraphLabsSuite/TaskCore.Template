@@ -89,7 +89,6 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
       this.graphVisualizer = new CircleGraphVisualizer(graph);
       this.renderSvg();
       window.onresize = this.updateSvg.bind(this);
-      // this.ref.addEventListener('SVGResize', this.renderSvg);
   }
 
   constructor() {

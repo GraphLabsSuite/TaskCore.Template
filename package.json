@@ -21,7 +21,7 @@
     "d3": "^4.10.2",
     "express": "^4.15.3",
     "graphlabs.core.graphs": "^0.0.29",
-    "graphlabs.core.visualizer": "^0.0.19",
+    "graphlabs.core.visualizer": "^0.0.20",
     "paper": "^0.11.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

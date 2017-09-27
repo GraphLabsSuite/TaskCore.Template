@@ -48,7 +48,8 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
               .attr('fill', 'black')
               .attr('r', elem.radius)
               .classed("dragging", true)
-              .call(d3.drag().on("start", started));
+              .call(d3.drag().on("start", started))
+              .on("click", clickVertex);
       }
       for (const elem of this.graphVisualizer.geometric.edges) {
           const data = [{x:elem.outPoint.X, y:elem.outPoint.Y}, {x:elem.inPoint.X, y:elem.inPoint.Y}];
@@ -64,7 +65,16 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
               .attr("y2", data[1].y)
               .attr("fill", "none")
               .attr("stroke", "black")
-              .attr("stroke-width", "5");
+              .attr("stroke-width", "5")
+              .on("click", clickEdge);
+      }
+
+      function clickEdge() {
+          console.log("Edge clicked!");
+      }
+
+      function clickVertex() {
+          console.log("Vertex clicked!");
       }
 
       function started() {
@@ -78,7 +88,6 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
               circle.raise().attr("cx", d3.event.x).attr("cy", d3.event.y);
               const name = circle.attr("id");
               d3.selectAll('line').each(function(l, li) {
-                  console.log(d3.select(this).attr("out"), name, d3.select(this).attr("in"));
                   if (`vertex_${d3.select(this).attr("out")}` == name) {
                       d3.select(this)
                           .attr("x1", d3.event.x)
@@ -114,7 +123,6 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
       }
 
       for (const elem of this.graphVisualizer.geometric.edges) {
-          console.log(select(`#edge_${elem.edge.vertexOne.name}_${elem.edge.vertexTwo.name}`));
           select(`#edge_${elem.edge.vertexOne.name}_${elem.edge.vertexTwo.name}`)
               .attr("x1", elem.outPoint.X)
               .attr("x2", elem.inPoint.X)

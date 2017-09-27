@@ -2161,9 +2161,9 @@ graphlabs.core.graphs@^0.0.29:
     ts-md5 "^1.2.0"
     typescript "^2.4.2"
 
-graphlabs.core.visualizer@^0.0.20:
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/graphlabs.core.visualizer/-/graphlabs.core.visualizer-0.0.20.tgz#a02aef3224a1e9521ab84870eb8cd7be7a71441e"
+graphlabs.core.visualizer@^0.0.21:
+  version "0.0.21"
+  resolved "https://registry.yarnpkg.com/graphlabs.core.visualizer/-/graphlabs.core.visualizer-0.0.21.tgz#e52cc44fd55f164d83202664aee86a559f4b6b24"
   dependencies:
     graphlabs.core.graphs "^0.0.29"
     typescript "^2.4.2"

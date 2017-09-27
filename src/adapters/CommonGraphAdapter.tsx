@@ -35,6 +35,14 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
   ref: SVGSVGElement;
   graphVisualizer: CircleGraphVisualizer;
 
+  protected clickEdge() {
+    console.log("Edge clicked!");
+  }
+
+  protected clickVertex() {
+      console.log("Vertex clicked!");
+  }
+
   renderSvg() {
       this.graphVisualizer.width = this.ref.clientWidth;
       this.graphVisualizer.height = this.ref.clientHeight;
@@ -48,8 +56,8 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
               .attr('fill', 'black')
               .attr('r', elem.radius)
               .classed("dragging", true)
-              .call(d3.drag().on("start", started))
-              .on("click", clickVertex);
+              .call(d3.drag().on("start", startDrag))
+              .on("click", this.clickVertex.bind(this));
       }
       for (const elem of this.graphVisualizer.geometric.edges) {
           const data = [{x:elem.outPoint.X, y:elem.outPoint.Y}, {x:elem.inPoint.X, y:elem.inPoint.Y}];
@@ -66,28 +74,18 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
               .attr("fill", "none")
               .attr("stroke", "black")
               .attr("stroke-width", "5")
-              .on("click", clickEdge);
+              .on("click", this.clickEdge.bind(this));
       }
 
-      function clickEdge() {
-          console.log("Edge clicked!");
-      }
-
-      function clickVertex() {
-          console.log("Vertex clicked!");
-      }
-
-      function started() {
+      function startDrag() {
           const circle = d3.select(this).classed("dragging", true);
-
           d3.event.on("drag", dragged).on("end", ended);
-
           function dragged(d) {
               // if (d3.event.x < referrer.clientWidth - radius
               //     && d3.event.x > radius && d3.event.y < referrer.clientHeight - radius && d3.event.y > radius) {
               circle.raise().attr("cx", d3.event.x).attr("cy", d3.event.y);
               const name = circle.attr("id");
-              d3.selectAll('line').each(function(l, li) {
+              d3.selectAll('line').each(function (l, li) {
                   if (`vertex_${d3.select(this).attr("out")}` == name) {
                       d3.select(this)
                           .attr("x1", d3.event.x)

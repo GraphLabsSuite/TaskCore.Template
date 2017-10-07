@@ -47,18 +47,6 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
       this.graphVisualizer.width = this.ref.clientWidth;
       this.graphVisualizer.height = this.ref.clientHeight;
       this.graphVisualizer.calculate();
-      for (const elem of this.graphVisualizer.geometric.vertices) {
-          select(this.ref)
-              .append('circle')
-              .attr('id', `vertex_${elem.label}`)
-              .attr('cx', elem.center.X)
-              .attr('cy', elem.center.Y)
-              .attr('fill', 'black')
-              .attr('r', elem.radius)
-              .classed("dragging", true)
-              .call(d3.drag().on("start", startDrag))
-              .on("click", this.clickVertex.bind(this));
-      }
       for (const elem of this.graphVisualizer.geometric.edges) {
           const data = [{x:elem.outPoint.X, y:elem.outPoint.Y}, {x:elem.inPoint.X, y:elem.inPoint.Y}];
           select(this.ref)
@@ -76,6 +64,29 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
               .attr("stroke-width", "5")
               .on("click", this.clickEdge.bind(this));
       }
+      for (const elem of this.graphVisualizer.geometric.vertices) {
+          select(this.ref)
+              .append('circle')
+              .attr('id', `vertex_${elem.label}`)
+              .attr('cx', elem.center.X)
+              .attr('cy', elem.center.Y)
+              .attr('fill', 'black')
+              .attr('r', elem.radius)
+              .classed("dragging", true)
+              .call(d3.drag().on("start", startDrag))
+              .on("click", this.clickVertex.bind(this));
+          select(this.ref)
+              .append("text")
+              .attr("id", `label_${elem.label}`)
+              .attr("x", elem.center.X)
+              .attr("y", elem.center.Y)
+              .text(elem.label)
+              .attr("text-anchor", "middle")
+              .attr("font-family", "sans-serif")
+              .attr("font-size", "2vmax")
+              .attr("fill", "white")
+              .attr("padding-top", "50%");
+      }
 
       function startDrag() {
           const circle = d3.select(this).classed("dragging", true);
@@ -85,14 +96,16 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
               //     && d3.event.x > radius && d3.event.y < referrer.clientHeight - radius && d3.event.y > radius) {
               circle.raise().attr("cx", d3.event.x).attr("cy", d3.event.y);
               const name = circle.attr("id");
+              const _id = name.substring(7);
+              select(`#label_${_id}`).raise().attr("x", d3.event.x).attr("y", d3.event.y);
               d3.selectAll('line').each(function (l, li) {
                   if (`vertex_${d3.select(this).attr("out")}` == name) {
-                      d3.select(this)
+                      select(this)
                           .attr("x1", d3.event.x)
                           .attr("y1", d3.event.y);
                   }
                   if (`vertex_${d3.select(this).attr("in")}` == name) {
-                      d3.select(this)
+                      select(this)
                           .attr("x2", d3.event.x)
                           .attr("y2", d3.event.y);
                   }
@@ -118,6 +131,7 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
               .attr('cy', elem.center.Y)
               .attr('fill', 'black')
               .attr('r', elem.radius);
+          select(`#label_${elem.label}`).raise().attr("x", elem.center.X).attr("y", elem.center.Y);
       }
 
       for (const elem of this.graphVisualizer.geometric.edges) {

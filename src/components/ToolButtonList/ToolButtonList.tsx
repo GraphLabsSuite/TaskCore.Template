@@ -10,10 +10,10 @@ interface ToolButtonListProperties {
 export class ToolButtonList extends React.Component<ToolButtonListProperties, React.ComponentState> {
 
   //TODO: Add normal types to these variables (maybe Dictionary)
-  public toolButtons;
+  public toolButtons: Object;
 
   componentWillMount() {
-    this.toolButtons = this.setDefaultButtonList();
+    this.toolButtons = {};
   }
 
   public constructor(props: ToolButtonListProperties) {
@@ -30,7 +30,8 @@ export class ToolButtonList extends React.Component<ToolButtonListProperties, Re
   private getList() {
     const result = [];
     const defaultList = this.setDefaultButtonList();
-    for (const key in defaultList) result.push(<ToolButton key={key} path={key} listener={defaultList[key]}/>);
+    for (const key in defaultList) result.push(<div key={key}><ToolButton path={key} listener={defaultList[key]}/></div>);
+    for (const key in this.toolButtons) result.push(<ToolButton key={key} path={key} listener={this.toolButtons[key]}/>);
     return <div className={style.ButtonList}>{result}</div>;
   }
 

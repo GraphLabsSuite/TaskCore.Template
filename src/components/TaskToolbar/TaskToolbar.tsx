@@ -9,8 +9,8 @@ export interface TaskToolbarProperties {
 export class TaskToolbar extends React.Component<TaskToolbarProperties, React.ComponentState> {
   public render() {
     return (<div className={style.TaskToolbarCenterPosition}>
+      <h2 className={style.Title}>Панель инструментов</h2>
       <ToolButtonList />
-      This is toolbar
     </div>);
   }
 }

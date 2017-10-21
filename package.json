@@ -1,7 +1,7 @@
 {
   "name": "graphlabs.core.template",
   "description": "Task template for GraphLabs web project",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "GraphLabs",
   "keywords": [
     "graphlabs",
@@ -22,6 +22,7 @@
     "express": "^4.15.3",
     "graphlabs.core.graphs": "^0.0.29",
     "graphlabs.core.visualizer": "^0.0.21",
+    "graphlabs.core.notifier": "^0.0.7",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",

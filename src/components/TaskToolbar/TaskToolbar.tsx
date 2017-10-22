@@ -1,5 +1,5 @@
 import * as React from "react";
-import {ToolButtonList} from "../ToolButtonList/ToolButtonList";
+import ToolButtonList from "../ToolButtonList/ToolButtonList";
 
 import * as style from "./TaskToolbar.scss";
 

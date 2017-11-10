@@ -1,5 +1,6 @@
 .bordered {
-  border: 2px solid black;
+  box-shadow:2px 2px 11px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow:2px 2px 11px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
-  background: #ffeeee;
+  background: #fffaf0;
 }

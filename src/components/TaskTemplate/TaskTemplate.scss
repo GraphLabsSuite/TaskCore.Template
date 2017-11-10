@@ -16,24 +16,24 @@
 
 .GraphCell {
   position: fixed;
-  left: 0;
-  top: 0;
-  width: 80%;
-  height: 80%;
+  left: 1%;
+  top: 1%;
+  width: 78%;
+  height: 78%;
 }
 
 .ToolCell {
   position: fixed;
-  left: 80%;
-  top: 0;
-  width: 20%;
-  height: 80%;
+  left: 81%;
+  top: 1%;
+  width: 18%;
+  height: 78%;
 }
 
 .LowRow {
   position: fixed;
-  left: 0;
+  left: 1%;
   top: 80%;
-  width: 100%;
-  height: 20%;
+  width: 98%;
+  height: 19%;
 }

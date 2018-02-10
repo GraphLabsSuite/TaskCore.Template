@@ -2,10 +2,11 @@ import * as React from "react";
 import * as classnames from "classnames";
 
 import * as style from "./ToolButton.scss";
+// import * as console from "console";
 
 interface ToolButtonProperties {
   path: string,
-  listener: () => void,
+  listener: () => void
 }
 
 export class ToolButton extends React.Component<ToolButtonProperties, React.ComponentState> {

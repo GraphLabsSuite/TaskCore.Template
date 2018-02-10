@@ -1,11 +1,12 @@
 import * as React from "react";
 import {GraphVisualizer} from "../GraphVisualizer/GraphVisualizer";
 import {TaskToolbar} from "../TaskToolbar/TaskToolbar";
-import {TaskConsole} from "../TaskConsole/TaskConsole";
+import TaskConsole from "../TaskConsole/TaskConsole";
 import { GraphGenerator, IGraph, IVertex, IEdge } from "graphlabs.core.graphs";
 import * as classnames from "classnames";
 import {connect, DispatchProp} from "react-redux";
 
+import { StudentMark } from "../StudentMark/StudentMark";
 import { actionsCreators } from "../../redux/graph/actions";
 import * as style from "./TaskTemplate.scss";
 import * as commonStyle from "../../styles/Common.scss";
@@ -38,9 +39,15 @@ class TaskTemplate extends React.Component<AppProperties, AppState> {
           <div className={classnames(style.GraphCell, commonStyle.bordered)}>
             <GraphVisualizer/>
           </div>
+          <div className={classnames(style.TaskCell, commonStyle.bordered)}>
+            Задание
+          </div>
           <div className={classnames(style.ToolCell, commonStyle.bordered)}>
             <TaskToolbar/>
           </div>
+        </div>
+        <div className={classnames(style.LeftBottom,commonStyle.bordered)}>
+          <StudentMark />
         </div>
         <div className={classnames(style.LowRow,commonStyle.bordered)}>
           <TaskConsole/>

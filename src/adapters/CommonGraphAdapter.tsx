@@ -52,40 +52,34 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
           select(this.ref)
               .append("line")
               .attr("id", `edge_${elem.edge.vertexOne.name}_${elem.edge.vertexTwo.name}`)
-              .attr("out", elem.edge.vertexOne.name)
+      .attr("out", elem.edge.vertexOne.name)
               .attr("in", elem.edge.vertexTwo.name)
-              .attr("class", "link")
               .attr("x1", data[0].x)
               .attr("x2", data[1].x)
               .attr("y1", data[0].y)
               .attr("y2", data[1].y)
-              .attr("fill", "none")
-              .attr("stroke", "black")
-              .attr("stroke-width", "5")
+              .classed(styles.link, true)
               .on("click", this.clickEdge.bind(this));
       }
       for (const elem of this.graphVisualizer.geometric.vertices) {
           select(this.ref)
               .append('circle')
               .attr('id', `vertex_${elem.label}`)
-              .attr('cx', elem.center.X)
+      .attr('cx', elem.center.X)
               .attr('cy', elem.center.Y)
-              .attr('fill', 'black')
               .attr('r', elem.radius)
+              .classed(styles.vertex, true)
               .classed("dragging", true)
               .call(d3.drag().on("start", startDrag))
               .on("click", this.clickVertex.bind(this));
           select(this.ref)
               .append("text")
               .attr("id", `label_${elem.label}`)
-              .attr("x", elem.center.X)
-              .attr("y", elem.center.Y)
+      .attr("x", elem.center.X)
+              .attr("y", elem.center.Y + elem.radius / 4)
+              .attr('font-size', elem.radius)
               .text(elem.label)
-              .attr("text-anchor", "middle")
-              .attr("font-family", "sans-serif")
-              .attr("font-size", "2vmax")
-              .attr("fill", "white")
-              .attr("padding-top", "50%");
+              .classed(styles.vertexLabel, true)
       }
 
       function startDrag() {
@@ -97,7 +91,7 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
               circle.raise().attr("cx", d3.event.x).attr("cy", d3.event.y);
               const name = circle.attr("id");
               const _id = name.substring(7);
-              select(`#label_${_id}`).raise().attr("x", d3.event.x).attr("y", d3.event.y);
+              select(`#label_${_id}`).raise().attr("x", d3.event.x).attr("y", d3.event.y + +circle.attr('r') / 4);
               d3.selectAll('line').each(function (l, li) {
                   if (`vertex_${d3.select(this).attr("out")}` == name) {
                       select(this)

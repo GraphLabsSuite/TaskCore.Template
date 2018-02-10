@@ -5,7 +5,8 @@ interface StudentMarkProperties {
 }
 
 interface StudentMarkState {
-  mark: number
+  mark: number,
+  message: string
 }
 
 export class StudentMark extends React.Component<StudentMarkProperties, Partial<StudentMarkState>> {
@@ -13,7 +14,8 @@ export class StudentMark extends React.Component<StudentMarkProperties, Partial<
   public constructor() {
     super();
     this.state = {
-      mark: 100
+      mark: 50,
+      message: ""
     }
   }
 
@@ -26,8 +28,12 @@ export class StudentMark extends React.Component<StudentMarkProperties, Partial<
   }
 
   public render() {
+      /*for( var action : this.state.notifier.studentActions ){
+          console.log( action );
+      }*/
     return (<div className={styles.StudentMark}>
-      <p className={this.getStyle()}>{this.state.mark}</p>
-    </div>);
+      <p className={this.getStyle()}>{this.state.mark} {this.state.message}</p>
+    </div>
+    );
   }
 }

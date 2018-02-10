@@ -1,11 +1,11 @@
 import * as React from "react";
-import {addAction, IStudentAction} from "graphlabs.core.notifier";
-import {connect, Dispatch} from "react-redux";
+import { addAction, IStudentAction } from "graphlabs.core.notifier";
+import { connect, Dispatch } from "react-redux";
 
-import {ToolButton} from "../ToolButton/ToolButton";
+import { ToolButton } from "../ToolButton/ToolButton";
 import * as style from "./ToolButtonList.scss";
-import {RootState} from "../../redux/rootReducer";
-import {Action} from "redux";
+import { RootState } from "../../redux/rootReducer";
+import { Action } from "redux";
 
 interface ToolButtonListProperties {
     addAction: (payload: IStudentAction) => Promise<Action>;
@@ -29,13 +29,26 @@ class ToolButtonList extends React.Component<ToolButtonListProperties, ToolButto
 
     private setDefaultButtonList() {
         let list = {};
-        list["/images/Help.png"] = () => { console.log("Help button!"); };
-        list["/images/Complete.png"] = () => { console.log("Complete button!"); };
-        list["/images/DontTouch.png"] = () => { this.props.addAction({
-          message: "Everything is OK",
-          fee: 1,
-          datetime: Date.now().toLocaleString()
-          })
+        list["/images/Help.png"] = () => {
+            this.props.addAction({
+                message: "Help required",
+                fee: 0,
+                datetime: Date.now().toLocaleString()
+            })
+        };
+        list["/images/Complete.png"] = () => {
+            this.props.addAction({
+                message: "Task is complete",
+                fee: 0,
+                datetime: Date.now().toLocaleString()
+            })
+        };
+        list["/images/DontTouch.png"] = () => {
+            this.props.addAction({
+                message: "DON'T TOUCH",
+                fee: 1,
+                datetime: Date.now().toLocaleString()
+            })
         };
         return list;
     }
@@ -43,8 +56,8 @@ class ToolButtonList extends React.Component<ToolButtonListProperties, ToolButto
     private getList() {
         const result = [];
         const defaultList = this.setDefaultButtonList();
-        for (const key in defaultList) result.push(<div key={key}><ToolButton path={key} listener={defaultList[key]}/></div>);
-        for (const key in this.toolButtons) result.push(<ToolButton key={key} path={key} listener={this.toolButtons[key]}/>);
+        for (const key in defaultList) result.push(<div key={key}><ToolButton path={key} listener={defaultList[key]} /></div>);
+        for (const key in this.toolButtons) result.push(<ToolButton key={key} path={key} listener={this.toolButtons[key]} />);
         return <div className={style.ButtonList}>{result}</div>;
     }
 
@@ -53,7 +66,7 @@ class ToolButtonList extends React.Component<ToolButtonListProperties, ToolButto
     }
 }
 
-const mapStateToProps = (state: RootState): {}  => {
+const mapStateToProps = (state: RootState): {} => {
     return {
     };
 };

@@ -1,13 +1,12 @@
 .StudentMark {
   height: 100%;
-  width: 100px;
-  float: left;
+  display: inline-block;
 }
 
 .Mark {
   font-size: x-large;
-  position	: absolute;
-  top		: 50%;
+  height: 100%;
+  display: inline-block;
 }
 
 .MarkNegative {

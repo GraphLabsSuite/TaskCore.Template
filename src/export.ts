@@ -7,11 +7,13 @@ import * as TaskToolbar from "./components/TaskToolbar/TaskToolbar";
 import * as ToolButton from "./components/ToolButton/ToolButton";
 import * as ToolButtonList from "./components/ToolButtonList/ToolButtonList";
 
-module.exports.CommonGraphAdapter = CommonGraphAdapter;
-module.exports.TaskTemplate = TaskTemplate;
-module.exports.GraphVisualizer = GraphVisualizer;
-module.exports.StudentMark = StudentMark;
-module.exports.TaskConsole = TaskConsole;
-module.exports.TaskToolbar = TaskToolbar;
-module.exports.ToolButton = ToolButton;
-module.exports.ToolButtonList = ToolButtonList;
+export {
+  CommonGraphAdapter,
+  TaskTemplate,
+  GraphVisualizer,
+  StudentMark,
+  TaskConsole,
+  TaskToolbar,
+  ToolButton,
+  ToolButtonList
+};

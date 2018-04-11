@@ -9,7 +9,6 @@ import {connect, DispatchProp} from "react-redux";
 import { StudentMark } from "../StudentMark/StudentMark";
 import { actionsCreators } from "../../redux/graph/actions";
 import * as style from "./TaskTemplate.scss";
-import * as commonStyle from "../../styles/Common.scss";
 import {RootState} from "../../redux/rootReducer";
 import {Dispatch} from "redux";
 
@@ -36,20 +35,20 @@ class TaskTemplate extends React.Component<AppProperties, AppState> {
     return (
       <div id="wrap" className={style.App}>
         <div className={style.MainRow}>
-          <div className={classnames(style.GraphCell, commonStyle.bordered)}>
+          <div className={classnames(style.GraphCell, style.bordered)}>
             <GraphVisualizer/>
           </div>
-          <div className={classnames(style.TaskCell, commonStyle.bordered)}>
+          <div className={classnames(style.TaskCell, style.bordered)}>
             Задание
           </div>
-          <div className={classnames(style.ToolCell, commonStyle.bordered)}>
+          <div className={classnames(style.ToolCell, style.bordered)}>
             <TaskToolbar/>
           </div>
         </div>
-        <div className={classnames(style.LeftBottom,commonStyle.bordered)}>
+        <div className={classnames(style.LeftBottom,style.bordered)}>
           <StudentMark />
         </div>
-        <div className={classnames(style.LowRow,commonStyle.bordered)}>
+        <div className={classnames(style.LowRow,style.bordered)}>
           <TaskConsole/>
         </div>
       </div>

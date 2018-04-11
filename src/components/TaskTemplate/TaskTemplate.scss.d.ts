@@ -5,3 +5,4 @@ export const GraphCell: string;
 export const ToolCell: string;
 export const TaskCell: string;
 export const LeftBottom: string;
+export const bordered: string;

@@ -13,10 +13,10 @@ import {graphSerializer} from "../utils/serializers";
 import {findDOMNode} from "react-dom";
 import {Point} from "graphlabs.core.visualizer";
 
-interface CommonGraphAdapterOwnProps {
+export interface CommonGraphAdapterOwnProps {
 }
 
-interface CommonGraphAdapterState extends React.ComponentState {
+export interface CommonGraphAdapterState extends React.ComponentState {
   events: Event[];
 }
 

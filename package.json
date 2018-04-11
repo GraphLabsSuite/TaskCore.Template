@@ -1,7 +1,7 @@
 {
   "name": "graphlabs.core.template",
   "description": "Task template for GraphLabs web project",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "author": "GraphLabs",
   "keywords": [
     "graphlabs",
@@ -15,6 +15,7 @@
     "type": "git",
     "url": "https://github.com/eakarpov/GraphLabsSuite.Core.Template.git"
   },
+  "main": "./src/export.ts",
   "dependencies": {
     "bootstrap": "^3.3.7",
     "bootstrap-sass": "^3.3.7",
@@ -67,6 +68,7 @@
   "scripts": {
     "start_dev": "set BOOTSTRAPRC_LOCATION=.bootstraprc&&node server.js",
     "start_prod": "set BOOTSTRAPRC_LOCATION=.bootstraprc&&set NODE_ENV=production&&node server.js",
-    "start": "npm run start_dev"
+    "start": "npm run start_dev",
+    "build": "tsc"
   }
 }

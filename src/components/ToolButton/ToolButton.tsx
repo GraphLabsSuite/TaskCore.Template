@@ -4,7 +4,7 @@ import * as classnames from "classnames";
 import * as style from "./ToolButton.scss";
 // import * as console from "console";
 
-interface ToolButtonProperties {
+export interface ToolButtonProperties {
   path: string,
   listener: () => void
 }

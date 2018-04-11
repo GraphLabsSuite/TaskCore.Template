@@ -9,6 +9,7 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "allowJs": false,
+    "declaration": true,
     "moduleResolution": "node"
   }
 }

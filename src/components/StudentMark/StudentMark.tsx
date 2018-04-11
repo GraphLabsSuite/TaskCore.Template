@@ -1,10 +1,10 @@
 import * as React from "react";
 import * as styles from "./StudentMark.scss";
 
-interface StudentMarkProperties {
+export interface StudentMarkProperties {
 }
 
-interface StudentMarkState {
+export interface StudentMarkState {
   mark: number,
   message: string
 }

@@ -1,4 +1,4 @@
-interface Func<T> {
+export interface Func<T> {
     ([...args]: any): T;
 }
 

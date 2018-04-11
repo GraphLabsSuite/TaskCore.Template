@@ -1,7 +1,7 @@
 {
   "name": "graphlabs.core.template",
   "description": "Task template for GraphLabs web project",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "GraphLabs",
   "keywords": [
     "graphlabs",
@@ -15,7 +15,8 @@
     "type": "git",
     "url": "https://github.com/eakarpov/GraphLabsSuite.Core.Template.git"
   },
-  "main": "./src/export.ts",
+  "main": "./build/export.js",
+  "types": "./build/export.d.ts",
   "dependencies": {
     "bootstrap": "^3.3.7",
     "bootstrap-sass": "^3.3.7",

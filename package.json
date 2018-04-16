@@ -1,7 +1,7 @@
 {
   "name": "graphlabs.core.template",
   "description": "Task template for GraphLabs web project",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "author": "GraphLabs",
   "keywords": [
     "graphlabs",
@@ -15,8 +15,8 @@
     "type": "git",
     "url": "https://github.com/eakarpov/GraphLabsSuite.Core.Template.git"
   },
-  "main": "./build/export.js",
-  "types": "./build/export.d.ts",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
   "dependencies": {
     "bootstrap": "^3.3.7",
     "bootstrap-sass": "^3.3.7",
@@ -29,7 +29,10 @@
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "classnames": "^2.2.5",
+    "cssnano": "^3.10.0",
+    "node-sass": "^4.5.3"
   },
   "devDependencies": {
     "@types/d3": "^4.10.0",
@@ -45,14 +48,11 @@
     "@types/webpack-hot-middleware": "^2.15.0",
     "awesome-typescript-loader": "^3.2.2",
     "bootstrap-loader": "^2.1.0",
-    "classnames": "^2.2.5",
     "css-loader": "^0.28.4",
-    "cssnano": "^3.10.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "html-webpack-plugin": "^2.30.1",
     "imports-loader": "^0.7.1",
-    "node-sass": "^4.5.3",
     "optimize-css-assets-webpack-plugin": "^3.0.0",
     "react-hot-loader": "^3.0.0-beta.7",
     "redux-devtools-extension": "^2.13.2",

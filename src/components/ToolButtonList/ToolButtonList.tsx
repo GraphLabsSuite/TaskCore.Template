@@ -3,7 +3,7 @@ import { addAction, IStudentAction } from "graphlabs.core.notifier";
 import { connect, Dispatch } from "react-redux";
 
 import { ToolButton } from "../ToolButton/ToolButton";
-import * as style from "./ToolButtonList.scss";
+import * as style from "../../styles/ToolButtonList.scss";
 import { RootState } from "../../redux/rootReducer";
 import { Action } from "redux";
 

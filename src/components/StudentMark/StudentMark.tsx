@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as styles from "./StudentMark.scss";
+import * as styles from "../../styles/StudentMark.scss";
 
 export interface StudentMarkProperties {
 }

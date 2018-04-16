@@ -3,7 +3,7 @@ import { addAction, IStudentAction } from "graphlabs.core.notifier";
 import { connect, Dispatch } from "react-redux";
 
 import { RootState } from "../../redux/rootReducer";
-import * as styles from "./TaskConsole.scss";
+import * as styles from "../../styles/TaskConsole.scss";
 
 
 

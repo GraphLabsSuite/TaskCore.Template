@@ -8,7 +8,7 @@ import {connect, DispatchProp} from "react-redux";
 
 import { StudentMark } from "../StudentMark/StudentMark";
 import { actionsCreators } from "../../redux/graph/actions";
-import * as style from "./TaskTemplate.scss";
+import * as style from "../../styles/TaskTemplate.scss";
 import {RootState} from "../../redux/rootReducer";
 import {Dispatch} from "redux";
 

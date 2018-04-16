@@ -1,7 +1,7 @@
 import * as React from "react";
 import ToolButtonList from "../ToolButtonList/ToolButtonList";
 
-import * as style from "./TaskToolbar.scss";
+import * as style from "../../styles/TaskToolbar.scss";
 
 export interface TaskToolbarProperties {
 }

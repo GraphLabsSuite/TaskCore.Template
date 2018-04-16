@@ -2,7 +2,7 @@ import * as React from "react";
 import {select} from "d3-selection";
 import * as d3 from "d3";
 
-import * as styles from "./CommonGraphAdapter.scss";
+import * as styles from "../styles/CommonGraphAdapter.scss";
 import {RootState} from "../redux/rootReducer";
 import {connect} from "react-redux";
 import {returnType} from "../utils/typeUtils";

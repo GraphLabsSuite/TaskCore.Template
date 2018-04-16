@@ -1,7 +1,7 @@
 {
   "name": "graphlabs.core.template",
   "description": "Task template for GraphLabs web project",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "GraphLabs",
   "keywords": [
     "graphlabs",
@@ -70,6 +70,6 @@
     "start_dev": "set BOOTSTRAPRC_LOCATION=.bootstraprc&&node server.js",
     "start_prod": "set BOOTSTRAPRC_LOCATION=.bootstraprc&&set NODE_ENV=production&&node server.js",
     "start": "npm run start_dev",
-    "build": "tsc"
+    "build": "webpack --config webpack.config.js --hide-modules"
   }
 }

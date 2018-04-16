@@ -1,23 +1,19 @@
 const path = require('path');
 const webpack = require('webpack');
-const cssnano = require('cssnano');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const bootstrapEntryPoints = require('./webpack.bootstrap.config.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-
-const bootstrapEntryPoints = require('./webpack.bootstrap.config');
 
 module.exports = {
   entry: {
     bundle: [
-      bootstrapEntryPoints.prod,
+      bootstrapEntryPoints.dev,
       path.join(__dirname, './src/root.tsx')
     ]
   },
   output: {
-    path: path.join(__dirname, './public'),
-    filename: "bundle.min.js",
-    publicPath: "/"
+    path: path.join(__dirname, './build'),
+    filename: "[name].js",
+    publicPath: "/",
   },
   resolve: {
     extensions: ["*", ".ts", ".tsx", ".js", ".jsx"]
@@ -28,13 +24,15 @@ module.exports = {
       {
         test: /\.(ts|tsx)$/,
         use: [
+          "react-hot-loader/webpack",
           "awesome-typescript-loader"
         ]
       },
       {
         enforce: "pre",
         test: /\.js$/,
-        loader: "source-map-loader"
+        loader: "source-map-loader",
+        exclude: [/node_modules/, /build/]
       },
       {
         test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
@@ -42,11 +40,21 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          // use style-loader in development
-          fallback: "style-loader",
-          use: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]!sass-loader'
-        })
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 1,
+              localIdentName: '[name]__[local]___[hash:base64:5]'
+            },
+          },
+          {
+            loader: 'sass-loader'
+          }]
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -59,24 +67,10 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
-    }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
-    }),
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
-    new ExtractTextPlugin({
-      filename: 'styles.css',
-      allChunks: true
-    }),
-    new OptimizeCSSAssetsPlugin({
-      cssProcessor: cssnano,
-      cssProcessorOptions: { discardComments: {removeAll: true } },
     }),
     new HtmlWebpackPlugin({
       title: 'Title',

@@ -9,7 +9,7 @@ module.exports = {
       'webpack-hot-middleware/client',
       'react-hot-loader/patch',
       bootstrapEntryPoints.dev,
-      path.join(__dirname, './src/index.tsx')
+      path.join(__dirname, './src/root.tsx')
     ]
   },
   output: {

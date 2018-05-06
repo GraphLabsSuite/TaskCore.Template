@@ -1,4 +1,4 @@
-import { postData } from "../utils/httpService";
+import { postData } from '../utils/httpService';
 
 export const loggingService = store => next => action => {
     const taskId = 123; // Long

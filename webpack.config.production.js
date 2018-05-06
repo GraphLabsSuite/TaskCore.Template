@@ -5,12 +5,9 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-const bootstrapEntryPoints = require('./webpack.bootstrap.config');
-
 module.exports = {
   entry: {
     bundle: [
-      bootstrapEntryPoints.prod,
       path.join(__dirname, './src/root.tsx')
     ]
   },
@@ -37,15 +34,11 @@ module.exports = {
         loader: "source-map-loader"
       },
       {
-        test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
-        loader: 'imports-loader?jQuery=jquery'
-      },
-      {
-        test: /\.scss$/,
+        test: /\.css$/,
         use: ExtractTextPlugin.extract({
           // use style-loader in development
           fallback: "style-loader",
-          use: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]!sass-loader'
+          use: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]'
         })
       },
       {

@@ -1,8 +1,8 @@
 // We use generic inference.
-import * as React from "react";
-import {RootState} from "../redux/rootReducer";
-import {Dispatch} from "redux";
-import { connect } from "react-redux";
+import * as React from 'react';
+import { RootState } from '../redux/rootReducer';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 export function typedConnect<OwnProps, StateProps, DispatchProps>(
   // And "capture" the return of mapStateToProps
   mapStateToProps: (state: RootState, ownProps: OwnProps) => StateProps,
@@ -15,5 +15,5 @@ export function typedConnect<OwnProps, StateProps, DispatchProps>(
     // Finally, we double assert the real connect to let us do anything we want.
     // And export a component that only takes OwnProps.
     return connect(mapStateToProps, mapDispatchToProps as any)(component) as any as React.StatelessComponent<OwnProps>;
-  }
+  };
 }

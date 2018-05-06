@@ -1,4 +1,4 @@
-import {ICounter, ICounterAction} from "../../models/counter";
+import { ICounter, ICounterAction } from '../../models/counter';
 
 /** Action Types */
 export const INCREMENT: string = 'counter/INCREMENT';
@@ -11,7 +11,7 @@ const initialState: ICounter = {
 export type State = {
 };
 
-export function counterReducer(state = initialState, action?: ICounterAction) {
+export function counterReducer(state: ICounter = initialState, action: ICounterAction) {
   switch (action.type) {
     case INCREMENT:
       return {

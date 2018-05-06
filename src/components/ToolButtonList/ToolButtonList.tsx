@@ -1,54 +1,57 @@
-import * as React from "react";
-import { addAction, IStudentAction } from "graphlabs.core.notifier";
-import { connect, Dispatch } from "react-redux";
+import * as React from 'react';
+import { addAction, IStudentAction } from 'graphlabs.core.notifier';
+import { connect, Dispatch } from 'react-redux';
 
-import { ToolButton } from "../ToolButton/ToolButton";
-import * as style from "../../styles/ToolButtonList.scss";
-import { RootState } from "../../redux/rootReducer";
-import { Action } from "redux";
+import { ToolButton } from '../ToolButton/ToolButton';
+import { RootState } from '../../redux/rootReducer';
+import { Action } from 'redux';
+import {default as styled } from 'styled-components';
 
-interface ToolButtonListProperties {
+export interface ToolButtonListProperties {
     addAction: (payload: IStudentAction) => Promise<Action>;
 }
 
-interface ToolButtonListState extends React.ComponentState {
-}
+const ButtonList = styled.div`
+  {
+    display: block;
+  }
+`;
 
-class ToolButtonList extends React.Component<ToolButtonListProperties, ToolButtonListState> {
+class ToolButtonList extends React.Component<ToolButtonListProperties> {
 
-    //TODO: Add normal types to these variables (maybe Dictionary)
+    // TODO: Add normal types to these variables (maybe Dictionary)
     public toolButtons: Object;
 
     componentWillMount() {
         this.toolButtons = {};
     }
 
-    public constructor(props: ToolButtonListProperties) {
-        super();
+    render() {
+        return this.getList();
     }
 
     private setDefaultButtonList() {
         let list = {};
-        list["/images/Help.png"] = () => {
+        list['/images/Help.png'] = () => {
             this.props.addAction({
-                message: "Help required",
+                message: 'Help required',
                 fee: 0,
                 datetime: Date.now().toLocaleString()
-            })
+            });
         };
-        list["/images/Complete.png"] = () => {
+        list['/images/Complete.png'] = () => {
             this.props.addAction({
-                message: "Task is complete",
+                message: 'Task is complete',
                 fee: 0,
                 datetime: Date.now().toLocaleString()
-            })
+            });
         };
-        list["/images/DontTouch.png"] = () => {
+        list['/images/DontTouch.png'] = () => {
             this.props.addAction({
-                message: "DON'T TOUCH",
+                message: 'DON\'T TOUCH',
                 fee: 1,
                 datetime: Date.now().toLocaleString()
-            })
+            });
         };
         return list;
     }
@@ -56,25 +59,22 @@ class ToolButtonList extends React.Component<ToolButtonListProperties, ToolButto
     private getList() {
         const result = [];
         const defaultList = this.setDefaultButtonList();
-        for (const key in defaultList) result.push(<div key={key}><ToolButton path={key} listener={defaultList[key]} /></div>);
-        for (const key in this.toolButtons) result.push(<ToolButton key={key} path={key} listener={this.toolButtons[key]} />);
-        return <div className={style.ButtonList}>{result}</div>;
-    }
-
-    render() {
-        return this.getList();
+        for (const key in defaultList) {
+          if (defaultList.hasOwnProperty(key)) {
+            result.push(<div key={key}><ToolButton path={key} listener={defaultList[key]}/></div>);
+          }
+        }
+        for (const key in this.toolButtons) {
+            if (this.toolButtons.hasOwnProperty(key)) {
+                result.push(<ToolButton key={key} path={key} listener={this.toolButtons[key]} />);
+            }
+        }
+        return <ButtonList>{result}</ButtonList>;
     }
 }
 
-const mapStateToProps = (state: RootState): {} => {
-    return {
-    };
-};
+const mapDispatchToProps = (dispatch: Dispatch<RootState>) => ({
+  addAction: payload => addAction(payload).then(res => dispatch(res))
+});
 
-const mapDispatchToProps = (dispatch: Dispatch<RootState>) => {
-    return {
-        addAction: payload => addAction(payload).then(res => dispatch(res))
-    };
-};
-
-export default connect<ToolButtonListState, ToolButtonListProperties, {}>(mapStateToProps, mapDispatchToProps)(ToolButtonList);
+export default connect<{}, ToolButtonListProperties>(null, mapDispatchToProps)(ToolButtonList);

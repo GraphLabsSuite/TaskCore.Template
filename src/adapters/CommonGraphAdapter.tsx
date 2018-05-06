@@ -1,33 +1,27 @@
-import * as React from "react";
-import {select} from "d3-selection";
-import * as d3 from "d3";
+import * as React from 'react';
+import { select } from 'd3-selection';
+import * as d3 from 'd3';
 
-import * as styles from "../styles/CommonGraphAdapter.scss";
-import {RootState} from "../redux/rootReducer";
-import {connect} from "react-redux";
-import {returnType} from "../utils/typeUtils";
-import {GraphSerializer, IEdge, IGraph, IVertex} from "graphlabs.core.graphs";
-import {CircleGraphVisualizer} from "graphlabs.core.visualizer/build/visualizers/CircleGraphVisualizer";
+import { RootState } from '../redux/rootReducer';
+import { connect } from 'react-redux';
+import { GraphSerializer, IEdge, IGraph, IVertex } from 'graphlabs.core.graphs';
+import { CircleGraphVisualizer } from 'graphlabs.core.visualizer/build/visualizers/CircleGraphVisualizer';
 
-import {graphSerializer} from "../utils/serializers";
-import {findDOMNode} from "react-dom";
-import {Point} from "graphlabs.core.visualizer";
+import { graphSerializer } from '../utils/serializers';
+import {IGraphView} from "../models/graph";
 
 export interface CommonGraphAdapterOwnProps {
+  className?: string;
 }
 
 export interface CommonGraphAdapterState extends React.ComponentState {
   events: Event[];
 }
 
-const mapStateToProps = (state: RootState) => {
-    return {
-        graph: state.graph
-    };
-};
+export interface CommonGraphAdapterStateProps {
+  graph: IGraphView,
+}
 
-const stateGeneric = returnType(mapStateToProps);
-type CommonGraphAdapterStateProps = typeof stateGeneric;
 type CommonGraphAdapterProps = CommonGraphAdapterStateProps & CommonGraphAdapterOwnProps;
 
 class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, CommonGraphAdapterState> {
@@ -36,11 +30,13 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
   graphVisualizer: CircleGraphVisualizer;
 
   protected clickEdge() {
-    console.log("Edge clicked!");
+    // tslint:disable-next-line no-console
+    console.log('Edge clicked!');
   }
 
   protected clickVertex() {
-      console.log("Vertex clicked!");
+    // tslint:disable-next-line no-console
+    console.log('Vertex clicked!');
   }
 
   renderSvg() {
@@ -48,60 +44,72 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
       this.graphVisualizer.height = this.ref.clientHeight;
       this.graphVisualizer.calculate();
       for (const elem of this.graphVisualizer.geometric.edges) {
-          const data = [{x:elem.outPoint.X, y:elem.outPoint.Y}, {x:elem.inPoint.X, y:elem.inPoint.Y}];
-          select(this.ref)
-              .append("line")
-              .attr("id", `edge_${elem.edge.vertexOne.name}_${elem.edge.vertexTwo.name}`)
-      .attr("out", elem.edge.vertexOne.name)
-              .attr("in", elem.edge.vertexTwo.name)
-              .attr("x1", data[0].x)
-              .attr("x2", data[1].x)
-              .attr("y1", data[0].y)
-              .attr("y2", data[1].y)
-              .classed(styles.link, true)
-              .on("click", this.clickEdge.bind(this));
+        const data = [{x: elem.outPoint.X, y: elem.outPoint.Y}, {x: elem.inPoint.X, y: elem.inPoint.Y}];
+        select(this.ref)
+          .append('line')
+          .attr('id', `edge_${elem.edge.vertexOne.name}_${elem.edge.vertexTwo.name}`)
+      .attr('out', elem.edge.vertexOne.name)
+        .attr('in', elem.edge.vertexTwo.name)
+        .attr('x1', data[0].x)
+        .attr('x2', data[1].x)
+        .attr('y1', data[0].y)
+        .attr('y2', data[1].y)
+        .style('stroke', 'black')
+        .style('stroke-width', 5)
+        .style('fill', 'none')
+        .on('click', this.clickEdge.bind(this));
       }
       for (const elem of this.graphVisualizer.geometric.vertices) {
-          select(this.ref)
-              .append('circle')
-              .attr('id', `vertex_${elem.label}`)
+        select(this.ref)
+          .append('circle')
+          .attr('id', `vertex_${elem.label}`)
       .attr('cx', elem.center.X)
-              .attr('cy', elem.center.Y)
-              .attr('r', elem.radius)
-              .classed(styles.vertex, true)
-              .classed("dragging", true)
-              .call(d3.drag().on("start", startDrag))
-              .on("click", this.clickVertex.bind(this));
-          select(this.ref)
-              .append("text")
-              .attr("id", `label_${elem.label}`)
-      .attr("x", elem.center.X)
-              .attr("y", elem.center.Y + elem.radius / 4)
-              .attr('font-size', elem.radius)
-              .text(elem.label)
-              .classed(styles.vertexLabel, true)
+        .attr('cy', elem.center.Y)
+        .attr('r', elem.radius)
+        .style('fill', '#eee')
+        .style('stroke', '#000')
+        .style('stroke-width', 5)
+        .classed('dragging', true)
+        .call(d3.drag().on('start', startDrag))
+        .on('click', this.clickVertex.bind(this));
+      select(this.ref)
+        .append('text')
+        .attr('id', `label_${elem.label}`)
+        .attr('x', elem.center.X)
+        .attr('y', elem.center.Y + elem.radius / 4)
+        .attr('font-size', elem.radius)
+        .text(elem.label)
+        .style('fill', '#000')
+        .style('font-family', 'sans-serif')
+        .style('text-anchor', 'middle')
+        .style('padding-top', '50%')
+        .style('user-select', 'none')
+        .style('pointer-events', 'none')
       }
 
       function startDrag() {
-          const circle = d3.select(this).classed("dragging", true);
-          d3.event.on("drag", dragged).on("end", ended);
-          function dragged(d) {
+          const circle = d3.select(this).classed('dragging', true);
+          d3.event.on('drag', dragged).on('end', ended);
+          function dragged(d: any) {
               // if (d3.event.x < referrer.clientWidth - radius
               //     && d3.event.x > radius && d3.event.y < referrer.clientHeight - radius && d3.event.y > radius) {
-              circle.raise().attr("cx", d3.event.x).attr("cy", d3.event.y);
-              const name = circle.attr("id");
+              circle.raise().attr('cx', d3.event.x).attr('cy', d3.event.y);
+              const name = circle.attr('id');
               const _id = name.substring(7);
-              select(`#label_${_id}`).raise().attr("x", d3.event.x).attr("y", d3.event.y + +circle.attr('r') / 4);
-              d3.selectAll('line').each(function (l, li) {
-                  if (`vertex_${d3.select(this).attr("out")}` == name) {
+              select(`#label_${_id}`)
+                .raise()
+                .attr('x', d3.event.x)
+                .attr('y', d3.event.y + +circle.attr('r') / 4);
+              d3.selectAll('line').each(function (l: any, li: any) {
+                  if (`vertex_${d3.select(this).attr('out')}` === name) {
                       select(this)
-                          .attr("x1", d3.event.x)
-                          .attr("y1", d3.event.y);
+                          .attr('x1', d3.event.x)
+                          .attr('y1', d3.event.y);
                   }
-                  if (`vertex_${d3.select(this).attr("in")}` == name) {
+                  if (`vertex_${d3.select(this).attr('in')}` === name) {
                       select(this)
-                          .attr("x2", d3.event.x)
-                          .attr("y2", d3.event.y);
+                          .attr('x2', d3.event.x)
+                          .attr('y2', d3.event.y);
                   }
               });
               // } else {
@@ -110,7 +118,7 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
           }
 
           function ended() {
-              circle.classed("dragging", false);
+              circle.classed('dragging', false);
           }
       }
   }
@@ -125,15 +133,15 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
               .attr('cy', elem.center.Y)
               .attr('fill', 'black')
               .attr('r', elem.radius);
-          select(`#label_${elem.label}`).raise().attr("x", elem.center.X).attr("y", elem.center.Y);
+          select(`#label_${elem.label}`).raise().attr('x', elem.center.X).attr('y', elem.center.Y);
       }
 
       for (const elem of this.graphVisualizer.geometric.edges) {
           select(`#edge_${elem.edge.vertexOne.name}_${elem.edge.vertexTwo.name}`)
-              .attr("x1", elem.outPoint.X)
-              .attr("x2", elem.inPoint.X)
-              .attr("y1", elem.outPoint.Y)
-              .attr("y2", elem.inPoint.Y);
+              .attr('x1', elem.outPoint.X)
+              .attr('x2', elem.inPoint.X)
+              .attr('y1', elem.outPoint.Y)
+              .attr('y2', elem.inPoint.Y);
       }
   }
 
@@ -145,8 +153,8 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
       window.onresize = this.updateSvg.bind(this);
   }
 
-  constructor() {
-    super();
+  constructor(props: CommonGraphAdapterProps) {
+    super(props);
     this.state = {
       events: []
     };
@@ -154,16 +162,22 @@ class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, Common
   }
 
   updateGraph() {
-      console.log("Here I am!");
+    // tslint:disable-next-line no-console
+    console.log('Here I am!');
   }
 
-    render() {
-    return <svg
-      className={styles.svg}
-      ref={(ref: SVGSVGElement) => this.ref = ref}
-    >
-    </svg>;
+  render() {
+    return (
+      <svg
+        style={{ width: '100%', height: '100%' }}
+        ref={(ref: SVGSVGElement) => this.ref = ref}
+      />);
   }
 }
 
-export default connect<CommonGraphAdapterStateProps, {}, CommonGraphAdapterOwnProps>(mapStateToProps)(CommonGraphAdapter);
+const mapStateToProps = (state: RootState) => ({
+  graph: state.graph
+});
+
+export default connect<CommonGraphAdapterStateProps>(mapStateToProps)
+  (CommonGraphAdapter);

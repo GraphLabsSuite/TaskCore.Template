@@ -1,10 +1,11 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import {AppContainer} from "react-hot-loader";
-import {Provider} from "react-redux";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
+import { Provider } from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.css';
 
-import {configureStore} from "./redux/store";
-import TaskTemplate from "./components/TaskTemplate/TaskTemplate";
+import { configureStore } from './redux/store';
+import TaskTemplate from './components/TaskTemplate/TaskTemplate';
 
 const store = configureStore();
 
@@ -15,7 +16,7 @@ const updateRender = () => {
         <TaskTemplate />
       </Provider>
     </AppContainer>,
-    document.getElementById("root"),
+    document.getElementById('root'),
   );
 };
 

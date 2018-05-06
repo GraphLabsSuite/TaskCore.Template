@@ -1,14 +1,7 @@
-import * as React from "react";
-import CommonGraphAdapter from "../../adapters/CommonGraphAdapter";
+import * as React from 'react';
+import CommonGraphAdapter from '../../adapters/CommonGraphAdapter';
 
-export interface GraphVisualizerProperties {
-}
-
-export class GraphVisualizer extends React.Component<GraphVisualizerProperties, React.ComponentState> {
-
-  public constructor() {
-    super();
-  }
+export class GraphVisualizer extends React.Component {
 
   public render() {
     return <CommonGraphAdapter />;

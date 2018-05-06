@@ -1,7 +1,6 @@
 import * as React from 'react';
-import * as styles from '../../styles/styles.css';
 import {default as styled, StyledFunction } from 'styled-components';
-import { HTMLProps, ReactNode } from 'react';
+import { HTMLProps } from 'react';
 
 export interface StudentMarkProperties {
 }

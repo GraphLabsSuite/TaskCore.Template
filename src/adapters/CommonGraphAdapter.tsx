@@ -24,7 +24,7 @@ export interface CommonGraphAdapterStateProps {
 
 type CommonGraphAdapterProps = CommonGraphAdapterStateProps & CommonGraphAdapterOwnProps;
 
-class CommonGraphAdapter extends React.Component<CommonGraphAdapterProps, CommonGraphAdapterState> {
+class CommonGraphAdapterClass extends React.Component<CommonGraphAdapterProps, CommonGraphAdapterState> {
 
   ref: SVGSVGElement;
   graphVisualizer: CircleGraphVisualizer;
@@ -179,5 +179,5 @@ const mapStateToProps = (state: RootState) => ({
   graph: state.graph
 });
 
-export default connect<CommonGraphAdapterStateProps>(mapStateToProps)
-  (CommonGraphAdapter);
+export const CommonGraphAdapter = connect<CommonGraphAdapterStateProps>(mapStateToProps)
+  (CommonGraphAdapterClass);

@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import { configureStore } from './redux/store';
-import TaskTemplate from './components/TaskTemplate/TaskTemplate';
+import { TaskTemplate } from './components/TaskTemplate/TaskTemplate';
 
 const store = configureStore();
 

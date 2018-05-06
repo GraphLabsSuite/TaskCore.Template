@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ToolButtonList from '../ToolButtonList/ToolButtonList';
+import { ToolButtonList } from '../ToolButtonList/ToolButtonList';
 
 import {default as styled } from 'styled-components';
 

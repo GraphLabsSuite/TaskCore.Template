@@ -1,5 +1,5 @@
 import * as React from 'react';
-import CommonGraphAdapter from '../../adapters/CommonGraphAdapter';
+import { CommonGraphAdapter } from '../../adapters/CommonGraphAdapter';
 
 export class GraphVisualizer extends React.Component {
 

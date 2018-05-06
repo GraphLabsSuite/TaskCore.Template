@@ -1,18 +1,17 @@
 import * as React from 'react';
 import { GraphVisualizer } from '../GraphVisualizer/GraphVisualizer';
 import { TaskToolbar } from '../TaskToolbar/TaskToolbar';
-import TaskConsole from '../TaskConsole/TaskConsole';
+import { TaskConsole } from '../TaskConsole/TaskConsole';
 import { GraphGenerator, IGraph, IVertex, IEdge } from 'graphlabs.core.graphs';
-import * as classnames from 'classnames';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 
 import { StudentMark } from '../StudentMark/StudentMark';
 import { actionsCreators } from '../../redux/graph/actions';
-import * as style from '../../styles/styles.css';
 import { RootState } from '../../redux/rootReducer';
 import { Dispatch } from 'redux';
 import {default as styled, StyledFunction } from 'styled-components';
 import { HTMLProps } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
 
 export interface AppProperties {
   addVertex: (name: string) => void;
@@ -106,7 +105,7 @@ const MainRow = styled.div`
   }
 `;
 
-class TaskTemplate extends React.Component<AppProperties, AppState> {
+class TaskTemplateClass extends React.Component<AppProperties, AppState> {
 
   componentWillMount() {
     const graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(5);
@@ -155,4 +154,4 @@ const mapDispatchToProps = (dispatch: Dispatch<RootState>): AppProperties => {
   };
 };
 
-export default connect<AppState, AppProperties, {}>(mapStateToProps, mapDispatchToProps)(TaskTemplate);
+export const TaskTemplate = connect<AppState, AppProperties, {}>(mapStateToProps, mapDispatchToProps)(TaskTemplateClass);

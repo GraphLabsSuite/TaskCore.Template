@@ -17,7 +17,7 @@ const Console = styled.div`
   }
 `;
 
-class TaskConsole extends Component<TaskConsoleProperties> {
+class TaskConsoleClass extends Component<TaskConsoleProperties> {
     public constructor(props: TaskConsoleProperties) {
         super(props);
     }
@@ -45,5 +45,5 @@ const mapStateToProps = (state: RootState) => ({
     actions: state.notifier.studentActions
 });
 
-export default connect<TaskConsoleProperties>(mapStateToProps)
-    (TaskConsole);
+export const TaskConsole = connect<TaskConsoleProperties>(mapStateToProps)
+    (TaskConsoleClass);

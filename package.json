@@ -1,7 +1,7 @@
 {
   "name": "graphlabs.core.template",
   "description": "Task template for GraphLabs web project",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "author": "GraphLabs",
   "keywords": [
     "graphlabs",

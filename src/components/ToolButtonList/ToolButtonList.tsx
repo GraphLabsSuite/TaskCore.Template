@@ -17,7 +17,7 @@ const ButtonList = styled.div`
   }
 `;
 
-class ToolButtonList extends React.Component<ToolButtonListProperties> {
+class ToolButtonListClass extends React.Component<ToolButtonListProperties> {
 
     // TODO: Add normal types to these variables (maybe Dictionary)
     public toolButtons: Object;
@@ -77,4 +77,4 @@ const mapDispatchToProps = (dispatch: Dispatch<RootState>) => ({
   addAction: payload => addAction(payload).then(res => dispatch(res))
 });
 
-export default connect<{}, ToolButtonListProperties>(null, mapDispatchToProps)(ToolButtonList);
+export const ToolButtonList = connect<{}, ToolButtonListProperties>(null, mapDispatchToProps)(ToolButtonListClass);

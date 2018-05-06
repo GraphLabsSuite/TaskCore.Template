@@ -3,22 +3,16 @@ import { GraphVisualizer } from '../GraphVisualizer/GraphVisualizer';
 import { TaskToolbar } from '../TaskToolbar/TaskToolbar';
 import { TaskConsole } from '../TaskConsole/TaskConsole';
 import { GraphGenerator, IGraph, IVertex, IEdge } from 'graphlabs.core.graphs';
-import { connect } from 'react-redux';
+const connect = require('react-redux');
 
 import { StudentMark } from '../StudentMark/StudentMark';
 import { actionsCreators } from '../../redux/graph/actions';
 import { RootState } from '../../redux/rootReducer';
 import { Dispatch } from 'redux';
 import {default as styled, StyledFunction } from 'styled-components';
-import {HTMLProps, ReactNode, SFC} from 'react';
+import {HTMLProps, SFC} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-
-export interface AppProperties {
-  addVertex: (name: string) => void;
-  addEdge: (one: string, two: string) => void;
-}
-
-export interface AppState extends React.ComponentState {}
+import {store} from "../../";
 
 const BorderedDiv = styled.div`
   {
@@ -105,17 +99,22 @@ const MainRow = styled.div`
   }
 `;
 
-class TaskTemplateClass extends React.Component<AppProperties, AppState> {
+export class TaskTemplate extends React.Component {
 
   componentWillMount() {
     const graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(5);
-    graph.vertices.forEach(v => this.props.addVertex(v.name));
-    graph.edges.forEach(e => this.props.addEdge(e.vertexOne.name, e.vertexTwo.name));
+    graph.vertices.forEach(v => this.dispatch(actionsCreators.addVertex(v.name)));
+    graph.edges.forEach(e => this.dispatch(actionsCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
   }
 
-  public constructor(props: AppProperties) {
+  public constructor(props: any) {
     super(props);
     this.task = this.task.bind(this);
+  }
+
+  private dispatch(action) {
+    store.dispatch(action);
+    return void 0;
   }
 
   protected task(): SFC<{}> {
@@ -123,7 +122,7 @@ class TaskTemplateClass extends React.Component<AppProperties, AppState> {
   }
 
   render() {
-    const Task = this.task();
+    const Task: any = this.task();
     return (
       <App id="wrap">
         <MainRow>
@@ -148,17 +147,3 @@ class TaskTemplateClass extends React.Component<AppProperties, AppState> {
     );
   }
 }
-
-const mapStateToProps = (state: RootState): {}  => {
-  return {
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch<RootState>): AppProperties => {
-  return {
-    addVertex: (name: string) => dispatch(actionsCreators.addVertex(name)),
-    addEdge: (one: string, two: string) => dispatch(actionsCreators.addEdge(one, two))
-  };
-};
-
-export const TaskTemplate = connect<AppState, AppProperties, {}>(mapStateToProps, mapDispatchToProps)(TaskTemplateClass);

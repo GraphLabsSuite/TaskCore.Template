@@ -25,3 +25,5 @@ export function configureStore(initialState?: IStore): Store<IStore> {
 
   return store;
 }
+
+export const store = configureStore();

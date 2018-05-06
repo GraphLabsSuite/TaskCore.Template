@@ -6,3 +6,5 @@ export * from './components/TaskConsole/TaskConsole';
 export * from './components/TaskToolbar/TaskToolbar';
 export * from './components/ToolButton/ToolButton';
 export * from './components/ToolButtonList/ToolButtonList';
+export * from './redux/store';
+export * from './redux/rootReducer';

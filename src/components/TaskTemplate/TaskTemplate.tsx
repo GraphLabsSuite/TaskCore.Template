@@ -10,7 +10,7 @@ import { actionsCreators } from '../../redux/graph/actions';
 import { RootState } from '../../redux/rootReducer';
 import { Dispatch } from 'redux';
 import {default as styled, StyledFunction } from 'styled-components';
-import { HTMLProps } from 'react';
+import {HTMLProps, ReactNode, SFC} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export interface AppProperties {
@@ -115,9 +115,15 @@ class TaskTemplateClass extends React.Component<AppProperties, AppState> {
 
   public constructor(props: AppProperties) {
     super(props);
+    this.task = this.task.bind(this);
+  }
+
+  protected task(): SFC<{}> {
+    return () => <p>Это пустой компонент задания</p>;
   }
 
   render() {
+    const Task = this.task();
     return (
       <App id="wrap">
         <MainRow>
@@ -126,6 +132,7 @@ class TaskTemplateClass extends React.Component<AppProperties, AppState> {
           </GraphCell>
           <TaskCell>
             Задание
+            <Task />
           </TaskCell>
           <ToolCell>
             <TaskToolbar/>

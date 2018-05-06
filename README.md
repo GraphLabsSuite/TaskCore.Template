@@ -15,9 +15,10 @@ Task template for graphlabs web project
 
 ### Extend the template
 
-1. create-react-app my-app —scripts-version=react-scripts-ts
-2. cp images ./public/images // тут пока не понял как автоматизировать
-3. npm i —save redux react-redux
+1. initialize your repository
+`create-react-app my-app —scripts-version=react-scripts-ts`
+2. add to `public/images` folder default images
+3. install redux store `npm i —save redux react-redux`
 4. add store to your appliction:
 
 ```javascript

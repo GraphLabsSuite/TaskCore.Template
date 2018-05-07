@@ -3,14 +3,10 @@ import { GraphVisualizer } from '../GraphVisualizer/GraphVisualizer';
 import { TaskToolbar } from '../TaskToolbar/TaskToolbar';
 import { TaskConsole } from '../TaskConsole/TaskConsole';
 import { GraphGenerator, IGraph, IVertex, IEdge } from 'graphlabs.core.graphs';
-const connect = require('react-redux');
-
 import { StudentMark } from '../StudentMark/StudentMark';
 import { actionsCreators } from '../../redux/graph/actions';
-import { RootState } from '../../redux/rootReducer';
-import { Dispatch } from 'redux';
 import {default as styled, StyledFunction } from 'styled-components';
-import {HTMLProps, SFC} from 'react';
+import {Component, HTMLProps, SFC} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import {store} from "../../";
 
@@ -99,7 +95,7 @@ const MainRow = styled.div`
   }
 `;
 
-export class TaskTemplate extends React.Component {
+export class TaskTemplate extends Component {
 
   componentWillMount() {
     const graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(5);

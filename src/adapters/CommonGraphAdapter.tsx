@@ -3,31 +3,39 @@ import { select } from 'd3-selection';
 import * as d3 from 'd3';
 
 import { RootState } from '../redux/rootReducer';
-import { connect } from 'react-redux';
 import { GraphSerializer, IEdge, IGraph, IVertex } from 'graphlabs.core.graphs';
 import { CircleGraphVisualizer } from 'graphlabs.core.visualizer/build/visualizers/CircleGraphVisualizer';
 
 import { graphSerializer } from '../utils/serializers';
+import {store} from "../redux/store";
+import {Component} from "react";
 import {IGraphView} from "../models/graph";
 
-export interface CommonGraphAdapterOwnProps {
+export interface CGAProps {
   className?: string;
 }
 
-export interface CommonGraphAdapterState extends React.ComponentState {
+export interface State {
   events: Event[];
 }
 
-export interface CommonGraphAdapterStateProps {
-  graph: IGraphView,
-}
-
-type CommonGraphAdapterProps = CommonGraphAdapterStateProps & CommonGraphAdapterOwnProps;
-
-class CommonGraphAdapterClass extends React.Component<CommonGraphAdapterProps, CommonGraphAdapterState> {
+export class CommonGraphAdapter extends Component<CGAProps, State> {
 
   ref: SVGSVGElement;
   graphVisualizer: CircleGraphVisualizer;
+
+  private _graph: IGraphView;
+  get graph(): IGraphView {
+    const state: RootState = store.getState();
+    store.subscribe(() => {
+      if (this.graph !== store.getState().graph) {
+        this._graph = store.getState().graph;
+        this.forceUpdate();
+      }
+    });
+    this._graph = {...state.graph};
+    return this._graph;
+  }
 
   protected clickEdge() {
     // tslint:disable-next-line no-console
@@ -146,14 +154,14 @@ class CommonGraphAdapterClass extends React.Component<CommonGraphAdapterProps, C
   }
 
   componentDidMount() {
-      const graphInString: string = graphSerializer(this.props.graph);
+      const graphInString: string = graphSerializer(this.graph);
       const graph: IGraph<IVertex, IEdge> = GraphSerializer.deserialize(graphInString);
       this.graphVisualizer = new CircleGraphVisualizer(graph);
       this.renderSvg();
       window.onresize = this.updateSvg.bind(this);
   }
 
-  constructor(props: CommonGraphAdapterProps) {
+  constructor(props: CGAProps) {
     super(props);
     this.state = {
       events: []
@@ -174,10 +182,3 @@ class CommonGraphAdapterClass extends React.Component<CommonGraphAdapterProps, C
       />);
   }
 }
-
-const mapStateToProps = (state: RootState) => ({
-  graph: state.graph
-});
-
-export const CommonGraphAdapter = connect<CommonGraphAdapterStateProps>(mapStateToProps)
-  (CommonGraphAdapterClass);

@@ -1,15 +1,9 @@
 import * as React from 'react';
-import { addAction, IStudentAction } from 'graphlabs.core.notifier';
-import { connect, Dispatch } from 'react-redux';
-
+import {addAction, addPlainAction, IStudentAction} from 'graphlabs.core.notifier';
 import { ToolButton } from '../ToolButton/ToolButton';
-import { RootState } from '../../redux/rootReducer';
-import { Action } from 'redux';
 import {default as styled } from 'styled-components';
-
-export interface ToolButtonListProperties {
-    addAction: (payload: IStudentAction) => Promise<Action>;
-}
+import {store} from "../../redux/store";
+import {Component} from "react";
 
 const ButtonList = styled.div`
   {
@@ -17,7 +11,10 @@ const ButtonList = styled.div`
   }
 `;
 
-class ToolButtonListClass extends React.Component<ToolButtonListProperties> {
+const taskId = 1; // TODO: get it from somewhere
+const sessionGuid = 'uuid'; //TODO: get it from somewhere
+
+export class ToolButtonList extends Component {
 
     // TODO: Add normal types to these variables (maybe Dictionary)
     public toolButtons: Object;
@@ -30,27 +27,45 @@ class ToolButtonListClass extends React.Component<ToolButtonListProperties> {
         return this.getList();
     }
 
+    private dispatch(payload: IStudentAction): void {
+      if (process.env.NODE_ENV === 'production') {
+        addAction(payload).then(res => store.dispatch(res));
+      } else {
+        store.dispatch(addPlainAction(payload));
+      }
+      return void 0;
+    }
+
     private setDefaultButtonList() {
         let list = {};
         list['/images/Help.png'] = () => {
-            this.props.addAction({
-                message: 'Help required',
-                fee: 0,
-                datetime: Date.now().toLocaleString()
+            this.dispatch({
+              message: 'Help required',
+              taskId,
+              sessionGuid,
+              isTaskFinished: false,
+              fee: 0,
+              datetime: Date.now(),
             });
         };
         list['/images/Complete.png'] = () => {
-            this.props.addAction({
-                message: 'Task is complete',
-                fee: 0,
-                datetime: Date.now().toLocaleString()
+            this.dispatch({
+              message: 'Task is complete',
+              taskId,
+              sessionGuid,
+              isTaskFinished: false,
+              fee: 0,
+              datetime: Date.now(),
             });
         };
         list['/images/DontTouch.png'] = () => {
-            this.props.addAction({
-                message: 'DON\'T TOUCH',
-                fee: 1,
-                datetime: Date.now().toLocaleString()
+            this.dispatch({
+              message: 'DON\'T TOUCH',
+              taskId,
+              sessionGuid,
+              isTaskFinished: false,
+              fee: 1,
+              datetime: Date.now(),
             });
         };
         return list;
@@ -72,9 +87,3 @@ class ToolButtonListClass extends React.Component<ToolButtonListProperties> {
         return <ButtonList>{result}</ButtonList>;
     }
 }
-
-const mapDispatchToProps = (dispatch: Dispatch<RootState>) => ({
-  addAction: payload => addAction(payload).then(res => dispatch(res))
-});
-
-export const ToolButtonList = connect<{}, ToolButtonListProperties>(null, mapDispatchToProps)(ToolButtonListClass);

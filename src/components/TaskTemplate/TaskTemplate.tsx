@@ -9,6 +9,8 @@ import {default as styled, StyledFunction } from 'styled-components';
 import {Component, HTMLProps, SFC} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import {store} from "../../";
+import {Promise} from 'bluebird';
+global.Promise = Promise;
 
 const BorderedDiv = styled.div`
   {

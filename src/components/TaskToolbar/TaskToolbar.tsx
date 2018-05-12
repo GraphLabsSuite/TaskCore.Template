@@ -14,7 +14,11 @@ export class TaskToolbar extends React.Component {
     return (
       <div>
         <Title>Панель инструментов</Title>
-        <ToolButtonList />
+        {this.getButtonList()}
       </div>);
+  }
+
+  protected getButtonList() {
+    return ToolButtonList;
   }
 }

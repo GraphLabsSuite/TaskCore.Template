@@ -4,6 +4,7 @@ import { ToolButton } from '../ToolButton/ToolButton';
 import {default as styled } from 'styled-components';
 import {store} from "../../redux/store";
 import {Component} from "react";
+import {Promise} from "es6-promise";
 
 const ButtonList = styled.div`
   {
@@ -36,6 +37,10 @@ export class ToolButtonList extends Component {
       return void 0;
     }
 
+    protected beforeComplete(): Promise<any> {
+      return Promise.resolve({ success: true, fee: 0 });
+    }
+
     private setDefaultButtonList() {
         let list = {};
         list['/images/Help.png'] = () => {
@@ -49,13 +54,25 @@ export class ToolButtonList extends Component {
             });
         };
         list['/images/Complete.png'] = () => {
-            this.dispatch({
-              message: 'Task is complete',
-              taskId,
-              sessionGuid,
-              isTaskFinished: false,
-              fee: 0,
-              datetime: Date.now(),
+            this.beforeComplete().then(res => {
+              this.dispatch({
+                message: 'Task is done',
+                taskId,
+                sessionGuid,
+                isTaskFinished: false,
+                fee: res.fee,
+                datetime: Date.now(),
+              });
+              if (res.success) {
+                this.dispatch({
+                  message: 'Task is checked',
+                  taskId,
+                  sessionGuid,
+                  isTaskFinished: true,
+                  fee: res.fee,
+                  datetime: Date.now(),
+                });
+              }
             });
         };
         list['/images/DontTouch.png'] = () => {

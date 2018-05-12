@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {default as styled, StyledFunction } from 'styled-components';
 import { HTMLProps } from 'react';
+import {store} from "../../";
 
 export interface StudentMarkProperties {
 }
@@ -51,15 +52,20 @@ export class StudentMark extends React.Component<StudentMarkProperties, Partial<
   public constructor(props: StudentMarkProperties) {
     super(props);
     this.state = {
-      mark: 50,
+      mark: store.getState().notifier.score,
       message: ''
     };
+    store.subscribe(() => {
+      console.log(store.getState().notifier.score);
+      if (store.getState().notifier.score !== this.state.mark) {
+        this.setState({
+          mark: store.getState().notifier.score,
+        });
+      }
+    });
   }
 
   public render() {
-    /*for( var action : this.state.notifier.studentActions ){
-        console.log( action );
-    }*/
     const Par = this.getStyle();
     return (<StudentMarkStyle>
         <Par>{this.state.mark} {this.state.message}</Par>

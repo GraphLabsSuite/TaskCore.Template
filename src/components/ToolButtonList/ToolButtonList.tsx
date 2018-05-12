@@ -37,7 +37,7 @@ export class ToolButtonList extends Component {
       return void 0;
     }
 
-    protected beforeComplete(): Promise<any> {
+    public beforeComplete(): Promise<any> {
       return Promise.resolve({ success: true, fee: 0 });
     }
 

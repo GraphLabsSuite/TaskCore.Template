@@ -11,14 +11,15 @@ const Title = styled.div`
 
 export class TaskToolbar extends React.Component {
   public render() {
+    const Buttons = this.getButtonList();
     return (
       <div>
         <Title>Панель инструментов</Title>
-        {this.getButtonList()}
+        <Buttons />
       </div>);
   }
 
-  protected getButtonList() {
+  public getButtonList() {
     return ToolButtonList;
   }
 }

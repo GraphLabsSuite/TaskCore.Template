@@ -8,7 +8,7 @@ import { actionsCreators } from '../../redux/graph/actions';
 import {default as styled, StyledFunction } from 'styled-components';
 import {Component, HTMLProps, SFC} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import {store, ToolButtonList} from "../../";
+import {store} from "../../";
 import {Promise} from 'bluebird';
 global.Promise = Promise;
 
@@ -112,7 +112,7 @@ export class TaskTemplate extends Component {
   }
 
   protected getTaskToolbar() {
-    return ToolButtonList;
+    return TaskToolbar;
   }
 
   private dispatch(action) {

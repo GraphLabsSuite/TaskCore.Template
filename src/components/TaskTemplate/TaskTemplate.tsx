@@ -8,7 +8,7 @@ import { actionsCreators } from '../../redux/graph/actions';
 import {default as styled, StyledFunction } from 'styled-components';
 import {Component, HTMLProps, SFC} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import {store} from "../../";
+import {store, ToolButtonList} from "../../";
 import {Promise} from 'bluebird';
 global.Promise = Promise;
 
@@ -108,6 +108,11 @@ export class TaskTemplate extends Component {
   public constructor(props: any) {
     super(props);
     this.task = this.task.bind(this);
+    this.getTaskToolbar = this.getTaskToolbar.bind(this);
+  }
+
+  protected getTaskToolbar() {
+    return ToolButtonList;
   }
 
   private dispatch(action) {
@@ -121,6 +126,7 @@ export class TaskTemplate extends Component {
 
   render() {
     const Task: any = this.task();
+    const Toolbar = this.getTaskToolbar();
     return (
       <App id="wrap">
         <MainRow>
@@ -132,7 +138,7 @@ export class TaskTemplate extends Component {
             <Task />
           </TaskCell>
           <ToolCell>
-            <TaskToolbar/>
+            <Toolbar/>
           </ToolCell>
         </MainRow>
         <LeftBottom>

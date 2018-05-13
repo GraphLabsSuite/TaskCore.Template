@@ -26,8 +26,6 @@ export class ToolButtonList extends Component<{}, ButtonsState> {
     // TODO: Add normal types to these variables (maybe Dictionary)
     public toolButtons: Object;
 
-    public help: string = "Test help example";
-
     private bound: HTMLDivElement;
 
     constructor(props: {}) {
@@ -44,6 +42,10 @@ export class ToolButtonList extends Component<{}, ButtonsState> {
 
     public render() {
         return this.getList();
+    }
+
+    public help(): string {
+      return 'Test help example';
     }
 
     public beforeComplete(): Promise<any> {
@@ -120,7 +122,7 @@ export class ToolButtonList extends Component<{}, ButtonsState> {
             }
         }
         return (<div ref={i => { this.bound = i; }}>
-          <Tooltip value={this.help} show={this.state.show} bound={this.bound} showTooltip={this.hide}/>
+          <Tooltip value={this.help()} show={this.state.show} bound={this.bound} showTooltip={this.hide}/>
           <ButtonList>{result}</ButtonList>
         </div>);
     }

@@ -5,6 +5,7 @@ import {default as styled } from 'styled-components';
 import {store} from "../../redux/store";
 import {Component} from "react";
 import {Promise} from "es6-promise";
+import {actionsCreators as actions} from '../../redux/app/actions';
 
 const ButtonList = styled.div`
   {
@@ -72,6 +73,7 @@ export class ToolButtonList extends Component {
                   fee: res.fee,
                   datetime: Date.now(),
                 });
+                store.dispatch(actions.setStatus(true));
               }
             });
         };

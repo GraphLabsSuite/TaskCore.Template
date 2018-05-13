@@ -97,7 +97,7 @@ const MainRow = styled.div`
   }
 `;
 
-export class TaskTemplate extends Component {
+export class TaskTemplate extends Component<{}, { status: boolean; }> {
 
   componentWillMount() {
     const graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(5);
@@ -105,8 +105,19 @@ export class TaskTemplate extends Component {
     graph.edges.forEach(e => this.dispatch(actionsCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
   }
 
-  public constructor(props: any) {
+  public constructor(props: {}) {
     super(props);
+    this.state = {
+      status: store.getState().app.status,
+    };
+    store.subscribe(() => {
+      console.log(store.getState().app.status);
+      if (store.getState().app.status !== this.state.status) {
+        this.setState({
+          status: store.getState().app.status,
+        });
+      }
+    });
     this.task = this.task.bind(this);
     this.getTaskToolbar = this.getTaskToolbar.bind(this);
   }
@@ -129,24 +140,29 @@ export class TaskTemplate extends Component {
     const Toolbar = this.getTaskToolbar();
     return (
       <App id="wrap">
-        <MainRow>
-          <GraphCell>
-            <GraphVisualizer/>
-          </GraphCell>
-          <TaskCell>
-            Задание
-            <Task />
-          </TaskCell>
-          <ToolCell>
-            <Toolbar/>
-          </ToolCell>
-        </MainRow>
-        <LeftBottom>
-          <StudentMark />
-        </LeftBottom>
-        <LowRow>
-          <TaskConsole/>
-        </LowRow>
+        {this.state.status
+          ? <p>Задание выполнено. Ожидайте ответа от сервера...</p>
+          : (
+          <div>
+            <MainRow>
+              <GraphCell>
+                <GraphVisualizer/>
+              </GraphCell>
+              <TaskCell>
+                <p>Задание</p>
+                <Task />
+              </TaskCell>
+              <ToolCell>
+                <Toolbar/>
+              </ToolCell>
+            </MainRow>
+            <LeftBottom>
+              <StudentMark />
+            </LeftBottom>
+            <LowRow>
+              <TaskConsole/>
+            </LowRow>
+          </div>)}
       </App>
     );
   }

@@ -36,7 +36,7 @@ const MarkPositive = styled(Mark)`
 
 const MarkNeutral = styled(Mark)`
   &&& {
-    color: yellow;
+    color: orange;
   }
 `;
 
@@ -67,10 +67,11 @@ export class StudentMark extends React.Component<StudentMarkProperties, Partial<
 
   public render() {
     const Par = this.getStyle();
-    return (<StudentMarkStyle>
+    return (<div style={{ textAlign: 'center' }}>
+      <StudentMarkStyle>
         <Par>{this.state.mark} {this.state.message}</Par>
       </StudentMarkStyle>
-    );
+    </div>);
   }
 
   private getStyle(): any {

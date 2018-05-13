@@ -6,6 +6,7 @@ import {store} from "../../redux/store";
 import {Component} from "react";
 import {Promise} from "es6-promise";
 import {actionsCreators as actions} from '../../redux/app/actions';
+import Tooltip from "../Tooltip/Tooltip";
 
 const ButtonList = styled.div`
   {
@@ -16,17 +17,37 @@ const ButtonList = styled.div`
 const taskId = 1; // TODO: get it from somewhere
 const sessionGuid = 'uuid'; //TODO: get it from somewhere
 
-export class ToolButtonList extends Component {
+export interface ButtonsState {
+  show: boolean;
+}
+
+export class ToolButtonList extends Component<{}, ButtonsState> {
 
     // TODO: Add normal types to these variables (maybe Dictionary)
     public toolButtons: Object;
 
-    componentWillMount() {
+    public help: string = "Test help example";
+
+    private bound: HTMLDivElement;
+
+    constructor(props: {}) {
+      super(props);
+      this.state = {
+        show: false,
+      };
+      this.hide = this.hide.bind(this);
+    }
+
+    public componentWillMount() {
         this.toolButtons = {};
     }
 
-    render() {
+    public render() {
         return this.getList();
+    }
+
+    public beforeComplete(): Promise<any> {
+      return Promise.resolve({ success: true, fee: 0 });
     }
 
     private dispatch(payload: IStudentAction): void {
@@ -38,8 +59,10 @@ export class ToolButtonList extends Component {
       return void 0;
     }
 
-    public beforeComplete(): Promise<any> {
-      return Promise.resolve({ success: true, fee: 0 });
+    private hide() {
+      this.setState({
+        show: false,
+      });
     }
 
     private setDefaultButtonList() {
@@ -52,6 +75,9 @@ export class ToolButtonList extends Component {
               isTaskFinished: false,
               fee: 0,
               datetime: Date.now(),
+            });
+            this.setState({
+              show: true,
             });
         };
         list['/images/Complete.png'] = () => {
@@ -77,16 +103,6 @@ export class ToolButtonList extends Component {
               }
             });
         };
-        list['/images/DontTouch.png'] = () => {
-            this.dispatch({
-              message: 'DON\'T TOUCH',
-              taskId,
-              sessionGuid,
-              isTaskFinished: false,
-              fee: 1,
-              datetime: Date.now(),
-            });
-        };
         return list;
     }
 
@@ -103,6 +119,9 @@ export class ToolButtonList extends Component {
                 result.push(<ToolButton key={key} path={key} listener={this.toolButtons[key]} />);
             }
         }
-        return <ButtonList>{result}</ButtonList>;
+        return (<div ref={i => { this.bound = i; }}>
+          <Tooltip value={this.help} show={this.state.show} bound={this.bound} showTooltip={this.hide}/>
+          <ButtonList>{result}</ButtonList>
+        </div>);
     }
 }

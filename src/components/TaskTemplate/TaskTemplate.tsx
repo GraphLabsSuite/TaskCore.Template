@@ -111,7 +111,6 @@ export class TaskTemplate extends Component<{}, { status: boolean; }> {
       status: store.getState().app.status,
     };
     store.subscribe(() => {
-      console.log(store.getState().app.status);
       if (store.getState().app.status !== this.state.status) {
         this.setState({
           status: store.getState().app.status,

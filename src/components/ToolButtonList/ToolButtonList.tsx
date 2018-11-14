@@ -68,8 +68,10 @@ export class ToolButtonList extends Component<{}, ButtonsState> {
     }
 
     private setDefaultButtonList() {
+        const setImg = (title: string) =>
+          `http://graphlabs-backend.eastus.azurecontainer.io:5000/odata/DownloadImage(name='${title}.png')`;
         let list = {};
-        list['/images/Help.png'] = () => {
+        list[setImg('Help')] = () => {
             this.dispatch({
               message: 'Help required',
               taskId,
@@ -82,7 +84,7 @@ export class ToolButtonList extends Component<{}, ButtonsState> {
               show: true,
             });
         };
-        list['/images/Complete.png'] = () => {
+        list[setImg('Complete')] = () => {
             this.beforeComplete().then(res => {
               this.dispatch({
                 message: 'Task is done',

@@ -168,7 +168,7 @@ export class TaskTemplate extends Component<{}, { status: boolean; }> {
            graph.addVertex(new Vertex(v));
         });
         edges.forEach((e: any) => {
-           graph.addEdge(new Edge(graph.getVertex(e.source), graph.getVertex(e.target)));
+           graph.addEdge(new Edge(graph.getVertex(e.source)[0], graph.getVertex(e.target)[0]));
         });
         return graph;
     }

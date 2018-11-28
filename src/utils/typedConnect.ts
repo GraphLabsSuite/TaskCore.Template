@@ -1,9 +1,9 @@
 // We use generic inference.
 import * as React from 'react';
 import { RootState } from '../redux/rootReducer';
-import { Dispatch } from 'redux';
+import {Action, Dispatch} from 'redux';
 import { connect } from 'react-redux';
-export function typedConnect<OwnProps, StateProps, DispatchProps>(
+export function typedConnect<OwnProps, StateProps extends Action<any>, DispatchProps>(
   // And "capture" the return of mapStateToProps
   mapStateToProps: (state: RootState, ownProps: OwnProps) => StateProps,
   // As well as the return of mapDispatchToProps.

@@ -69,7 +69,7 @@ export class ToolButtonList extends Component<{}, ButtonsState> {
 
     private setDefaultButtonList() {
         const setImg = (title: string) =>
-          `http://graphlabs-backend.eastus.azurecontainer.io:5000/odata/DownloadImage(name='${title}.png')`;
+          `http://gl-backend.svtz.ru:5000/odata/DownloadImage(name='${title}.png')`;
         let list = {};
         list[setImg('Help')] = () => {
             this.dispatch({

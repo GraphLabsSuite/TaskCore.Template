@@ -76,6 +76,7 @@
     "start_prod": "cross-env NODE_ENV=production node server.js",
     "start": "npm run start_dev",
     "build": "tsc",
+    "prepublish": "npm run build",
     "fix": "tslint --fix src/**/*.ts{,x}"
   }
 }

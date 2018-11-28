@@ -2,14 +2,15 @@ import * as React from 'react';
 import { GraphVisualizer } from '../GraphVisualizer/GraphVisualizer';
 import { TaskToolbar } from '../TaskToolbar/TaskToolbar';
 import { TaskConsole } from '../TaskConsole/TaskConsole';
-import { GraphGenerator, IGraph, IVertex, IEdge } from 'graphlabs.core.graphs';
+import { GraphGenerator, IGraph, IVertex, IEdge, Graph, Vertex, Edge } from 'graphlabs.core.graphs';
 import { StudentMark } from '../StudentMark/StudentMark';
 import { actionsCreators } from '../../redux/graph/actions';
 import {default as styled, StyledFunction } from 'styled-components';
-import {Component, HTMLProps, SFC} from 'react';
+import { Component, HTMLProps, SFC } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import {store} from "../../";
-import {Promise} from 'bluebird';
+import { store } from '../../';
+import { Promise } from 'bluebird';
+
 global.Promise = Promise;
 
 const BorderedDiv = styled.div`
@@ -61,7 +62,7 @@ const LeftBottom = BorderedDiv.extend`
   }
 `;
 
-const LowRow =  BorderedDiv.extend`
+const LowRow = BorderedDiv.extend`
   {
     position: fixed;
     left: 15%;
@@ -72,7 +73,7 @@ const LowRow =  BorderedDiv.extend`
 `;
 
 interface Idiv {
-  id: string;
+    id: string;
 }
 
 const div: StyledFunction<Idiv & HTMLProps<HTMLDivElement>> = styled.div;
@@ -98,71 +99,90 @@ const MainRow = styled.div`
 `;
 
 export class TaskTemplate extends Component<{}, { status: boolean; }> {
-
-  componentWillMount() {
-    const graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(5);
-    graph.vertices.forEach(v => this.dispatch(actionsCreators.addVertex(v.name)));
-    graph.edges.forEach(e => this.dispatch(actionsCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
-  }
-
-  public constructor(props: {}) {
-    super(props);
-    this.state = {
-      status: store.getState().app.status,
+    public state = {
+        status: store.getState().app.status,
     };
-    store.subscribe(() => {
-      if (store.getState().app.status !== this.state.status) {
-        this.setState({
-          status: store.getState().app.status,
+
+    componentWillMount() {
+        const data = sessionStorage.getItem('variant');
+        let graph: IGraph<IVertex, IEdge>;
+        if (data) {
+           graph = this.graphManager(data);
+        } else {
+            graph = GraphGenerator.generate(5);
+        }
+        graph.vertices.forEach(v => this.dispatch(actionsCreators.addVertex(v.name)));
+        graph.edges.forEach(e => this.dispatch(actionsCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
+    }
+
+    public constructor(props: {}) {
+        super(props);
+        store.subscribe(() => {
+            if (store.getState().app.status !== this.state.status) {
+                this.setState({
+                    status: store.getState().app.status,
+                });
+            }
         });
-      }
-    });
-    this.task = this.task.bind(this);
-    this.getTaskToolbar = this.getTaskToolbar.bind(this);
-  }
+        this.task = this.task.bind(this);
+        this.getTaskToolbar = this.getTaskToolbar.bind(this);
+    }
 
-  protected getTaskToolbar() {
-    return TaskToolbar;
-  }
+    public render() {
+        const Task: any = this.task();
+        const Toolbar = this.getTaskToolbar();
+        return (
+            <App id="wrap">
+                {this.state.status
+                    ? <p>Задание выполнено. Ожидайте ответа от сервера...</p>
+                    : (
+                        <div>
+                            <MainRow>
+                                <GraphCell>
+                                    <GraphVisualizer/>
+                                </GraphCell>
+                                <TaskCell>
+                                    <p>Задание</p>
+                                    <Task/>
+                                </TaskCell>
+                                <ToolCell>
+                                    <Toolbar/>
+                                </ToolCell>
+                            </MainRow>
+                            <LeftBottom>
+                                <StudentMark/>
+                            </LeftBottom>
+                            <LowRow>
+                                <TaskConsole/>
+                            </LowRow>
+                        </div>)}
+            </App>
+        );
+    }
 
-  private dispatch(action) {
-    store.dispatch(action);
-    return void 0;
-  }
+    protected graphManager(data: any) {
+        const graphData = JSON.parse(data);
+        const { vertices, edges } = graphData.data[0];
+        const graph = new Graph();
+        vertices.forEach((v: any) => {
+           graph.addVertex(new Vertex(v));
+        });
+        edges.forEach((e: any) => {
+           graph.addEdge(new Edge(graph.getVertex(e.source), graph.getVertex(e.target)));
+        });
+        return graph;
+    }
 
-  protected task(): SFC<{}> {
-    return () => <p>Это пустой компонент задания</p>;
-  }
+    protected getTaskToolbar() {
+        return TaskToolbar;
+    }
 
-  render() {
-    const Task: any = this.task();
-    const Toolbar = this.getTaskToolbar();
-    return (
-      <App id="wrap">
-        {this.state.status
-          ? <p>Задание выполнено. Ожидайте ответа от сервера...</p>
-          : (
-          <div>
-            <MainRow>
-              <GraphCell>
-                <GraphVisualizer/>
-              </GraphCell>
-              <TaskCell>
-                <p>Задание</p>
-                <Task />
-              </TaskCell>
-              <ToolCell>
-                <Toolbar/>
-              </ToolCell>
-            </MainRow>
-            <LeftBottom>
-              <StudentMark />
-            </LeftBottom>
-            <LowRow>
-              <TaskConsole/>
-            </LowRow>
-          </div>)}
-      </App>
-    );
-  }
+    protected task(): SFC<{}> {
+        return () => <p>Это пустой компонент задания</p>;
+    }
+
+    private dispatch(action: any) {
+        store.dispatch(action);
+        return void 0;
+    }
 }

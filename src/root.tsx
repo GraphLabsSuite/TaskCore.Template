@@ -5,8 +5,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import { TaskTemplate } from './components/TaskTemplate/TaskTemplate';
 
-console.log(process.env);
-
 const updateRender = () => {
   ReactDOM.render(
     <AppContainer>

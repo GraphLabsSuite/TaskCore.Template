@@ -17,3 +17,16 @@ export {
   ToolButton,
   ToolButtonList
 };
+export * from './components/TaskTemplate/TaskTemplate';
+export * from './adapters/CommonGraphAdapter';
+export * from './components/GraphVisualizer/GraphVisualizer';
+export * from './components/StudentMark/StudentMark';
+export * from './components/TaskConsole/TaskConsole';
+export * from './components/TaskToolbar/TaskToolbar';
+export * from './components/ToolButton/ToolButton';
+export * from './components/ToolButtonList/ToolButtonList';
+export * from './redux/store';
+export * from './redux/rootReducer';
+export * from './redux/graph';
+export * from './redux/intersection'
+export * from './redux/rootAction';

@@ -1,27 +1,30 @@
-import {createStore, applyMiddleware, Middleware, Store} from 'redux';
+ import { createStore, applyMiddleware, Middleware, Store } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { loggingService } from '../middleware/loggingService';
-import rootReducer from './rootReducer';
-import {IStore} from "../types/IStore";
+import rootReducer, {RootState} from './rootReducer';
+import {init} from "graphlabs.core.notifier";
 
-export function configureStore(initialState?: IStore): Store<IStore> {
+init({
+    protocol: 'http',
+    host: 'localhost',
+    port: 54446,
+    path: 'RegisterUserActions'
+});
 
-  const middlewares: Middleware[] = [
-    thunk, loggingService
-
-  ];
-
-  const store = createStore(rootReducer, initialState, composeWithDevTools(
-    applyMiddleware(...middlewares),
-  ));
-
-  if (module.hot) {
-    // Enable Webpack hot module replacement for reducers
-    module.hot.accept(['./counter', './graph'], () => {
-      store.replaceReducer(rootReducer);
-    });
-  }
-
-  return store;
+export function configureStore(initialState?: RootState): Store<RootState> {
+    const middlewares: Middleware[] = [
+        thunk,
+    ];
+    const store = createStore(rootReducer, initialState, composeWithDevTools(
+        applyMiddleware(...middlewares),
+    ));
+    if (module.hot) {
+        // Enable Webpack hot module replacement for reducers
+        module.hot.accept(['./counter', './graph', './intersection'], () => {
+            store.replaceReducer(rootReducer);
+        });
+    }
+    return store;
 }
+
+export const store = configureStore();

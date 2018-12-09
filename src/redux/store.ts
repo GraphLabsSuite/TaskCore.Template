@@ -6,9 +6,9 @@ import { init } from 'graphlabs.core.notifier';
 
 init({
   protocol: 'http',
-  host: 'localhost',
-  port: 54446,
-  path: 'RegisterUserActions'
+  host: 'gl-backend.svtz.ru',
+  port: 5050,
+  path: 'odata/taskVariantLogs'
 });
 
 export function configureStore(initialState?: RootState): Store<RootState> {

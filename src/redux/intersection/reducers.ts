@@ -1,29 +1,29 @@
-import { IIntersectionView } from '../../models/graph';
+import {IIntersectionPairsView, IIntersectionView} from '../../models/intersection';
 import {
     ADD_INTERSECTION,
     REMOVE_INTERSECTION
 } from './actions';
-import { IGraphActionIntersection} from '../../types/IGraphAction';
+import {IIntersectionActionPairs} from '../../types/IIntersectionAction';
 
 const initialIntersection : IIntersectionView = {
     pairs: []
 }
 
-export default (state: IIntersectionView = initialIntersection, action: IGraphActionIntersection) : IIntersectionView => {
+export default (state: IIntersectionView = initialIntersection, action: IIntersectionActionPairs) : IIntersectionView => {
     switch (action.type){
         case ADD_INTERSECTION:
             return{
                 pairs: [
                     ...state.pairs,
-                    (<IGraphActionIntersection> action).pair
+                    (<IIntersectionActionPairs> action).payload
                 ],
             };
         case REMOVE_INTERSECTION:
             return {
                 pairs: [
                     ...state.pairs
-                        .filter( p => p.vertexOne !== (<IGraphActionIntersection> action).pair.vertexOne
-                            && p.vertexTwo !== (<IGraphActionIntersection> action).pair.vertexTwo ),
+                        .filter( p => p.vertexOne !== (<IIntersectionActionPairs> action).payload.vertexOne
+                            && p.vertexTwo !== (<IIntersectionActionPairs> action).payload.vertexTwo ),
                 ]
             };
         default:

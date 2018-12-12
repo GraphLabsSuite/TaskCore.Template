@@ -11,3 +11,4 @@ export interface IEdgeView {
 export interface IVertexView {
   name: string;
 }
+

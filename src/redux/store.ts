@@ -7,7 +7,7 @@ import { init } from 'graphlabs.core.notifier';
 init({
   protocol: 'http',
   host: 'gl-backend.svtz.ru',
-  port: 5050,
+  port: 5000,
   path: 'odata/taskVariantLogs'
 });
 

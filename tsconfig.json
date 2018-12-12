@@ -11,5 +11,8 @@
     "allowJs": false,
     "declaration": true,
     "moduleResolution": "node"
-  }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }

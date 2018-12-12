@@ -1,4 +1,4 @@
-import {IIntersectionPairsView, IIntersectionView} from '../../models/intersection';
+import { IIntersectionView} from '../../models/intersection';
 import {
     ADD_INTERSECTION,
     REMOVE_INTERSECTION

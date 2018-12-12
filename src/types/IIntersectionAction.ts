@@ -1,4 +1,4 @@
-import {IIntersectionPairsView, IIntersectionView} from "../models/intersection";
+import {IIntersectionPairsView} from "../models/intersection";
 
 export interface  IIntersectionActionPairs{
     type: string;

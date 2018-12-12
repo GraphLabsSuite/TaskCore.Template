@@ -24,7 +24,7 @@ export const REMOVE_EDGE: string = "graph/REMOVE_EDGE";
 //   },
 // };
 
-export const actionsCreators = {
+export const graphActionsCreators = {
   addVertex(name: string): IGraphActionVertex {
     return {
       type: ADD_VERTEX,

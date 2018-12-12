@@ -4,7 +4,7 @@ import {intersectionActionCreators} from './intersection/actions';
 
 // export type RootAction =
 //   GraphActions[keyof GraphActions];
-export const actionCreators = {
+export const actionsCreators = {
     ...graphActionsCreators,
     ...intersectionActionCreators,
 }

@@ -1,23 +1,38 @@
-import * as React from "react";
-import * as classnames from "classnames";
+import * as React from 'react';
+import {default as styled, StyledFunction } from 'styled-components';
+import { HTMLProps } from 'react';
 
-import * as style from "../../styles/ToolButton.scss";
-// import * as console from "console";
+interface MyButton {
+  className: string;
+  onClick: any;
+}
+
+const button: StyledFunction<MyButton & HTMLProps<HTMLDivElement>> = styled.button;
+
+const ToolButtonStyle = button`
+  {
+    position: relative;
+    width: 100%;
+    margin-left: -50%;
+    left: 50%;
+  }
+`;
 
 export interface ToolButtonProperties {
-  path: string,
-  listener: () => void
+  path: string;
+  listener: () => void;
 }
 
 export class ToolButton extends React.Component<ToolButtonProperties, React.ComponentState> {
 
-  public constructor() {
-    super();
+  public constructor(props: ToolButtonProperties) {
+    super(props);
   }
 
   render() {
-    return (<button className={classnames("btn btn-success", style.ToolButton)} onClick={this.props.listener}>
-      <img src={this.props.path}/>
-    </button>);
+    return (
+      <ToolButtonStyle className="btn btn-success" onClick={this.props.listener}>
+        <img src={this.props.path}/>
+      </ToolButtonStyle>);
   }
 }

@@ -1,71 +1,188 @@
-import * as React from "react";
-import {GraphVisualizer} from "../GraphVisualizer/GraphVisualizer";
-import {TaskToolbar} from "../TaskToolbar/TaskToolbar";
-import TaskConsole from "../TaskConsole/TaskConsole";
-import { GraphGenerator, IGraph, IVertex, IEdge } from "graphlabs.core.graphs";
-import * as classnames from "classnames";
-import {connect, DispatchProp} from "react-redux";
+import * as React from 'react';
+import { GraphVisualizer } from '../GraphVisualizer/GraphVisualizer';
+import { TaskToolbar } from '../TaskToolbar/TaskToolbar';
+import { TaskConsole } from '../TaskConsole/TaskConsole';
+import { GraphGenerator, IGraph, IVertex, IEdge, Graph, Vertex, Edge } from 'graphlabs.core.graphs';
+import { StudentMark } from '../StudentMark/StudentMark';
+import { actionsCreators } from '../../redux/graph/actions';
+import {default as styled, StyledFunction } from 'styled-components';
+import { Component, HTMLProps, SFC } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import { store } from '../../';
+import { Promise } from 'bluebird';
 
-import { StudentMark } from "../StudentMark/StudentMark";
-import { actionsCreators } from "../../redux/graph/actions";
-import * as style from "../../styles/TaskTemplate.scss";
-import {RootState} from "../../redux/rootReducer";
-import {Dispatch} from "redux";
+global.Promise = Promise;
 
-export interface AppProperties {
-  addVertex: (name: string) => void,
-  addEdge: (one: string, two: string) => void
+const BorderedDiv = styled.div`
+  {
+    box-shadow:2px 2px 11px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow:2px 2px 11px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    background: #fffaf0;
+  }
+`;
+
+const GraphCell = BorderedDiv.extend`
+  {
+    position: fixed;
+    left: 15%;
+    top: 1%;
+    width: 62%;
+    height: 78%;
+  }
+`;
+
+const ToolCell = BorderedDiv.extend`
+  {
+     position: fixed;
+    left: 1%;
+    top: 1%;
+    width: 12%;
+    height: 78%;
+  }
+`;
+
+const TaskCell = BorderedDiv.extend`
+  {
+    position: fixed;
+    left: 79%;
+    top: 1%;
+    width: 20%;
+    height: 78%;
+  }
+`;
+
+const LeftBottom = BorderedDiv.extend`
+  {
+    position: fixed;
+    left: 1%;
+    top: 80%;
+    width: 12%;
+    height: 19%;
+  }
+`;
+
+const LowRow = BorderedDiv.extend`
+  {
+    position: fixed;
+    left: 15%;
+    top: 80%;
+    width: 84%;
+    height: 19%;
+  }
+`;
+
+interface Idiv {
+    id: string;
 }
 
-export interface AppState extends React.ComponentState {}
+const div: StyledFunction<Idiv & HTMLProps<HTMLDivElement>> = styled.div;
 
-class TaskTemplate extends React.Component<AppProperties, AppState> {
-
-  componentWillMount() {
-    const graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(5);
-    graph.vertices.forEach(v => this.props.addVertex(v.name));
-    graph.edges.forEach(e => this.props.addEdge(e.vertexOne.name, e.vertexTwo.name));
+const App = div`
+  {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
   }
+`;
 
-  public constructor(props: AppProperties) {
-    super(props);
+const MainRow = styled.div`
+  {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 80%;
   }
+`;
 
-  render() {
-    return (
-      <div id="wrap" className={style.App}>
-        <div className={style.MainRow}>
-          <div className={classnames(style.GraphCell, style.bordered)}>
-            <GraphVisualizer/>
-          </div>
-          <div className={classnames(style.TaskCell, style.bordered)}>
-            Задание
-          </div>
-          <div className={classnames(style.ToolCell, style.bordered)}>
-            <TaskToolbar/>
-          </div>
-        </div>
-        <div className={classnames(style.LeftBottom,style.bordered)}>
-          <StudentMark />
-        </div>
-        <div className={classnames(style.LowRow,style.bordered)}>
-          <TaskConsole/>
-        </div>
-      </div>
-    );
-  }
+export class TaskTemplate extends Component<{}, { status: boolean; }> {
+    public state = {
+        status: store.getState().app.status,
+    };
+
+    componentWillMount() {
+        const data = sessionStorage.getItem('variant');
+        let graph: IGraph<IVertex, IEdge>;
+        if (data) {
+           graph = this.graphManager(data);
+        } else {
+            graph = GraphGenerator.generate(5);
+        }
+        graph.vertices.forEach(v => this.dispatch(actionsCreators.addVertex(v.name)));
+        graph.edges.forEach(e => this.dispatch(actionsCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
+    }
+
+    public constructor(props: {}) {
+        super(props);
+        store.subscribe(() => {
+            if (store.getState().app.status !== this.state.status) {
+                this.setState({
+                    status: store.getState().app.status,
+                });
+            }
+        });
+        this.task = this.task.bind(this);
+        this.getTaskToolbar = this.getTaskToolbar.bind(this);
+    }
+
+    public render() {
+        const Task: any = this.task();
+        const Toolbar = this.getTaskToolbar();
+        return (
+            <App id="wrap">
+                {this.state.status
+                    ? <p>Задание выполнено. Ожидайте ответа от сервера...</p>
+                    : (
+                        <div>
+                            <MainRow>
+                                <GraphCell>
+                                    <GraphVisualizer/>
+                                </GraphCell>
+                                <TaskCell>
+                                    <p>Задание</p>
+                                    <Task/>
+                                </TaskCell>
+                                <ToolCell>
+                                    <Toolbar/>
+                                </ToolCell>
+                            </MainRow>
+                            <LeftBottom>
+                                <StudentMark/>
+                            </LeftBottom>
+                            <LowRow>
+                                <TaskConsole/>
+                            </LowRow>
+                        </div>)}
+            </App>
+        );
+    }
+
+    protected graphManager(data: any) {
+        const graphData = JSON.parse(data);
+        const { vertices, edges } = graphData.data[0];
+        const graph = new Graph();
+        vertices.forEach((v: any) => {
+           graph.addVertex(new Vertex(v));
+        });
+        edges.forEach((e: any) => {
+           graph.addEdge(new Edge(graph.getVertex(e.source)[0], graph.getVertex(e.target)[0]));
+        });
+        return graph;
+    }
+
+    protected getTaskToolbar() {
+        return TaskToolbar;
+    }
+
+    protected task(): SFC<{}> {
+        return () => <p>Это пустой компонент задания</p>;
+    }
+
+    private dispatch(action: any) {
+        store.dispatch(action);
+        return void 0;
+    }
 }
-
-const mapStateToProps = (state: RootState): {}  => {
-  return {
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch<RootState>): AppProperties => {
-  return {
-    addVertex: (name: string) => dispatch(actionsCreators.addVertex(name)),
-    addEdge: (one: string, two: string) => dispatch(actionsCreators.addEdge(one, two))
-  };
-};
-
-export default connect<AppState, AppProperties, {}>(mapStateToProps, mapDispatchToProps)(TaskTemplate);

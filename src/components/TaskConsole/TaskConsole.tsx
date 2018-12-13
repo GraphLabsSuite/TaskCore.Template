@@ -1,54 +1,54 @@
-import * as React from "react";
-import { addAction, IStudentAction } from "graphlabs.core.notifier";
-import { connect, Dispatch } from "react-redux";
+import * as React from 'react';
+import { IStudentAction } from 'graphlabs.core.notifier';
+import { RootState } from '../../redux/rootReducer';
+import {default as styled } from 'styled-components';
+import {Component} from "react";
+import {store} from "../../";
 
-import { RootState } from "../../redux/rootReducer";
-import * as styles from "../../styles/TaskConsole.scss";
+const Console = styled.div`
+  {
+    height: 100%;
+    display: inline-block;
+  }
+`;
 
+export class TaskConsole extends Component {
 
-
-interface TaskConsoleProperties {
-    actions: Array<IStudentAction>;
-}
-
-interface TaskConsoleState extends React.ComponentState {
-}
-
-class TaskConsole extends React.Component<TaskConsoleProperties, TaskConsoleState> {
-    public constructor(props: TaskConsoleProperties) {
-        super(props);
+    private _action: Array<IStudentAction>;
+    get actions(): Array<IStudentAction> {
+      const state: RootState = store.getState();
+      store.subscribe(() => {
+        let flag = false;
+        store.getState().notifier.studentActions.forEach((e, i) => {
+           if (this._action[i] !== e) {
+             flag = true;
+           }
+        });
+        if (flag) {
+          this._action = store.getState().notifier.studentActions;
+          this.forceUpdate();
+        }
+      });
+      this._action = [...state.notifier.studentActions];
+      return this._action;
     }
 
     public render() {
-        console.log(this.props.actions);
-        var actions = this.props.actions.map(i => {
-            let date = new Date(+(i.datetime.replace(/\s/g, '')));
+        const actions = this.actions.map((i, index) => {
+            const nData: number = i.datetime;
+            let date = new Date(nData);
             let hours = date.getHours();
             let minutes = date.getMinutes();
             let seconds = date.getSeconds();
             let message = i.message;
             let result = hours + ':' + minutes + ':' + seconds + '  : ' + message;
-            return <div>{result}</div>;
+            return <div key={index}>{result}</div>;
         });
-//This is the rest of console
-        return (<div className={styles.Console}>
+        // This is the rest of console
+        return (
+          <Console>
             {actions}
-
-        </div>);
+          </Console>);
     }
 
 }
-
-const mapStateToProps = (state: RootState): {} => {
-    return {
-        actions: state.notifier.studentActions
-    };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch<RootState>) => {
-    return {
-    };
-};
-
-export default connect<TaskConsoleState, TaskConsoleProperties, {}>(mapStateToProps, mapDispatchToProps)(TaskConsole);
-

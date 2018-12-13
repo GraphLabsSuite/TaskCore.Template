@@ -1,4 +1,4 @@
-import {IEdgeView, IGraphView, IVertexView} from "../models/graph";
+import { IEdgeView, IGraphView, IVertexView } from '../models/graph';
 
 function getVertex(name: string, arr: IVertexView[]): IVertexView {
     return arr.filter(v => v.name === name)[0];
@@ -9,7 +9,8 @@ function serializeVertex(v: IVertexView): string {
 }
 
 function serializeEdge(e: IEdgeView, arr: IVertexView[]): string {
-    return `{"vertexOne": ${serializeVertex(getVertex(e.vertexOne, arr))} "vertexTwo": ${serializeVertex(getVertex(e.vertexTwo, arr))} "isDirected": false},`;
+    return `{"vertexOne": ${serializeVertex(getVertex(e.vertexOne, arr))} "vertexTwo": ${
+        serializeVertex(getVertex(e.vertexTwo, arr))} "isDirected": false},`;
 }
 
 export function graphSerializer(graph: IGraphView): string {

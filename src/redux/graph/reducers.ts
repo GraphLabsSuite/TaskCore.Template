@@ -1,4 +1,4 @@
-import {IGraphView} from "../../models/graph";
+import { IGraphView } from '../../models/graph';
 
 import {
   ADD_VERTEX,
@@ -6,7 +6,7 @@ import {
   REMOVE_VERTEX,
   REMOVE_EDGE
 } from './actions';
-import {IGraphAction, IGraphActionEdge, IGraphActionVertex} from "../../types/IGraphAction";
+import { IGraphAction, IGraphActionEdge, IGraphActionVertex } from '../../types/IGraphAction';
 
 const initialState: IGraphView = {
   vertices: [],
@@ -28,10 +28,13 @@ export default (state: IGraphView = initialState, action: IGraphAction): IGraphV
         case REMOVE_VERTEX:
             return {
                 vertices: [
-                    ...state.vertices.filter(v => v.name != (<IGraphActionVertex> action).vertex.name),
+                    ...state.vertices
+                      .filter(v => v.name !== (<IGraphActionVertex> action).vertex.name),
                 ],
                 edges: [
-                    ...state.edges.filter(e => e.vertexTwo != (<IGraphActionVertex> action).vertex.name && e.vertexOne != (<IGraphActionVertex> action).vertex.name)
+                    ...state.edges
+                      .filter(e => e.vertexTwo !== (<IGraphActionVertex> action).vertex.name
+                        && e.vertexOne !== (<IGraphActionVertex> action).vertex.name)
                 ]
             };
         case ADD_EDGE:
@@ -50,7 +53,9 @@ export default (state: IGraphView = initialState, action: IGraphAction): IGraphV
                     ...state.vertices
                 ],
                 edges: [
-                    ...state.edges.filter(e => e.vertexOne != (<IGraphActionEdge> action).edge.vertexOne && e.vertexTwo != (<IGraphActionEdge> action).edge.vertexTwo),
+                    ...state.edges
+                      .filter(e => e.vertexOne !== (<IGraphActionEdge> action).edge.vertexOne
+                        && e.vertexTwo !== (<IGraphActionEdge> action).edge.vertexTwo),
                 ]
             };
         default:

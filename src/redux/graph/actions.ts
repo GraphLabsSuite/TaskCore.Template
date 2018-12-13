@@ -1,9 +1,9 @@
-import {IEdgeView, IVertexView} from "../../models/graph";
-import {IGraphActionEdge, IGraphActionVertex} from "../../types/IGraphAction";
-export const ADD_VERTEX: string = "graph/ADD_VERTEX";
-export const REMOVE_VERTEX: string = "graph/REMOVE_VERTEX";
-export const ADD_EDGE: string = "graph/ADD_EDGE";
-export const REMOVE_EDGE: string = "graph/REMOVE_EDGE";
+import { IEdgeView, IVertexView } from '../../models/graph';
+import { IGraphActionEdge, IGraphActionVertex } from '../../types/IGraphAction';
+export const ADD_VERTEX: string = 'graph/ADD_VERTEX';
+export const REMOVE_VERTEX: string = 'graph/REMOVE_VERTEX';
+export const ADD_EDGE: string = 'graph/ADD_EDGE';
+export const REMOVE_EDGE: string = 'graph/REMOVE_EDGE';
 
 // export type Actions = {
 //   ADD_VERTEX: {

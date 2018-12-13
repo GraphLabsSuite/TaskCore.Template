@@ -1,6 +1,6 @@
 export interface IGraphView {
   vertices: IVertexView[];
-  edges: IEdgeView[]
+  edges: IEdgeView[];
 }
 
 export interface IEdgeView {

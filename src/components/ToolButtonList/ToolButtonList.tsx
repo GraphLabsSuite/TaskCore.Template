@@ -1,54 +1,111 @@
-import * as React from "react";
-import { addAction, IStudentAction } from "graphlabs.core.notifier";
-import { connect, Dispatch } from "react-redux";
+import * as React from 'react';
+import { addAction, addPlainAction, IStudentAction } from 'graphlabs.core.notifier';
+import { ToolButton } from '../ToolButton/ToolButton';
+import {default as styled } from 'styled-components';
+import { store } from '../../redux/store';
+import { Component } from 'react';
+import { Promise } from 'es6-promise';
+import {actionsCreators as actions } from '../../redux/app/actions';
+import Tooltip from '../Tooltip/Tooltip';
 
-import { ToolButton } from "../ToolButton/ToolButton";
-import * as style from "../../styles/ToolButtonList.scss";
-import { RootState } from "../../redux/rootReducer";
-import { Action } from "redux";
+const ButtonList = styled.div`
+  {
+    display: block;
+  }
+`;
 
-interface ToolButtonListProperties {
-    addAction: (payload: IStudentAction) => Promise<Action>;
+const taskId = 1; // TODO: get it from somewhere
+const sessionGuid = 'uuid'; // TODO: get it from somewhere
+
+export interface ButtonsState {
+    show: boolean;
 }
 
-interface ToolButtonListState extends React.ComponentState {
-}
+export class ToolButtonList extends Component<{}, ButtonsState> {
 
-class ToolButtonList extends React.Component<ToolButtonListProperties, ToolButtonListState> {
-
-    //TODO: Add normal types to these variables (maybe Dictionary)
+    // TODO: Add normal types to these variables (maybe Dictionary)
     public toolButtons: Object;
 
-    componentWillMount() {
+    private bound: HTMLDivElement;
+
+    constructor(props: {}) {
+        super(props);
+        this.state = {
+            show: false,
+        };
+        this.hide = this.hide.bind(this);
+    }
+
+    public componentWillMount() {
         this.toolButtons = {};
     }
 
-    public constructor(props: ToolButtonListProperties) {
-        super();
+    public render() {
+        return this.getList();
+    }
+
+    public help(): string {
+        return 'Test help example';
+    }
+
+    public beforeComplete(): Promise<any> {
+        return Promise.resolve({success: true, fee: 0});
+    }
+
+    private dispatch(payload: IStudentAction): void {
+        if (process.env.NODE_ENV === 'production') {
+            addAction(payload).then(res => store.dispatch(res));
+        } else {
+            store.dispatch(addPlainAction(payload));
+        }
+        return void 0;
+    }
+
+    private hide() {
+        this.setState({
+            show: false,
+        });
     }
 
     private setDefaultButtonList() {
+        const setImg = (title: string) =>
+            `http://gl-backend.svtz.ru:5000/odata/downloadImage(name='${title}.png')`;
         let list = {};
-        list["/images/Help.png"] = () => {
-            this.props.addAction({
-                message: "Help required",
+        list[setImg('Help')] = () => {
+            this.dispatch({
+                message: 'Help required',
+                taskId,
+                sessionGuid,
+                isTaskFinished: false,
                 fee: 0,
-                datetime: Date.now().toLocaleString()
-            })
+                datetime: Date.now(),
+            });
+            this.setState({
+                show: true,
+            });
         };
-        list["/images/Complete.png"] = () => {
-            this.props.addAction({
-                message: "Task is complete",
-                fee: 0,
-                datetime: Date.now().toLocaleString()
-            })
-        };
-        list["/images/DontTouch.png"] = () => {
-            this.props.addAction({
-                message: "DON'T TOUCH",
-                fee: 1,
-                datetime: Date.now().toLocaleString()
-            })
+        list[setImg('Complete')] = () => {
+            this.beforeComplete().then(res => {
+                this.dispatch({
+                    message: `Task is done (${res.fee})`,
+                    taskId,
+                    sessionGuid,
+                    isTaskFinished: false,
+                    fee: res.fee,
+                    datetime: Date.now(),
+                });
+                if (res.success) {
+                    this.dispatch({
+                        message: 'Task is checked',
+                        taskId,
+                        sessionGuid,
+                        isTaskFinished: true,
+                        fee: res.fee,
+                        datetime: Date.now(),
+                    });
+                    store.dispatch(actions.setStatus(true));
+                }
+            });
         };
         return list;
     }
@@ -56,25 +113,25 @@ class ToolButtonList extends React.Component<ToolButtonListProperties, ToolButto
     private getList() {
         const result = [];
         const defaultList = this.setDefaultButtonList();
-        for (const key in defaultList) result.push(<div key={key}><ToolButton path={key} listener={defaultList[key]} /></div>);
-        for (const key in this.toolButtons) result.push(<ToolButton key={key} path={key} listener={this.toolButtons[key]} />);
-        return <div className={style.ButtonList}>{result}</div>;
-    }
-
-    render() {
-        return this.getList();
+        for (const key in defaultList) {
+            if (defaultList.hasOwnProperty(key)) {
+                result.push(<div key={key}><ToolButton path={key} listener={defaultList[key]}/></div>);
+            }
+        }
+        for (const key in this.toolButtons) {
+            if (this.toolButtons.hasOwnProperty(key)) {
+                result.push(<ToolButton key={key} path={key} listener={this.toolButtons[key]}/>);
+            }
+        }
+        return (
+            <div
+                ref={i => {
+                    this.bound = i;
+                }}
+            >
+                <Tooltip value={this.help()} show={this.state.show} bound={this.bound} showTooltip={this.hide}/>
+                <ButtonList>{result}</ButtonList>
+            </div>
+        );
     }
 }
-
-const mapStateToProps = (state: RootState): {} => {
-    return {
-    };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch<RootState>) => {
-    return {
-        addAction: payload => addAction(payload).then(res => dispatch(res))
-    };
-};
-
-export default connect<ToolButtonListState, ToolButtonListProperties, {}>(mapStateToProps, mapDispatchToProps)(ToolButtonList);

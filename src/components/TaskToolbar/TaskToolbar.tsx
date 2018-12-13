@@ -1,16 +1,25 @@
-import * as React from "react";
-import ToolButtonList from "../ToolButtonList/ToolButtonList";
+import * as React from 'react';
+import { ToolButtonList } from '../ToolButtonList/ToolButtonList';
 
-import * as style from "../../styles/TaskToolbar.scss";
+import {default as styled } from 'styled-components';
 
-export interface TaskToolbarProperties {
-}
+const Title = styled.div`
+  {
+    font-size: 100%;
+  }
+`;
 
-export class TaskToolbar extends React.Component<TaskToolbarProperties, React.ComponentState> {
+export class TaskToolbar extends React.Component {
   public render() {
-    return (<div className={style.TaskToolbarCenterPosition}>
-      <h2 className={style.Title}>Панель инструментов</h2>
-      <ToolButtonList />
-    </div>);
+    const Buttons = this.getButtonList();
+    return (
+      <div>
+        <Title>Панель инструментов</Title>
+        <Buttons />
+      </div>);
+  }
+
+  public getButtonList() {
+    return ToolButtonList;
   }
 }

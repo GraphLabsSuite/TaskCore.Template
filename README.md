@@ -12,3 +12,16 @@ Task template for graphlabs web project
 ### Installation
 
 * npm install graphlabs.core.template
+
+### Extend the template
+
+1. initialize your repository
+`create-react-app my-app —scripts-version=react-scripts-ts`
+2. add to `public/images` folder default images
+3. Extend your application from TaskTemplate
+```javascript
+import { TaskTemplate } from 'graphlabs.core.template';
+class App extends TaskTemplate {
+}
+```
+6. Now you can develop your task module by overriding field in the template and adding your custom logic.

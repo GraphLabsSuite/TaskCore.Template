@@ -5,14 +5,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     bundle: [
-      'webpack-hot-middleware/client',
-      'react-hot-loader/patch',
       path.join(__dirname, './src/root.tsx')
     ]
   },
   output: {
     path: path.join(__dirname, './public'),
-    filename: "bundle.js",
+    filename: "build.js",
     publicPath: "/",
   },
   resolve: {
@@ -43,7 +41,9 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
+              modules: true,
               importLoaders: 1,
+              localIdentName: '[name]__[local]___[hash:base64:5]'
             },
           }]
       },

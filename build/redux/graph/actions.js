@@ -23,28 +23,28 @@ exports.REMOVE_EDGE = 'graph/REMOVE_EDGE';
 //   },
 // };
 exports.graphActionsCreators = {
-    addVertex(name) {
+    addVertex: function (name) {
         return {
             type: exports.ADD_VERTEX,
-            vertex: { name }
+            vertex: { name: name }
         };
     },
-    removeVertex(name) {
+    removeVertex: function (name) {
         return {
             type: exports.REMOVE_VERTEX,
-            vertex: { name }
+            vertex: { name: name }
         };
     },
-    addEdge(vertexOne, vertexTwo) {
+    addEdge: function (vertexOne, vertexTwo) {
         return {
             type: exports.ADD_EDGE,
-            edge: { vertexOne, vertexTwo }
+            edge: { vertexOne: vertexOne, vertexTwo: vertexTwo }
         };
     },
-    removeEdge(vertexOne, vertexTwo) {
+    removeEdge: function (vertexOne, vertexTwo) {
         return {
             type: exports.REMOVE_EDGE,
-            edge: { vertexOne, vertexTwo }
+            edge: { vertexOne: vertexOne, vertexTwo: vertexTwo }
         };
     }
 };

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const redux_1 = require("redux");
-const reducers_1 = require("./graph/reducers");
-const reducers_2 = require("./intersection/reducers");
-const reducers_3 = require("./app/reducers");
-const graphlabs_core_notifier_1 = require("graphlabs.core.notifier");
-const rootReducer = redux_1.combineReducers({
+var redux_1 = require("redux");
+var reducers_1 = require("./graph/reducers");
+var reducers_2 = require("./intersection/reducers");
+var reducers_3 = require("./app/reducers");
+var graphlabs_core_notifier_1 = require("graphlabs.core.notifier");
+var rootReducer = redux_1.combineReducers({
     graph: reducers_1.default,
     intersection: reducers_2.default,
     app: reducers_3.default,

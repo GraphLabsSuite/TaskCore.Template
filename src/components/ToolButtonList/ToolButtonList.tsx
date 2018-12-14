@@ -6,6 +6,7 @@ import { store } from '../../redux/store';
 import { Component } from 'react';
 import {actionsCreators as actions } from '../../redux/app/actions';
 import Tooltip from '../Tooltip/Tooltip';
+import { Promise } from 'bluebird';
 
 const ButtonList = styled.div`
   {

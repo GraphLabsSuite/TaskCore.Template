@@ -3,16 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ADD_INTERSECTION = 'intersection/ADD_INTERSECTION';
 exports.REMOVE_INTERSECTION = 'intersection/REMOVE_INTERSECCTION';
 exports.intersectionActionCreators = {
-    addIntersection(vertexOne, vertexTwo) {
+    addIntersection: function (vertexOne, vertexTwo) {
         return {
             type: exports.ADD_INTERSECTION,
-            payload: { vertexOne, vertexTwo }
+            payload: { vertexOne: vertexOne, vertexTwo: vertexTwo }
         };
     },
-    removeIntersection(vertexOne, vertexTwo) {
+    removeIntersection: function (vertexOne, vertexTwo) {
         return {
             type: exports.REMOVE_INTERSECTION,
-            payload: { vertexOne, vertexTwo }
+            payload: { vertexOne: vertexOne, vertexTwo: vertexTwo }
         };
     }
 };

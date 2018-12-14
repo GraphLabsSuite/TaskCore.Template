@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const actions_1 = require("./actions");
-const initialState = {
+var actions_1 = require("./actions");
+var initialState = {
     status: false,
 };
-exports.default = (state = initialState, action) => {
+exports.default = (function (state, action) {
+    if (state === void 0) { state = initialState; }
     switch (action.type) {
         case actions_1.SET_STATUS:
             return {
@@ -13,5 +14,5 @@ exports.default = (state = initialState, action) => {
         default:
             return state;
     }
-};
+});
 //# sourceMappingURL=reducers.js.map

@@ -1,57 +1,44 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const actions_1 = require("./actions");
-const initialState = {
+var actions_1 = require("./actions");
+var initialState = {
     vertices: [],
     edges: []
 };
-exports.default = (state = initialState, action) => {
+exports.default = (function (state, action) {
+    if (state === void 0) { state = initialState; }
     switch (action.type) {
         case actions_1.ADD_VERTEX:
             return {
-                vertices: [
-                    ...state.vertices,
+                vertices: state.vertices.concat([
                     action.vertex
-                ],
-                edges: [
-                    ...state.edges
-                ]
+                ]),
+                edges: state.edges.slice()
             };
         case actions_1.REMOVE_VERTEX:
             return {
-                vertices: [
-                    ...state.vertices
-                        .filter(v => v.name !== action.vertex.name),
-                ],
-                edges: [
-                    ...state.edges
-                        .filter(e => e.vertexTwo !== action.vertex.name
-                        && e.vertexOne !== action.vertex.name)
-                ]
+                vertices: state.vertices
+                    .filter(function (v) { return v.name !== action.vertex.name; }).slice(),
+                edges: state.edges
+                    .filter(function (e) { return e.vertexTwo !== action.vertex.name
+                    && e.vertexOne !== action.vertex.name; }).slice()
             };
         case actions_1.ADD_EDGE:
             return {
-                vertices: [
-                    ...state.vertices
-                ],
-                edges: [
-                    ...state.edges,
+                vertices: state.vertices.slice(),
+                edges: state.edges.concat([
                     action.edge
-                ],
+                ]),
             };
         case actions_1.REMOVE_EDGE:
             return {
-                vertices: [
-                    ...state.vertices
-                ],
-                edges: [
-                    ...state.edges
-                        .filter(e => e.vertexOne !== action.edge.vertexOne
-                        && e.vertexTwo !== action.edge.vertexTwo),
-                ]
+                vertices: state.vertices.slice(),
+                edges: state.edges
+                    .filter(function (e) { return e.vertexOne !== action.edge.vertexOne
+                    && e.vertexTwo !== action.edge.vertexTwo; }).slice()
             };
         default:
             return state;
     }
-};
+});
 //# sourceMappingURL=reducers.js.map

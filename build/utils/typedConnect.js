@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_1 = require("react-redux");
+const react_redux_1 = require("react-redux");
 function typedConnect(
 // And "capture" the return of mapStateToProps
 mapStateToProps, 

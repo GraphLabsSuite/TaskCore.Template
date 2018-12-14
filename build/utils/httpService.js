@@ -4,7 +4,7 @@ function postData(address, obj) {
     return fetch(address, {
         method: 'post',
         body: JSON.stringify(obj)
-    }).catch(function (reason) {
+    }).catch(reason => {
         // tslint:disable-next-line no-console
         console.error(reason);
     });

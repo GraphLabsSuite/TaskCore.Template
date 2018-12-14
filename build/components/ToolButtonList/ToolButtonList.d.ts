@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import { Promise } from 'es6-promise';
 export interface ButtonsState {
     show: boolean;
 }

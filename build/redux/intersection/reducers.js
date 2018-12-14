@@ -1,26 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var actions_1 = require("./actions");
-var initialIntersection = {
+const actions_1 = require("./actions");
+const initialIntersection = {
     pairs: []
 };
-exports.default = (function (state, action) {
-    if (state === void 0) { state = initialIntersection; }
+exports.default = (state = initialIntersection, action) => {
     switch (action.type) {
         case actions_1.ADD_INTERSECTION:
             return {
-                pairs: state.pairs.concat([
+                pairs: [
+                    ...state.pairs,
                     action.payload
-                ]),
+                ],
             };
         case actions_1.REMOVE_INTERSECTION:
             return {
-                pairs: state.pairs
-                    .filter(function (p) { return p.vertexOne !== action.payload.vertexOne
-                    && p.vertexTwo !== action.payload.vertexTwo; }).slice()
+                pairs: [
+                    ...state.pairs
+                        .filter(p => p.vertexOne !== action.payload.vertexOne
+                        && p.vertexTwo !== action.payload.vertexTwo),
+                ]
             };
         default:
             return state;
     }
-});
+};
 //# sourceMappingURL=reducers.js.map

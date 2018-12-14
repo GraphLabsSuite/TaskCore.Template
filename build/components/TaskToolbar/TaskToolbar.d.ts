@@ -1,7 +1,6 @@
-/// <reference types="react" />
-import * as React from "react";
-export interface TaskToolbarProperties {
-}
-export declare class TaskToolbar extends React.Component<TaskToolbarProperties, React.ComponentState> {
+import * as React from 'react';
+import { ToolButtonList } from '../ToolButtonList/ToolButtonList';
+export declare class TaskToolbar extends React.Component {
     render(): JSX.Element;
+    getButtonList(): typeof ToolButtonList;
 }

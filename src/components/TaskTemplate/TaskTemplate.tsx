@@ -4,7 +4,7 @@ import { TaskToolbar } from '../TaskToolbar/TaskToolbar';
 import { TaskConsole } from '../TaskConsole/TaskConsole';
 import { GraphGenerator, IGraph, IVertex, IEdge, Graph, Vertex, Edge } from 'graphlabs.core.graphs';
 import { StudentMark } from '../StudentMark/StudentMark';
-import { actionsCreators } from '../../redux/graph/actions';
+import { actionsCreators } from '../../redux/rootAction';
 import {default as styled, StyledFunction } from 'styled-components';
 import { Component, HTMLProps, SFC } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';

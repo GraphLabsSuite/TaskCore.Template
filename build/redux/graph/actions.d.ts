@@ -1,4 +1,4 @@
-import { IGraphActionEdge, IGraphActionVertex } from "../../types/IGraphAction";
+import { IGraphActionEdge, IGraphActionVertex } from '../../types/IGraphAction';
 export declare const ADD_VERTEX: string;
 export declare const REMOVE_VERTEX: string;
 export declare const ADD_EDGE: string;

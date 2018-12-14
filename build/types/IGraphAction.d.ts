@@ -1,4 +1,4 @@
-import { IEdgeView, IVertexView } from "../models/graph";
+import { IEdgeView, IVertexView } from '../models/graph';
 export interface IGraphActionVertex {
     type: string;
     vertex: IVertexView;

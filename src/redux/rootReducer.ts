@@ -1,5 +1,4 @@
 import { combineReducers, Reducer } from 'redux';
-import { counterReducer } from './counter/index';
 import graphReducer from './graph/reducers';
 import intersectionReducer from './intersection/reducers'
 import appReducer from './app/reducers';

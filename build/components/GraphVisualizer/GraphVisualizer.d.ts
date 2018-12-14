@@ -1,8 +1,4 @@
-/// <reference types="react" />
-import * as React from "react";
-export interface GraphVisualizerProperties {
-}
-export declare class GraphVisualizer extends React.Component<GraphVisualizerProperties, React.ComponentState> {
-    constructor();
+import * as React from 'react';
+export declare class GraphVisualizer extends React.Component {
     render(): JSX.Element;
 }

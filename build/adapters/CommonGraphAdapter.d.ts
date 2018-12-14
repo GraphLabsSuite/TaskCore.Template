@@ -1,9 +1,23 @@
-/// <reference types="react" />
-import * as React from "react";
-export interface CommonGraphAdapterOwnProps {
+import { CircleGraphVisualizer } from 'graphlabs.core.visualizer';
+import { Component } from 'react';
+import { IGraphView } from '../models/graph';
+export interface CGAProps {
+    className?: string;
 }
-export interface CommonGraphAdapterState extends React.ComponentState {
+export interface State {
     events: Event[];
 }
-declare const _default: React.ComponentClass<CommonGraphAdapterOwnProps>;
-export default _default;
+export declare class CommonGraphAdapter extends Component<CGAProps, State> {
+    ref: SVGSVGElement;
+    graphVisualizer: CircleGraphVisualizer;
+    private _graph;
+    readonly graph: IGraphView;
+    protected clickEdge(): void;
+    protected clickVertex(): void;
+    renderSvg(): void;
+    updateSvg(): void;
+    componentDidMount(): void;
+    constructor(props: CGAProps);
+    updateGraph(): void;
+    render(): JSX.Element;
+}

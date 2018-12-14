@@ -28,5 +28,9 @@ export * from './components/ToolButtonList/ToolButtonList';
 export * from './redux/store';
 export * from './redux/rootReducer';
 export * from './redux/graph';
-export * from './redux/intersection'
+export * from './redux/intersection';
 export * from './redux/rootAction';
+export * from './models/graph';
+export * from './models/intersection';
+export * from './types/IIntersectionAction';
+export * from './types/IGraphAction';

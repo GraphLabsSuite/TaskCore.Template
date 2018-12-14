@@ -1,5 +1,4 @@
-/// <reference types="react" />
-import * as React from "react";
+import * as React from 'react';
 export interface StudentMarkProperties {
 }
 export interface StudentMarkState {
@@ -7,7 +6,7 @@ export interface StudentMarkState {
     message: string;
 }
 export declare class StudentMark extends React.Component<StudentMarkProperties, Partial<StudentMarkState>> {
-    constructor();
-    private getStyle();
+    constructor(props: StudentMarkProperties);
     render(): JSX.Element;
+    private getStyle;
 }

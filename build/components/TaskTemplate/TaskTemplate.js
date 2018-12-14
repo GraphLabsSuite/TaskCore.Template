@@ -20,7 +20,7 @@ var TaskToolbar_1 = require("../TaskToolbar/TaskToolbar");
 var TaskConsole_1 = require("../TaskConsole/TaskConsole");
 var graphlabs_core_graphs_1 = require("graphlabs.core.graphs");
 var StudentMark_1 = require("../StudentMark/StudentMark");
-var actions_1 = require("../../redux/graph/actions");
+var rootAction_1 = require("../../redux/rootAction");
 var styled_components_1 = require("styled-components");
 var react_1 = require("react");
 require("bootstrap/dist/css/bootstrap.css");
@@ -64,8 +64,8 @@ var TaskTemplate = /** @class */ (function (_super) {
         else {
             graph = graphlabs_core_graphs_1.GraphGenerator.generate(5);
         }
-        graph.vertices.forEach(function (v) { return _this.dispatch(actions_1.actionsCreators.addVertex(v.name)); });
-        graph.edges.forEach(function (e) { return _this.dispatch(actions_1.actionsCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)); });
+        graph.vertices.forEach(function (v) { return _this.dispatch(rootAction_1.actionsCreators.addVertex(v.name)); });
+        graph.edges.forEach(function (e) { return _this.dispatch(rootAction_1.actionsCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)); });
     };
     TaskTemplate.prototype.render = function () {
         var Task = this.task();

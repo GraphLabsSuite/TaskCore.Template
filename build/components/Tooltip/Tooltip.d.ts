@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { Component, ReactNode } from 'react';
 export interface Props {
     value: string;

@@ -18,7 +18,7 @@ function configureStore(initialState) {
     var store = redux_1.createStore(rootReducer_1.default, initialState, redux_devtools_extension_1.composeWithDevTools(redux_1.applyMiddleware.apply(void 0, middlewares)));
     if (module.hot) {
         // Enable Webpack hot module replacement for reducers
-        module.hot.accept(['./counter', './graph', './intersection'], function () {
+        module.hot.accept(['./graph', './intersection'], function () {
             store.replaceReducer(rootReducer_1.default);
         });
     }

@@ -20,7 +20,7 @@ export function configureStore(initialState?: RootState): Store<RootState> {
     ));
     if (module.hot) {
         // Enable Webpack hot module replacement for reducers
-        module.hot.accept(['./counter', './graph', './intersection'], () => {
+        module.hot.accept([ './graph', './intersection'], () => {
             store.replaceReducer(rootReducer);
         });
     }

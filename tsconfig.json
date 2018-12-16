@@ -12,7 +12,13 @@
     "declaration": true,
     "moduleResolution": "node"
   },
+  "libs": [
+    "es2015.promise",
+    "es5",
+    "dom"
+  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "build"
   ]
 }

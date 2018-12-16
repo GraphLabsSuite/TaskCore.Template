@@ -20,9 +20,9 @@ var ToolButton_1 = require("../ToolButton/ToolButton");
 var styled_components_1 = require("styled-components");
 var store_1 = require("../../redux/store");
 var react_1 = require("react");
-var es6_promise_1 = require("es6-promise");
 var actions_1 = require("../../redux/app/actions");
 var Tooltip_1 = require("../Tooltip/Tooltip");
+var bluebird_1 = require("bluebird");
 var ButtonList = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  {\n    display: block;\n  }\n"], ["\n  {\n    display: block;\n  }\n"])));
 var taskId = 1; // TODO: get it from somewhere
 var sessionGuid = 'uuid'; // TODO: get it from somewhere
@@ -46,7 +46,7 @@ var ToolButtonList = /** @class */ (function (_super) {
         return 'Test help example';
     };
     ToolButtonList.prototype.beforeComplete = function () {
-        return es6_promise_1.Promise.resolve({ success: true, fee: 0 });
+        return bluebird_1.Promise.resolve({ success: true, fee: 0 });
     };
     ToolButtonList.prototype.dispatch = function (payload) {
         if (process.env.NODE_ENV === 'production') {

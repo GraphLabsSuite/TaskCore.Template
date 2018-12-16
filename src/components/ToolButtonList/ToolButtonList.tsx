@@ -4,9 +4,9 @@ import { ToolButton } from '../ToolButton/ToolButton';
 import {default as styled } from 'styled-components';
 import { store } from '../../redux/store';
 import { Component } from 'react';
-import { Promise } from 'es6-promise';
 import {actionsCreators as actions } from '../../redux/app/actions';
 import Tooltip from '../Tooltip/Tooltip';
+import { Promise } from 'bluebird';
 
 const ButtonList = styled.div`
   {

@@ -74,8 +74,7 @@ export class ToolButtonList extends Component<{}, ButtonsState> {
         list[setImg('Help')] = () => {
             this.dispatch({
                 message: 'Help required',
-                taskId,
-                sessionGuid,
+                variantId: taskId,
                 isTaskFinished: false,
                 fee: 0,
                 datetime: Date.now(),
@@ -88,8 +87,7 @@ export class ToolButtonList extends Component<{}, ButtonsState> {
             this.beforeComplete().then(res => {
                 this.dispatch({
                     message: `Task is done (${res.fee})`,
-                    taskId,
-                    sessionGuid,
+                    variantId: taskId,
                     isTaskFinished: false,
                     fee: res.fee,
                     datetime: Date.now(),
@@ -97,8 +95,7 @@ export class ToolButtonList extends Component<{}, ButtonsState> {
                 if (res.success) {
                     this.dispatch({
                         message: 'Task is checked',
-                        taskId,
-                        sessionGuid,
+                        variantId: taskId,
                         isTaskFinished: true,
                         fee: res.fee,
                         datetime: Date.now(),

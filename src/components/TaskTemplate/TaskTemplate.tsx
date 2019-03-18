@@ -131,6 +131,7 @@ export class TaskTemplate extends Component<{}, { status: boolean; }> {
     public render() {
         const Task: any = this.task();
         const Toolbar = this.getTaskToolbar();
+        const Area = this.getArea();
         return (
             <App id="wrap">
                 {this.state.status
@@ -139,7 +140,7 @@ export class TaskTemplate extends Component<{}, { status: boolean; }> {
                         <div>
                             <MainRow>
                                 <GraphCell>
-                                    <GraphVisualizer/>
+                                    <Area />
                                 </GraphCell>
                                 <TaskCell>
                                     <p>Задание</p>
@@ -175,6 +176,10 @@ export class TaskTemplate extends Component<{}, { status: boolean; }> {
 
     protected getTaskToolbar() {
         return TaskToolbar;
+    }
+
+    protected getArea() {
+        return GraphVisualizer;
     }
 
     protected task(): SFC<{}> {

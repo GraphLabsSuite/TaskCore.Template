@@ -178,8 +178,8 @@ export class TaskTemplate extends Component<{}, { status: boolean; }> {
         return TaskToolbar;
     }
 
-    protected getArea() {
-        return GraphVisualizer;
+    protected getArea(): SFC<{}> {
+        return () => <GraphVisualizer/>;
     }
 
     protected task(): SFC<{}> {

@@ -9,3 +9,4 @@ export * from './components/ToolButtonList/ToolButtonList';
 export * from './redux/store';
 export * from './redux/rootReducer';
 export * from './redux/graph';
+export * from './models/graph';

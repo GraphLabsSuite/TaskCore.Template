@@ -18,9 +18,9 @@ export function configureStore(initialState?: RootState): Store<RootState> {
   const storeObject: Store = createStore(rootReducer, initialState, composeWithDevTools(
     applyMiddleware(...middlewares),
   ));
-  if (module.hot) {
+  if ((module as any).hot) {
     // Enable Webpack hot module replacement for reducers
-    module.hot.accept(['./graph'], () => {
+      (module as any).hot.accept(['./graph'], () => {
       store.replaceReducer(rootReducer);
     });
   }

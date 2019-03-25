@@ -1,4 +1,4 @@
-import * as React from 'react';
+﻿import * as React from 'react';
 import { GraphVisualizer } from '../GraphVisualizer/GraphVisualizer';
 import { TaskToolbar } from '../TaskToolbar/TaskToolbar';
 import { TaskConsole } from '../TaskConsole/TaskConsole';
@@ -103,11 +103,19 @@ export class TaskTemplate extends Component<{}, { status: boolean; }> {
         status: store.getState().app.status,
     };
 
-    componentWillMount() {
+componentWillMount() {
         const data = sessionStorage.getItem('variant');
         let graph: IGraph<IVertex, IEdge>;
+        let matrix: IMatrix;
         if (data) {
-           graph = this.graphManager(data);
+          switch(data.type) {
+             case matrix: 
+                 matrix = this.matrixManager(data);
+                 break;
+             case graph:  
+                 graph = this.graphManager(data);
+                 break;
+           }
         } else {
             graph = GraphGenerator.generate(5);
         }

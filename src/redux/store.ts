@@ -15,7 +15,7 @@ export function configureStore(initialState?: RootState): Store<RootState> {
   const middlewares: Middleware[] = [
     thunk,
   ];
-  const storeObject: Store = createStore(rootReducer, initialState, composeWithDevTools(
+  const storeObject: Store<RootState> = createStore(rootReducer, initialState, composeWithDevTools(
     applyMiddleware(...middlewares),
   ));
   if ((module as any).hot) {
@@ -27,4 +27,4 @@ export function configureStore(initialState?: RootState): Store<RootState> {
   return storeObject;
 }
 
-export const store: Store = configureStore();
+export const store: Store<RootState> = configureStore();

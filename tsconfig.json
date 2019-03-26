@@ -5,7 +5,7 @@
     "noImplicitAny": true,
     "module": "esnext",
     "target": "es5",
-    "jsx": "preserve",
+    "jsx": "react",
     "declaration": true,
     "lib": [
       "dom",

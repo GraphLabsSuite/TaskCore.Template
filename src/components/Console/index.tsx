@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IStudentAction } from 'graphlabs.core.notifier';
-import { RootState, store } from '../../main';
+import { RootState, store } from '../..';
 import {Component} from "react";
 import styles from './Console.module.css';
 

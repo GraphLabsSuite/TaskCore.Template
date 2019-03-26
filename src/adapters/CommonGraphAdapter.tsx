@@ -2,14 +2,12 @@ import * as React from 'react';
 import { select } from 'd3-selection';
 import * as d3 from 'd3';
 
-import { RootState } from '../redux/rootReducer';
+import { RootState, store, IGraphView } from '..';
 import { GraphSerializer, IEdge, IGraph, IVertex } from 'graphlabs.core.graphs';
 import { CircleGraphVisualizer } from 'graphlabs.core.visualizer';
 
 import { graphSerializer } from '../utils/serializers';
-import { store } from '../redux/store';
 import { Component } from 'react';
-import { IGraphView } from '../models/graph';
 
 export interface CGAProps {
     className?: string;
@@ -21,10 +19,10 @@ export interface State {
 
 export class CommonGraphAdapter extends Component<CGAProps, State> {
 
-    ref: SVGSVGElement;
-    graphVisualizer: CircleGraphVisualizer;
+    public ref!: SVGSVGElement;
+    public graphVisualizer!: CircleGraphVisualizer;
 
-    private _graph: IGraphView;
+    private _graph!: IGraphView;
     get graph(): IGraphView {
         const state: RootState = store.getState();
         store.subscribe(() => {
@@ -67,8 +65,9 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
                 .style('fill', 'none')
                 .on('click', this.clickEdge.bind(this));
         }
+
         for (const elem of this.graphVisualizer.geometric.vertices) {
-            select(this.ref)
+            select<SVGSVGElement, {}>(this.ref)
                 .append('circle')
                 .attr('id', `vertex_${elem.label}`)
                 .attr('cx', elem.center.X)
@@ -78,7 +77,7 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
                 .style('stroke', '#000')
                 .style('stroke-width', 5)
                 .classed('dragging', true)
-                .call(d3.drag().on('start', startDrag))
+                .call(d3.drag<SVGCircleElement, {}>().on('start', startDrag))
                 .on('click', this.clickVertex.bind(this));
             select(this.ref)
                 .append('text')
@@ -95,7 +94,7 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
                 .style('pointer-events', 'none');
         }
 
-        function startDrag() {
+        function startDrag(this: SVGCircleElement) {
             const circle = d3.select(this).classed('dragging', true);
             d3.event.on('drag', dragged).on('end', ended);
 

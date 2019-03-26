@@ -1,4 +1,4 @@
-import { IGraphView } from '../../models/graph';
+import { IGraphView } from '../..';
 
 import {
   ADD_VERTEX,

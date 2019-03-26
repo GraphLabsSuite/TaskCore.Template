@@ -1,20 +1,12 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
-import 'bootstrap/dist/css/bootstrap.css';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import * as serviceWorker from './serviceWorker';
+import {Template} from './components/Template';
 
-import { TaskTemplate } from './components/TaskTemplate/TaskTemplate';
+ReactDOM.render(<Template />, document.getElementById('root'));
 
-const updateRender = () => {
-  ReactDOM.render(
-    <AppContainer>
-      <TaskTemplate />
-    </AppContainer>,
-    document.getElementById('root'),
-  );
-};
-
-updateRender();
-if ((module as any).hot) {
-  (module as any).hot.accept();
-}
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();

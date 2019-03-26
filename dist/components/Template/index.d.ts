@@ -1,4 +1,4 @@
-import { TaskToolbar } from '../TaskToolbar';
+import { Toolbar } from '../Toolbar';
 import { IGraph, IVertex, IEdge } from 'graphlabs.core.graphs';
 import { Component, SFC } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -13,7 +13,7 @@ export declare class Template extends Component<{}, State> {
     constructor(props: {});
     render(): JSX.Element;
     protected graphManager(data: any): IGraph<IVertex, IEdge>;
-    protected getTaskToolbar(): typeof TaskToolbar;
+    protected getTaskToolbar(): typeof Toolbar;
     protected getArea(): SFC<{}>;
     protected task(): SFC<{}>;
     private dispatch;

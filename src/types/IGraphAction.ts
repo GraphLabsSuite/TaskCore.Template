@@ -10,3 +10,5 @@ export interface IGraphActionEdge {
 }
 
 export type IGraphAction = IGraphActionEdge | IGraphActionVertex;
+
+export const graphAction = 'graphAction';

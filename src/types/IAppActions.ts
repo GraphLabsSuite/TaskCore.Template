@@ -4,3 +4,5 @@ export interface ISetStatus {
 }
 
 export type IAppActions = ISetStatus;
+
+export const appAction = 'appAction';

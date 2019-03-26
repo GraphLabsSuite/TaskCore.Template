@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { ToolButtonList } from '../ToolButtonList';
-import styles from './TaskToolbar.module.css';
+import styles from './Toolbar.module.css';
 
-export class TaskToolbar extends React.Component {
+export class Toolbar extends React.Component {
     public render() {
         const Buttons = this.getButtonList();
         return (

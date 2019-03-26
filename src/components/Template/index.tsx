@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { GraphVisualizer } from '../GraphVisualizer';
-import { TaskToolbar } from '../TaskToolbar';
-import { TaskConsole } from '../Console';
+import { Toolbar } from '../Toolbar';
+import { Console } from '../Console';
 import { GraphGenerator, IGraph, IVertex, IEdge, Graph, Vertex, Edge } from 'graphlabs.core.graphs';
 import { StudentMark } from '../StudentMark';
 import { actionsCreators, store } from '../..';
@@ -72,7 +72,7 @@ export class Template extends Component<{}, State> {
                                 <StudentMark/>
                             </div>
                             <div className={styles.LowRow}>
-                                <TaskConsole/>
+                                <Console/>
                             </div>
                         </div>)}
             </div>
@@ -94,7 +94,7 @@ export class Template extends Component<{}, State> {
     }
 
     protected getTaskToolbar() {
-        return TaskToolbar;
+        return Toolbar;
     }
 
     protected getArea(): SFC<{}> {

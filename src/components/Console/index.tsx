@@ -4,7 +4,7 @@ import { RootState, store } from '../..';
 import {Component} from "react";
 import styles from './Console.module.css';
 
-export class TaskConsole extends Component {
+export class Console extends Component {
 
     private _action!: Array<IStudentAction>;
     get actions(): Array<IStudentAction> {

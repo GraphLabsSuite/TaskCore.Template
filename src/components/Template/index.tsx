@@ -4,7 +4,7 @@ import { Toolbar } from '../Toolbar';
 import { Console } from '../Console';
 import { GraphGenerator, IGraph, IVertex, IEdge, Graph, Vertex, Edge } from 'graphlabs.core.graphs';
 import { StudentMark } from '../StudentMark';
-import { actionsCreators, store } from '../..';
+import { graphActionCreators, store } from '../..';
 import { Component, SFC } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Promise } from 'bluebird';
@@ -29,8 +29,8 @@ export class Template extends Component<{}, State> {
         } else {
             graph = GraphGenerator.generate(5);
         }
-        graph.vertices.forEach(v => this.dispatch(actionsCreators.addVertex(v.name)));
-        graph.edges.forEach(e => this.dispatch(actionsCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
+        graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
+        graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
     }
 
     public constructor(props: {}) {

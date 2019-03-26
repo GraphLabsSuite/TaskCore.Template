@@ -8,6 +8,7 @@ export * from './components/ToolButton';
 export * from './components/ToolButtonList';
 export * from './redux/store';
 export * from './redux/rootReducer';
+export * from './redux/app';
 export * from './redux/graph';
 export * from './models';
 export * from './types';

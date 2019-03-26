@@ -3,7 +3,7 @@ import { addAction, addPlainAction, IStudentAction } from 'graphlabs.core.notifi
 import { ToolButton } from '../ToolButton';
 import { store } from '../..';
 import { Component } from 'react';
-import {actionsCreators as actions } from '../../redux/app/actions';
+import {appActionCreators as actions } from '../../redux/app/actions';
 import Tooltip from '../Tooltip';
 import styles from './ToolButtonList.module.css';
 

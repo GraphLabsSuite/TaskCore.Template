@@ -3,6 +3,8 @@ module.exports = {
     entry: "./src/index.ts",
     output: {
         filename: "bundle.js",
+        library: 'graphlabs.core.template',
+        libraryTarget: 'umd',
         path: __dirname + "/dist"
     },
     devtool: "source-map",

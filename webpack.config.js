@@ -31,16 +31,30 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    'css-loader',
-                ],
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true,
+                            modules: true,
+                            localIdentName: "[local]___[hash:base64:5]"
+                        },
+                    },
+                ]
             },
             {
                 test: /\.scss$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    'css-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true,
+                            modules: true,
+                            localIdentName: "[local]___[hash:base64:5]"
+                        },
+                    },
                     'sass-loader',
-                ],
+                ]
             },
             {
                 test:/\.(svg|eot|woff2|woff|ttf)$/,
@@ -49,20 +63,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new MiniCssExtractPlugin({
-            filename: "[name].css",
-        })
+        new MiniCssExtractPlugin(),
     ],
-    optimization: {
-        splitChunks: {
-            cacheGroups: {
-                styles: {
-                    name: 'styles',
-                    test: /\.(css|scss)$/,
-                    chunks: 'all',
-                    enforce: true
-                }
-            }
-        }
-    },
 };

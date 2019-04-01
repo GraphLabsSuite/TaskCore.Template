@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import {Template} from './components/Template';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(<Template />, document.getElementById('root'));
 

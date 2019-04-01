@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "outDir": "dist",
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "esnext",
@@ -12,14 +12,8 @@
       "dom.iterable",
       "esnext"
     ],
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "noEmit": true
+    "rootDir": "src"
   },
   "include": [
     "./src/**/*"

@@ -69,7 +69,7 @@
     "start": "node scripts/start.js",
     "build:prod": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "build": "webpack-cli"
+    "build": "tsc"
   },
   "main": "./dist/bundle.js",
   "types": "./dist/index.d.ts",

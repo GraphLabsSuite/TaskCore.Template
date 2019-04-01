@@ -3,6 +3,7 @@ import { GraphVisualizer } from '../GraphVisualizer/GraphVisualizer';
 import { TaskToolbar } from '../TaskToolbar/TaskToolbar';
 import { TaskConsole } from '../TaskConsole/TaskConsole';
 import { GraphGenerator, IGraph, IVertex, IEdge, Graph, Vertex, Edge } from 'graphlabs.core.graphs';
+import { Matrix, IMatrix }  from 'graphlabs.core.lib';
 import { StudentMark } from '../StudentMark/StudentMark';
 import { actionsCreators } from '../../redux/graph/actions';
 import {default as styled, StyledFunction } from 'styled-components';
@@ -105,16 +106,20 @@ export class TaskTemplate extends Component<{}, { status: boolean; }> {
 
 componentWillMount() {
         const data = sessionStorage.getItem('variant');
+        const objectData = JSON.parse(data);
+        const dataType = objectData.type;
         let graph: IGraph<IVertex, IEdge>;
         let matrix: IMatrix;
         if (data) {
-          switch(data.type) {
-             case matrix: 
-                 matrix = this.matrixManager(data);
+          switch (objectData.type) {
+             case 'matrix':
+                 // matrixOb = this.matrixManager(data);
                  break;
-             case graph:  
+             case 'graph':
                  graph = this.graphManager(data);
                  break;
+              default:
+                  break;
            }
         } else {
             graph = GraphGenerator.generate(5);

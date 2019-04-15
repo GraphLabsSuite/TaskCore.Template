@@ -24,7 +24,6 @@ export class Template extends Component<{}, State> {
     componentWillMount() {
         const data = sessionStorage.getItem('variant');
         const objectData = JSON.parse(data || 'null');
-        const dataType = objectData.type;
         let graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(5);
         let matrix: IMatrixView;
         if (data) {

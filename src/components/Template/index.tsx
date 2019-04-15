@@ -4,7 +4,7 @@ import { Toolbar } from '../Toolbar';
 import { Console } from '../Console';
 import { GraphGenerator, IGraph, IVertex, IEdge, Graph, Vertex, Edge } from 'graphlabs.core.graphs';
 import { StudentMark } from '../StudentMark';
-import { graphActionCreators, store } from '../..';
+import {graphActionCreators, IMatrixView, store} from '../..';
 import { Component, SFC } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Promise } from 'bluebird';
@@ -23,11 +23,21 @@ export class Template extends Component<{}, State> {
 
     componentWillMount() {
         const data = sessionStorage.getItem('variant');
-        let graph: IGraph<IVertex, IEdge>;
+        const objectData = JSON.parse(data || '');
+        const dataType = objectData.type;
+        let graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(5);
+        let matrix: IMatrixView;
         if (data) {
-            graph = this.graphManager(data);
-        } else {
-            graph = GraphGenerator.generate(5);
+            switch (objectData && objectData.type) {
+                case 'matrix':
+                    // matrixOb = this.matrixManager(data);
+                    break;
+                case 'graph':
+                    graph = this.graphManager(data);
+                    break;
+                default:
+                    break;
+            }
         }
         graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
         graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));

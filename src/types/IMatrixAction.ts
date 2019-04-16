@@ -1,8 +1,6 @@
-import {IMatrixView} from "../models/matrix";
+import {IMatrixView} from "../models";
 
-export interface IMatrixAction {
+export interface IMatrixActionFill {
     type: string;
     matrix: IMatrixView;
 }
-
-export const matrixAction = 'matrixAction';

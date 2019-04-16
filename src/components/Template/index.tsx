@@ -26,34 +26,23 @@ export class Template extends Component<{}, State> {
 
     componentWillMount() {
         const data = sessionStorage.getItem('variant');
-        let graph: IGraph<IVertex, IEdge>;
+        const objectData = JSON.parse(data || 'null');
+        let graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(5);
         let matrix: IMatrixView;
-        let objectData;
-        try {
-            objectData = JSON.parse(data||"null");
-        } catch (err) {
-            alert( 'Извините, в данных ошибка, мы попробуем получить их ещё раз' );
-            alert( err.name );
-            alert( err.message );
-        }
-        if (objectData && objectData.type) {
-            switch (objectData.type) {
+        if (data) {
+            switch (objectData && objectData.type) {
                 case 'matrix':
                     matrix = this.matrixManager(data);
                     break;
                 case 'graph':
                     graph = this.graphManager(data);
-                    graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
-                    graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
                     break;
                 default:
                     break;
             }
-        } else {
-            graph = GraphGenerator.generate(5);
-            graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
-            graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
-        }
+        } 
+        graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
+        graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
 
     }
 

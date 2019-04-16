@@ -1,32 +1,26 @@
 import * as React from 'react';
 import { addAction, addPlainAction, IStudentAction } from 'graphlabs.core.notifier';
-import { ToolButton } from '../ToolButton/ToolButton';
-import {default as styled } from 'styled-components';
-import { store } from '../../redux/store';
+import { ToolButton } from '../ToolButton';
+import { store } from '../..';
 import { Component } from 'react';
-import { Promise } from 'es6-promise';
-import {actionsCreators as actions } from '../../redux/app/actions';
-import Tooltip from '../Tooltip/Tooltip';
-
-const ButtonList = styled.div`
-  {
-    display: block;
-  }
-`;
+import {appActionCreators as actions } from '../../redux/app/actions';
+import Tooltip from '../Tooltip';
+import styles from './ToolButtonList.module.css';
 
 const taskId = 1; // TODO: get it from somewhere
 const sessionGuid = 'uuid'; // TODO: get it from somewhere
 
-export interface ButtonsState {
+interface State {
     show: boolean;
 }
 
-export class ToolButtonList extends Component<{}, ButtonsState> {
+export class ToolButtonList extends Component<{}, State> {
 
-    // TODO: Add normal types to these variables (maybe Dictionary)
-    public toolButtons: Object;
+    public toolButtons!: {
+        [index: string]: () => void;
+    };
 
-    private bound: HTMLDivElement;
+    private bound!: HTMLDivElement|null;
 
     constructor(props: {}) {
         super(props);
@@ -68,9 +62,9 @@ export class ToolButtonList extends Component<{}, ButtonsState> {
     }
 
     private setDefaultButtonList() {
-        const setImg = (title: string) =>
+        const setImg = (title: string): string =>
             `http://gl-backend.svtz.ru:5000/odata/downloadImage(name='${title}.png')`;
-        let list = {};
+        let list: { [index: string]: () => void } = {};
         list[setImg('Help')] = () => {
             this.dispatch({
                 message: 'Help required',
@@ -122,12 +116,10 @@ export class ToolButtonList extends Component<{}, ButtonsState> {
         }
         return (
             <div
-                ref={i => {
-                    this.bound = i;
-                }}
+                ref={i => {this.bound = i}}
             >
                 <Tooltip value={this.help()} show={this.state.show} bound={this.bound} showTooltip={this.hide}/>
-                <ButtonList>{result}</ButtonList>
+                <div className={styles.ButtonList}>{result}</div>
             </div>
         );
     }

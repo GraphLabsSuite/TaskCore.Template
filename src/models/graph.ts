@@ -1,13 +1,15 @@
 export interface IGraphView {
-  vertices: IVertexView[];
-  edges: IEdgeView[];
+    vertices: IVertexView[];
+    edges: IEdgeView[];
 }
 
 export interface IEdgeView {
-  vertexOne: string;
-  vertexTwo: string;
+    vertexOne: string;
+    vertexTwo: string;
 }
 
 export interface IVertexView {
-  name: string;
+    name: string;
 }
+
+export const graph = 'graph';

@@ -30,7 +30,7 @@ export class Template extends Component<{}, State> {
         let matrix: IMatrixView;
         let objectData;
         try {
-            objectData = JSON.parse(data||"");
+            objectData = JSON.parse(data||"null");
         } catch (err) {
             alert( 'Извините, в данных ошибка, мы попробуем получить их ещё раз' );
             alert( err.name );

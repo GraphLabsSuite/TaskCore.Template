@@ -15,16 +15,16 @@ export function configureStore(initialState?: RootState): Store<RootState> {
   const middlewares: Middleware[] = [
     thunk,
   ];
-  const storeObject: Store = createStore(rootReducer, initialState, composeWithDevTools(
+  const storeObject: Store<RootState> = createStore(rootReducer, initialState, composeWithDevTools(
     applyMiddleware(...middlewares),
   ));
-  if (module.hot) {
+  if ((module as any).hot) {
     // Enable Webpack hot module replacement for reducers
-    module.hot.accept(['./graph'], () => {
+      (module as any).hot.accept(['./graph'], () => {
       store.replaceReducer(rootReducer);
     });
   }
   return storeObject;
 }
 
-export const store: Store = configureStore();
+export const store: Store<RootState> = configureStore();

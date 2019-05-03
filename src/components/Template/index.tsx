@@ -32,14 +32,13 @@ export class Template extends Component<{}, State> {
         try {
             objectData = JSON.parse(data||"null");
         } catch (err) {
-            alert( 'Извините, в данных ошибка, мы попробуем получить их ещё раз' );
-            alert( err.name );
-            alert( err.message );
+            console.log("Извините, в данных ошибка, мы попробуем получить их еще раз");
         }
         if (objectData && objectData.type) {
             switch (objectData.type) {
                 case 'matrix':
                     matrix = this.matrixManager(data);
+                    graph = GraphGenerator.generate(0);
                     break;
                 case 'graph':
                     graph = this.graphManager(data);

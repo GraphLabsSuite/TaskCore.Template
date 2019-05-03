@@ -1,14 +1,13 @@
-
-import {IMatrixAction} from "../../types/IMatrixAction";
-import {IMatrixView} from "../../models/matrix";
+import {IMatrixView} from "../../models";
+import {IMatrixActionFill} from "../../types/IMatrixAction";
 
 export const FILL_MATRIX: string = 'matrix/FILL_MATRIX';
 
-export const matrixActionsCreators = {
-    fillMatrix: function (matrix: IMatrixView): IMatrixAction {
-        return {
-            type: FILL_MATRIX,
-            matrix: matrix
-        };
-    }
-}
+export const matrixActionCreators = {
+  fillMatrix(matrix: IMatrixView): IMatrixActionFill {
+    return {
+      type: FILL_MATRIX,
+      matrix,
+    };
+  },
+};

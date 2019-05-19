@@ -26,7 +26,7 @@ export class Template extends Component<{}, State> {
 
     componentWillMount() {
         const data = sessionStorage.getItem('variant');
-        let graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(5);
+        let graph: IGraph<IVertex, IEdge>;
         let matrix: IMatrixView;
         let objectData;
         try {
@@ -39,18 +39,25 @@ export class Template extends Component<{}, State> {
                 case 'matrix':
                     matrix = this.matrixManager(data);
                     graph = GraphGenerator.generate(0);
+                    graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
+                    graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
                     break;
                 case 'graph':
                     graph = this.graphManager(data);
+                    graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
+                    graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
                     break;
                 default:
                     break;
             }
-        } 
-        graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
-        graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
-
+        }
+        else {
+            graph = GraphGenerator.generate(5);
+            graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
+            graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
+        }
     }
+
 
     public constructor(props: {}) {
         super(props);

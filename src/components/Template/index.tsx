@@ -5,7 +5,7 @@ import { Console } from '../Console';
 import { GraphGenerator, IGraph, IVertex, IEdge, Graph, Vertex, Edge } from 'graphlabs.core.graphs';
 import { StudentMark } from '../StudentMark';
 import { graphActionCreators, store } from '../..';
-import { matrixActionsCreators } from "../../redux/matrix";
+import {matrixActionCreators} from "../../redux/matrix";
 import {Matrix, IMatrix} from "graphlabs.core.lib";
 import { IMatrixView } from "../../models/matrix";
 import { Component, SFC } from 'react';
@@ -26,25 +26,38 @@ export class Template extends Component<{}, State> {
 
     componentWillMount() {
         const data = sessionStorage.getItem('variant');
-        const objectData = JSON.parse(data || 'null');
-        let graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(5);
+        let graph: IGraph<IVertex, IEdge>;
         let matrix: IMatrixView;
-        if (data) {
-            switch (objectData && objectData.type) {
+        let objectData;
+        try {
+            objectData = JSON.parse(data||"null");
+        } catch (err) {
+            console.log("Извините, в данных ошибка, мы попробуем получить их еще раз");
+        }
+        if (objectData && objectData.type) {
+            switch (objectData.type) {
                 case 'matrix':
                     matrix = this.matrixManager(data);
+                    graph = GraphGenerator.generate(0);
+                    graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
+                    graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
                     break;
                 case 'graph':
                     graph = this.graphManager(data);
+                    graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
+                    graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
                     break;
                 default:
                     break;
             }
-        } 
-        graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
-        graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
-
+        }
+        else {
+            graph = GraphGenerator.generate(5);
+            graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
+            graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
+        }
     }
+
 
     public constructor(props: {}) {
         super(props);
@@ -109,7 +122,7 @@ export class Template extends Component<{}, State> {
     protected matrixManager(data: any) {
         const matrixData = JSON.parse(data);
         const { matrix } = matrixData.data[0];
-        store.dispatch(matrixActionsCreators.fillMatrix(matrix));
+        store.dispatch(matrixActionCreators.fillMatrix(matrix));
         return matrix;
     }
 

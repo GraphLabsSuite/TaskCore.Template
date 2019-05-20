@@ -104,18 +104,18 @@ export class Template extends Component<{}, State> {
     }
 
     protected graphManager(data: any): IGraph<IVertex, IEdge> {
+        // TODO: fix the types
+        const graph: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
         if (data) {
             const { vertices, edges } = data[0];
-            // TODO: fix the types
-            const graph: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
             vertices.forEach((v: any) => {
                 graph.addVertex(new Vertex(v));
             });
             edges.forEach((e: any) => {
                 graph.addEdge(new Edge(graph.getVertex(e.source)[0], graph.getVertex(e.target)[0]));
             });
-            return graph;
         }
+        return graph;
     }
 
     protected matrixManager(data: any) {

@@ -41,7 +41,7 @@ export class Template extends Component<{}, State> {
                     graph = GraphGenerator.generate(0);
                     break;
                 case 'graph':
-                    graph = this.graphManager(data);
+                    graph = this.graphManager(objectData.value);
                     graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
                     graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
                     break;
@@ -104,17 +104,18 @@ export class Template extends Component<{}, State> {
     }
 
     protected graphManager(data: any): IGraph<IVertex, IEdge> {
-        const graphData = JSON.parse(data);
-        const { vertices, edges } = graphData.data[0];
-        // TODO: fix the types
-        const graph: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
-        vertices.forEach((v: any) => {
-            graph.addVertex(new Vertex(v));
-        });
-        edges.forEach((e: any) => {
-            graph.addEdge(new Edge(graph.getVertex(e.source)[0], graph.getVertex(e.target)[0]));
-        });
-        return graph;
+        if (data) {
+            const { vertices, edges } = data[0];
+            // TODO: fix the types
+            const graph: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
+            vertices.forEach((v: any) => {
+                graph.addVertex(new Vertex(v));
+            });
+            edges.forEach((e: any) => {
+                graph.addEdge(new Edge(graph.getVertex(e.source)[0], graph.getVertex(e.target)[0]));
+            });
+            return graph;
+        }
     }
 
     protected matrixManager(data: any) {

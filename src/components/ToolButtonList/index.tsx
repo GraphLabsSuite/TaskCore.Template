@@ -14,11 +14,15 @@ interface State {
     show: boolean;
 }
 
+interface AssociativeArray {
+    [index: string]: () => void;
+}
+
 export class ToolButtonList extends Component<{}, State> {
 
-    public toolButtons: {
-        [index: string]: () => void;
-    } = {};
+    public get toolButtons(): AssociativeArray {
+        return {};
+    };
 
     private bound!: HTMLDivElement|null;
 

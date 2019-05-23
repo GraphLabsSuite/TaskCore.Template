@@ -16,9 +16,9 @@ interface State {
 
 export class ToolButtonList extends Component<{}, State> {
 
-    public toolButtons!: {
+    public toolButtons: {
         [index: string]: () => void;
-    };
+    } = {};
 
     private bound!: HTMLDivElement|null;
 
@@ -28,10 +28,6 @@ export class ToolButtonList extends Component<{}, State> {
             show: false,
         };
         this.hide = this.hide.bind(this);
-    }
-
-    public componentWillMount() {
-        this.toolButtons = {};
     }
 
     public render() {

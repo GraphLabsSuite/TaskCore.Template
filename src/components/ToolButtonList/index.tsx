@@ -14,14 +14,10 @@ interface State {
     show: boolean;
 }
 
-interface AssociativeArray {
-    [index: string]: () => void;
-}
-
 export class ToolButtonList extends Component<{}, State> {
 
-    public get toolButtons(): AssociativeArray {
-        return {};
+    public toolButtons?: {
+        [index: string]: () => void;
     };
 
     private bound!: HTMLDivElement|null;
@@ -109,9 +105,11 @@ export class ToolButtonList extends Component<{}, State> {
                 result.push(<div key={key}><ToolButton path={key} listener={defaultList[key]}/></div>);
             }
         }
-        for (const key in this.toolButtons) {
-            if (this.toolButtons.hasOwnProperty(key)) {
-                result.push(<ToolButton key={key} path={key} listener={this.toolButtons[key]}/>);
+        if (this.toolButtons) {
+            for (const key in this.toolButtons) {
+                if (this.toolButtons.hasOwnProperty(key)) {
+                    result.push(<ToolButton key={key} path={key} listener={this.toolButtons[key]}/>);
+                }
             }
         }
         return (

@@ -6,8 +6,7 @@ import { GraphGenerator, IGraph, IVertex, IEdge, Graph, Vertex, Edge } from 'gra
 import { StudentMark } from '../StudentMark';
 import { graphActionCreators, store } from '../..';
 import {matrixActionCreators} from "../../redux/matrix";
-import {Matrix, IMatrix} from "graphlabs.core.lib";
-import { IMatrixView } from "../../models/matrix";
+import { IMatrixView } from "../../models";
 import { Component, SFC } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Promise } from 'bluebird';

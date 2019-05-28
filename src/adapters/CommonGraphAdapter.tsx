@@ -93,14 +93,14 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
                 .style('user-select', 'none')
                 .style('pointer-events', 'none');
         }
-
+        const referrer = this.ref;
         function startDrag(this: SVGCircleElement) {
             const circle = d3.select(this).classed('dragging', true);
             d3.event.on('drag', dragged).on('end', ended);
-
+            const radius = parseFloat(circle.attr('r'));
             function dragged(d: any) {
-                // if (d3.event.x < referrer.clientWidth - radius
-                //     && d3.event.x > radius && d3.event.y < referrer.clientHeight - radius && d3.event.y > radius) {
+                if (d3.event.x < referrer.clientWidth - radius
+                    && d3.event.x > radius && d3.event.y < referrer.clientHeight - radius && d3.event.y > radius) {
                 circle.raise().attr('cx', d3.event.x).attr('cy', d3.event.y);
                 const name = circle.attr('id');
                 const _id = name.substring(7);
@@ -120,7 +120,7 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
                             .attr('y2', d3.event.y);
                     }
                 });
-                // } else {
+                }
                 //     console.log("ATTENTION!!!");
                 // }
             }

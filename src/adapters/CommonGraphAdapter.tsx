@@ -46,8 +46,8 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
     }
 
     renderSvg() {
-        this.graphVisualizer.width = this.ref.clientWidth || this.ref.getBoundingClientRect().width;
-        this.graphVisualizer.height = this.ref.clientHeight || this.ref.getBoundingClientRect().height;
+        this.graphVisualizer.width = this.ref.getBoundingClientRect().width;
+        this.graphVisualizer.height = this.ref.getBoundingClientRect().height;
         this.graphVisualizer.calculate();
         for (const elem of this.graphVisualizer.geometric.edges) {
             const data = [{x: elem.outPoint.X, y: elem.outPoint.Y}, {x: elem.inPoint.X, y: elem.inPoint.Y}];
@@ -99,8 +99,10 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
             d3.event.on('drag', dragged).on('end', ended);
             const radius = parseFloat(circle.attr('r'));
             function dragged(d: any) {
-                if (d3.event.x < referrer.clientWidth - radius
-                    && d3.event.x > radius && d3.event.y < referrer.clientHeight - radius && d3.event.y > radius) {
+                if (d3.event.x < referrer.getBoundingClientRect().width - radius
+                    && d3.event.x > radius
+                    && d3.event.y < referrer.getBoundingClientRect().height - radius
+                    && d3.event.y > radius) {
                 circle.raise().attr('cx', d3.event.x).attr('cy', d3.event.y);
                 const name = circle.attr('id');
                 const _id = name.substring(7);
@@ -132,8 +134,8 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
     }
 
     updateSvg() {
-        this.graphVisualizer.width = this.ref.clientWidth;
-        this.graphVisualizer.height = this.ref.clientHeight;
+        this.graphVisualizer.width = this.ref.getBoundingClientRect().width;
+        this.graphVisualizer.height = this.ref.getBoundingClientRect().height;
         this.graphVisualizer.calculate();
         for (const elem of this.graphVisualizer.geometric.vertices) {
             select(`#vertex_${elem.label}`)
@@ -141,7 +143,10 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
                 .attr('cy', elem.center.Y)
                 .attr('fill', 'black')
                 .attr('r', elem.radius);
-            select(`#label_${elem.label}`).raise().attr('x', elem.center.X).attr('y', elem.center.Y);
+            select(`#label_${elem.label}`)
+                .attr('x', elem.center.X)
+                .attr('y', elem.center.Y + elem.radius / 4)
+                .attr('font-size', elem.radius);
         }
 
         for (const elem of this.graphVisualizer.geometric.edges) {
@@ -176,9 +181,9 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
 
     render() {
         return (
-            <svg
-                style={{width: '100%', height: '100%'}}
-                ref={(ref: SVGSVGElement) => this.ref = ref}
-            />);
+                <svg
+                    style={{width: '100%', height: '100%'}}
+                    ref={(ref: SVGSVGElement) => this.ref = ref}
+                />);
     }
 }

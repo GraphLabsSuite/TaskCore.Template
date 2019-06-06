@@ -2,12 +2,13 @@ import * as React from 'react';
 import { select } from 'd3-selection';
 import * as d3 from 'd3';
 
-import { RootState, store, IGraphView } from '..';
+import { RootState, store, IGraphView, SET_ACTION, appActionCreators } from '..';
 import { GraphSerializer, IEdge, IGraph, IVertex } from 'graphlabs.core.graphs';
 import { CircleGraphVisualizer } from 'graphlabs.core.visualizer';
 
 import { graphSerializer } from '../utils/serializers';
 import { Component } from 'react';
+import { dispatch } from 'd3';
 
 export interface CGAProps {
     className?: string;
@@ -35,14 +36,22 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
         return this._graph;
     }
 
-    protected clickEdge() {
-        // tslint:disable-next-line no-console
-        console.log('Edge clicked!');
+    protected clickEdge(this: SVGLineElement, e: any) {
+        const action = {
+            type: 'edge',
+            out: this.getAttribute('out'),
+            in: this.getAttribute('in'),
+        };
+        store.dispatch(appActionCreators.setAction(action));
     }
 
-    protected clickVertex() {
-        // tslint:disable-next-line no-console
-        console.log('Vertex clicked!');
+    protected clickVertex(this: SVGCircleElement, v: any) {
+        const action = {
+            type: 'vertex',
+            id: this.getAttribute('label'),
+        };
+        store.dispatch(appActionCreators.setAction(action));
+
     }
 
     renderSvg() {
@@ -63,7 +72,7 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
                 .style('stroke', 'black')
                 .style('stroke-width', 5)
                 .style('fill', 'none')
-                .on('click', this.clickEdge.bind(this));
+                .on('click', this.clickEdge);
         }
 
         for (const elem of this.graphVisualizer.geometric.vertices) {
@@ -72,13 +81,14 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
                 .attr('id', `vertex_${elem.label}`)
                 .attr('cx', elem.center.X)
                 .attr('cy', elem.center.Y)
+                .attr('label', elem.label)
                 .attr('r', elem.radius)
                 .style('fill', '#eee')
                 .style('stroke', '#000')
                 .style('stroke-width', 5)
                 .classed('dragging', true)
                 .call(d3.drag<SVGCircleElement, {}>().on('start', startDrag))
-                .on('click', this.clickVertex.bind(this));
+                .on('click', this.clickVertex);
             select(this.ref)
                 .append('text')
                 .attr('id', `label_${elem.label}`)

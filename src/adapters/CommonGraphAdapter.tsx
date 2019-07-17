@@ -51,7 +51,15 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
             id: this.getAttribute('label'),
         };
         store.dispatch(appActionCreators.setAction(action));
-
+        let elemColour = select<SVGCircleElement, {}>(this).style("fill");
+        if (elemColour === 'rgb(255, 0, 0)'){
+            select<SVGCircleElement, {}>(this)
+                .style('fill', '#eee');
+        }
+        else {
+            select<SVGCircleElement, {}>(this)
+                .style('fill', '#ff0000');
+        }
     }
 
     renderSvg() {

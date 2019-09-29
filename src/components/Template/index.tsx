@@ -18,7 +18,10 @@ interface State {
     status: boolean;
 }
 
-export class Template extends Component<{}, State> {
+export class Template extends Component< {}, State> {
+
+    // public graph: IGraph<IVertex, IEdge>;
+
     public state = {
         status: store.getState().app.status,
     };
@@ -33,14 +36,14 @@ export class Template extends Component<{}, State> {
         } catch (err) {
             console.log("Error while JSON parsing");
         }
-        if (objectData && objectData.type) {
-            switch (objectData.type) {
+        if (objectData && objectData.data[0].type) {
+            switch (objectData.data[0].type) {
                 case 'matrix':
-                    matrix = this.matrixManager(data);
+                    matrix = this.matrixManager(objectData.data[0].value);
                     graph = GraphGenerator.generate(0);
                     break;
                 case 'graph':
-                    graph = this.graphManager(objectData.value);
+                    graph = this.graphManager(objectData.data[0].value);
                     graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
                     graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
                     break;
@@ -55,7 +58,6 @@ export class Template extends Component<{}, State> {
         }
     }
 
-
     public constructor(props: {}) {
         super(props);
         store.subscribe(() => {
@@ -65,6 +67,7 @@ export class Template extends Component<{}, State> {
                 });
             }
         });
+        // this.graph = new Graph() as unknown as IGraph<IVertex, IEdge>;
         this.task = this.task.bind(this);
         this.getTaskToolbar = this.getTaskToolbar.bind(this);
     }
@@ -106,7 +109,8 @@ export class Template extends Component<{}, State> {
         // TODO: fix the types
         const graph: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
         if (data) {
-            const { vertices, edges } = data[0];
+            let vertices = data[0].vertices;
+            let edges  = data[0].edges;
             vertices.forEach((v: any) => {
                 graph.addVertex(new Vertex(v));
             });
@@ -118,8 +122,8 @@ export class Template extends Component<{}, State> {
     }
 
     protected matrixManager(data: any) {
-        const matrixData = JSON.parse(data);
-        const { matrix } = matrixData.data[0];
+        // const matrixData = JSON.parse(data);
+        const { matrix } = data[0];
         store.dispatch(matrixActionCreators.fillMatrix(matrix));
         return matrix;
     }
@@ -129,7 +133,10 @@ export class Template extends Component<{}, State> {
     }
 
     protected getArea(): SFC<{}> {
-        return () => <GraphVisualizer/>;
+        return () => <GraphVisualizer
+          //  graph = {this.graph}
+            adapterType={'readable'}
+        />;
     }
 
     protected task(): SFC<{}> {

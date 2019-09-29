@@ -1,9 +1,28 @@
 import * as React from 'react';
-import { CommonGraphAdapter } from '../..';
+// { ReadableGraphAdapter, WritableGraphAdapter } from 'graphlabs.core.visualizer';
+import {CommonGraphAdapter} from "../..";
+import { IGraph, IEdge, IVertex } from "graphlabs.core.graphs";
 
-export class GraphVisualizer extends React.Component {
+export interface GVProps {
+    adapterType?: string;
+   // graph: IGraph<IVertex, IEdge>;
+}
+export class GraphVisualizer extends React.Component<GVProps> {
+
+    /*public render() {
+        if (this.props.adapterType == 'writable'){
+            return <WritableGraphAdapter
+                //graph = {this.props.graph}
+            />;
+        }
+        else if (this.props.adapterType == 'readable' || this.props.adapterType == null) {
+            return <ReadableGraphAdapter
+                //graph = {this.props.graph}
+            />;
+        }
+    }*/
 
     public render() {
-        return <CommonGraphAdapter />;
+        return <CommonGraphAdapter/>
     }
 }

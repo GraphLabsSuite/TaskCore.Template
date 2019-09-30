@@ -33,8 +33,6 @@ export class Template extends Component< {}, State> {
         let objectData;
         try {
             objectData = JSON.parse(data||"null");
-            //console.log(objectData);
-            console.log(data);
         } catch (err) {
             console.log("Error while JSON parsing");
         }
@@ -124,7 +122,6 @@ export class Template extends Component< {}, State> {
     }
 
     protected matrixManager(data: any) {
-        // const matrixData = JSON.parse(data);
         let matrix  = JSON.parse(data[0].matrix);
         store.dispatch(matrixActionCreators.fillMatrix(matrix));
         return matrix;

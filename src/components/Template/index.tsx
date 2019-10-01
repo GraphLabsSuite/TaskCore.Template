@@ -122,8 +122,7 @@ export class Template extends Component< {}, State> {
     }
 
     protected matrixManager(data: any) {
-        // const matrixData = JSON.parse(data);
-        const { matrix } = data[0];
+        let matrix  = JSON.parse(data[0].matrix);
         store.dispatch(matrixActionCreators.fillMatrix(matrix));
         return matrix;
     }

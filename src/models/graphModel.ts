@@ -1,7 +1,10 @@
-import {IGraph, IVertex, IEdge} from "graphlabs.core.graphs";
+import {IGraph, IVertex, IEdge, Graph} from "graphlabs.core.graphs";
 
-export interface graphModel{
-    graph: IGraph<IVertex, IEdge>;
+let graphModel:  IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
+let init:(graph: IGraph<IVertex, IEdge>) => void;
+
+init = function (graph: IGraph<IVertex, IEdge>) {
+   graphModel = graph;
 }
 
-export const graphModel = 'graphModel';
+export {init, graphModel};

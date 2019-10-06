@@ -5,7 +5,7 @@ import { IGraph, IEdge, IVertex } from "graphlabs.core.graphs";
 
 export interface GVProps {
     adapterType?: string;
-   // graph: IGraph<IVertex, IEdge>;
+    graph: IGraph<IVertex, IEdge>;
 }
 export class GraphVisualizer extends React.Component<GVProps> {
 
@@ -23,6 +23,8 @@ export class GraphVisualizer extends React.Component<GVProps> {
     }*/
 
     public render() {
-        return <CommonGraphAdapter/>
+        return <CommonGraphAdapter
+            graph = {this.props.graph}
+        />
     }
 }

@@ -45,7 +45,8 @@ export class Template extends Component< {}, State> {
                 case 'graph':
                     graph = this.graphManager(objectData.data[0].value);
                     init(graph);
-                    // console.log(graphModel);
+                    graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
+                    graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
                     break;
                 default:
                     break;
@@ -53,8 +54,9 @@ export class Template extends Component< {}, State> {
         }
         else {
             graph = GraphGenerator.generate(5);
+            graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
+            graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
              init(graph);
-             // console.log(graphModel);
         }
     }
 

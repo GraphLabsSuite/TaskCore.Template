@@ -12,6 +12,7 @@ import { dispatch } from 'd3';
 
 export interface CGAProps {
     className?: string;
+    graph: IGraph<IVertex,IEdge>;
 }
 
 export interface State {
@@ -177,9 +178,7 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
     }
 
     componentDidMount() {
-        const graphInString: string = graphSerializer(this.graph);
-        const graph: IGraph<IVertex, IEdge> = GraphSerializer.deserialize(graphInString);
-        this.graphVisualizer = new CircleGraphVisualizer(graph);
+        this.graphVisualizer = new CircleGraphVisualizer(this.props.graph);
         this.renderSvg();
         window.onresize = this.updateSvg.bind(this);
     }

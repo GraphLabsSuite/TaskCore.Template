@@ -11,6 +11,7 @@ import { Component, SFC } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Promise } from 'bluebird';
 import styles from './Template.module.scss';
+import {init, graphModel} from "../..";
 
 global.Promise = Promise;
 
@@ -20,15 +21,13 @@ interface State {
 
 export class Template extends Component< {}, State> {
 
-    // public graph: IGraph<IVertex, IEdge>;
-
     public state = {
         status: store.getState().app.status,
     };
 
     componentWillMount() {
         const data = sessionStorage.getItem('variant');
-        let graph: IGraph<IVertex, IEdge>;
+        let graph:IGraph<IVertex, IEdge>;
         let matrix: IMatrixView;
         let objectData;
         try {
@@ -41,9 +40,11 @@ export class Template extends Component< {}, State> {
                 case 'matrix':
                     matrix = this.matrixManager(objectData.data[0].value);
                     graph = GraphGenerator.generate(0);
+                    init(graph);
                     break;
                 case 'graph':
                     graph = this.graphManager(objectData.data[0].value);
+                    init(graph);
                     graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
                     graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
                     break;
@@ -55,6 +56,7 @@ export class Template extends Component< {}, State> {
             graph = GraphGenerator.generate(5);
             graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
             graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
+             init(graph);
         }
     }
 
@@ -67,7 +69,6 @@ export class Template extends Component< {}, State> {
                 });
             }
         });
-        // this.graph = new Graph() as unknown as IGraph<IVertex, IEdge>;
         this.task = this.task.bind(this);
         this.getTaskToolbar = this.getTaskToolbar.bind(this);
     }
@@ -133,7 +134,7 @@ export class Template extends Component< {}, State> {
 
     protected getArea(): SFC<{}> {
         return () => <GraphVisualizer
-          //  graph = {this.graph}
+            graph = {graphModel}
             adapterType={'readable'}
         />;
     }

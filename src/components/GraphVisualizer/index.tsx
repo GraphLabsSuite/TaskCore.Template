@@ -23,6 +23,9 @@ export class GraphVisualizer extends React.Component<GVProps> {
     }*/
 
     public render() {
+        if (this.props.adapterType) {
+            window.sessionStorage.setItem("adapterType", this.props.adapterType);
+        }
         return <CommonGraphAdapter
             graph = {this.props.graph}
         />

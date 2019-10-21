@@ -5,6 +5,8 @@ export const REMOVE_VERTEX: string = 'graph/REMOVE_VERTEX';
 export const ADD_EDGE: string = 'graph/ADD_EDGE';
 export const REMOVE_EDGE: string = 'graph/REMOVE_EDGE';
 
+import {graphModel} from "../../models/graphModel";
+
 // export type Actions = {
 //   ADD_VERTEX: {
 //     type: typeof ADD_VERTEX,

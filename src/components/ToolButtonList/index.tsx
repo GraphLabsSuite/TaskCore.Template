@@ -57,6 +57,25 @@ export class ToolButtonList extends Component<{}, State> {
         });
     }
 
+   /* private setGraphCreationList() {
+        const setImg = (title: string): string =>
+            `http://gl-backend.svtz.ru:5000/odata/downloadImage(name='${title}.png')`;
+        let list: { [index: string]: () => void } = {};
+        list[setImg('add_vertex')] = () => {
+            // addVertex();
+        };
+        list[setImg('add_edge')] = () => {
+            // addEdge();
+        };
+        list[setImg('remove_vertex')] = () => {
+            // removeVertex();
+        };
+        list[setImg('remove_edge')] = () => {
+            // removeEdge();
+        };
+        return list;
+    } */
+
     private setDefaultButtonList() {
         const setImg = (title: string): string =>
             `http://gl-backend.svtz.ru:5000/odata/downloadImage(name='${title}.png')`;
@@ -100,11 +119,17 @@ export class ToolButtonList extends Component<{}, State> {
     private getList() {
         const result = [];
         const defaultList = this.setDefaultButtonList();
+        // const graphCreationList = this.setGraphCreationList();
         for (const key in defaultList) {
             if (defaultList.hasOwnProperty(key)) {
                 result.push(<div key={key}><ToolButton path={key} listener={defaultList[key]}/></div>);
             }
         }
+      /*  for (const key in graphCreationList) { //надо поставить условие!!!
+            if  (graphCreationList.hasOwnProperty(key)) {
+                result.push(<div key={key}><ToolButton path={key} listener={graphCreationList[key]}/></div>);
+            }
+        }*/
         if (this.toolButtons) {
             for (const key in this.toolButtons) {
                 if (this.toolButtons.hasOwnProperty(key)) {

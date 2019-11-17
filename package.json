@@ -1,6 +1,6 @@
 {
   "name": "graphlabs.core.template",
-  "version": "1.0.23",
+  "version": "1.0.31",
   "dependencies": {
     "@babel/core": "7.2.2",
     "@svgr/webpack": "4.1.0",
@@ -34,7 +34,7 @@
     "fs-extra": "7.0.1",
     "graphlabs.core.graphs": "0.0.30",
     "graphlabs.core.notifier": "0.0.29",
-    "graphlabs.core.visualizer": "0.0.22",
+    "graphlabs.core.visualizer": "0.0.34",
     "html-webpack-plugin": "4.0.0-alpha.2",
     "identity-obj-proxy": "3.0.0",
     "jest": "23.6.0",

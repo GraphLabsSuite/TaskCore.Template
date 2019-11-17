@@ -6,6 +6,7 @@ import { Component } from 'react';
 import {appActionCreators as actions } from '../../redux/app/actions';
 import Tooltip from '../Tooltip';
 import styles from './ToolButtonList.module.css';
+import {adapter} from "../..";
 
 const taskId = 1; // TODO: get it from somewhere
 const sessionGuid = 'uuid'; // TODO: get it from somewhere
@@ -62,16 +63,17 @@ export class ToolButtonList extends Component<{}, State> {
             `http://gl-backend.svtz.ru:5000/odata/downloadImage(name='${title}.png')`;
         let list: { [index: string]: () => void } = {};
         list[setImg('add_vertex')] = () => {
-            // addVertex();
+            console.log(adapter);
+            adapter.addVertex();
         };
         list[setImg('add_edge')] = () => {
-            // addEdge();
+            adapter.addEdge();
         };
         list[setImg('remove_vertex')] = () => {
-            // removeVertex();
+            adapter.removeVertex();
         };
         list[setImg('remove_edge')] = () => {
-            // removeEdge();
+            adapter.removeEdge();
         };
         return list;
     }

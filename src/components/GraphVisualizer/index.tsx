@@ -1,5 +1,6 @@
 import * as React from 'react';
-// { ReadableGraphAdapter, WritableGraphAdapter } from 'graphlabs.core.visualizer';
+import {ReadableAdapter, WritableAdapter} from "graphlabs.core.visualizer";
+
 import {CommonGraphAdapter} from "../..";
 import { IGraph, IEdge, IVertex } from "graphlabs.core.graphs";
 
@@ -7,27 +8,37 @@ export interface GVProps {
     adapterType?: string;
     graph: IGraph<IVertex, IEdge>;
 }
+
+let adapter: WritableAdapter;
+
 export class GraphVisualizer extends React.Component<GVProps> {
 
-    /*public render() {
-        if (this.props.adapterType == 'writable'){
-            return <WritableGraphAdapter
-                //graph = {this.props.graph}
-            />;
-        }
-        else if (this.props.adapterType == 'readable' || this.props.adapterType == null) {
-            return <ReadableGraphAdapter
-                //graph = {this.props.graph}
-            />;
-        }
-    }*/
-
-    public render() {
+   public render() {
+        // console.log(this.props.graph);
         if (this.props.adapterType) {
             window.sessionStorage.setItem("adapterType", this.props.adapterType);
         }
+        if (this.props.adapterType == 'writable') {
+            return <WritableAdapter
+                graph={this.props.graph}
+                ref={(i: WritableAdapter) => adapter = i}
+            />;
+        } else if (this.props.adapterType == 'readable' || this.props.adapterType == null) {
+            return <ReadableAdapter
+                graph={this.props.graph}
+            />;
+            console.log(ReadableAdapter.prototype.props.graph);
+        }
+    }
+}
+/*
+     public render() {
+
         return <CommonGraphAdapter
             graph = {this.props.graph}
         />
     }
-}
+}*/
+export {adapter};
+
+

@@ -19,6 +19,7 @@ interface State {
     status: boolean;
 }
 
+
 export class Template extends Component< {}, State> {
 
     public state = {
@@ -56,7 +57,7 @@ export class Template extends Component< {}, State> {
             graph = GraphGenerator.generate(5);
             graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
             graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
-             init(graph);
+            init(graph);
         }
     }
 
@@ -137,6 +138,7 @@ export class Template extends Component< {}, State> {
             graph = {graphModel}
             adapterType={'readable'}
         />;
+
     }
 
     protected task(): SFC<{}> {
@@ -147,4 +149,7 @@ export class Template extends Component< {}, State> {
         store.dispatch(action);
         return void 0;
     }
+
+
 }
+

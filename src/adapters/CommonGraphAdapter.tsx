@@ -3,7 +3,7 @@ import { select } from 'd3-selection';
 import * as d3 from 'd3';
 
 import { RootState, store, IGraphView, SET_ACTION, appActionCreators } from '..';
-import { GraphSerializer, IEdge, IGraph, IVertex } from 'graphlabs.core.graphs';
+import { GraphSerializer, IEdge, IGraph, IVertex, Vertex } from 'graphlabs.core.graphs';
 import { CircleGraphVisualizer } from 'graphlabs.core.visualizer';
 
 import { graphSerializer } from '../utils/serializers';
@@ -23,6 +23,8 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
 
     public ref!: SVGSVGElement;
     public graphVisualizer!: CircleGraphVisualizer;
+    //vertex: IVertex;
+    //vert:IVertex;
 
     private _graph!: IGraphView;
     get graph(): IGraphView {
@@ -46,7 +48,8 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
         store.dispatch(appActionCreators.setAction(action));
     }
 
-    protected clickVertex(this: SVGCircleElement, v: any) {
+    protected clickVertex(this: SVGCircleElement, v:any) {
+        // this.vertex = 'mama';
         const action = {
             type: 'vertex',
             id: this.getAttribute('label'),
@@ -67,6 +70,7 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
         this.graphVisualizer.width = this.ref.getBoundingClientRect().width;
         this.graphVisualizer.height = this.ref.getBoundingClientRect().height;
         this.graphVisualizer.calculate();
+
         for (const elem of this.graphVisualizer.geometric.edges) {
             const data = [{x: elem.outPoint.X, y: elem.outPoint.Y}, {x: elem.inPoint.X, y: elem.inPoint.Y}];
             select(this.ref)
@@ -87,6 +91,7 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
         for (const elem of this.graphVisualizer.geometric.vertices) {
             select<SVGSVGElement, {}>(this.ref)
                 .append('circle')
+                //.datum([this.vertex,this.vert])
                 .attr('id', `vertex_${elem.label}`)
                 .attr('cx', elem.center.X)
                 .attr('cy', elem.center.Y)
@@ -150,9 +155,37 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
                 circle.classed('dragging', false);
             }
         }
+        /*function clickVertex(this: SVGCircleElement, arr:IVertex[]) {
+            if (arr[0].name == '') {
+                arr[0].rename('1');
+                //vertex.name = '1';
+            }
+            else if (arr[1].name == '') {
+                arr[1].rename('2');
+            }
+            console.log(arr[0]);
+            console.log(arr[1]);
+            const action = {
+                type: 'vertex',
+                id: this.getAttribute('label'),
+            };
+            store.dispatch(appActionCreators.setAction(action));
+            let elemColour = select<SVGCircleElement, {}>(this).style("fill");
+            if (elemColour === 'rgb(255, 0, 0)'){
+                select<SVGCircleElement, {}>(this)
+                    .style('fill', '#eee');
+            }
+            else {
+                select<SVGCircleElement, {}>(this)
+                    .style('fill', '#ff0000');
+            }
+
+        }*/
     }
 
     updateSvg() {
+        //console.log(this.vertex);
+        //console.log(this.vert);
         this.graphVisualizer.width = this.ref.getBoundingClientRect().width;
         this.graphVisualizer.height = this.ref.getBoundingClientRect().height;
         this.graphVisualizer.calculate();
@@ -189,6 +222,8 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
             events: []
         };
         this.updateGraph = this.updateGraph.bind(this);
+        //this.vertex = new Vertex('');
+        //this.vert = new Vertex('');
     }
 
     updateGraph() {

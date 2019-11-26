@@ -57,7 +57,7 @@ export class Template extends Component< {}, State> {
             graph = GraphGenerator.generate(5);
             graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
             graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
-            init(graph);
+             init(graph);
         }
     }
 
@@ -111,8 +111,8 @@ export class Template extends Component< {}, State> {
         // TODO: fix the types
         const graph: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
         if (data) {
-            let vertices = data[0].vertices;
-            let edges  = data[0].edges;
+            let vertices = data.vertices;
+            let edges  = data.edges;
             vertices.forEach((v: any) => {
                 graph.addVertex(new Vertex(v));
             });
@@ -124,7 +124,7 @@ export class Template extends Component< {}, State> {
     }
 
     protected matrixManager(data: any) {
-        let matrix  = JSON.parse(data[0].matrix);
+        let matrix  = JSON.parse(data.matrix);
         store.dispatch(matrixActionCreators.fillMatrix(matrix));
         return matrix;
     }

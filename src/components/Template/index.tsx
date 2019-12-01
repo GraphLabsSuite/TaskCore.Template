@@ -12,6 +12,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Promise } from 'bluebird';
 import styles from './Template.module.scss';
 import {init, graphModel} from "../..";
+import { nGraphsActionCreators } from '../../redux/ngraphs';
+import { INGraphsView } from '../../models';
 
 global.Promise = Promise;
 
@@ -30,6 +32,7 @@ export class Template extends Component< {}, State> {
         const data = sessionStorage.getItem('variant');
         let graph:IGraph<IVertex, IEdge>;
         let matrix: IMatrixView;
+        let ngraphs: INGraphsView;
         let objectData;
         try {
             objectData = JSON.parse(data||"null");
@@ -45,6 +48,14 @@ export class Template extends Component< {}, State> {
                     break;
                 case 'graph':
                     graph = this.graphManager(objectData.data[0].value);
+                    init(graph);
+                    graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
+                    graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
+                    break;
+                case 'n-graphs':
+                    let result = this.nGraphsManager(objectData.data[0].value);
+                    ngraphs = result.ngraphs;
+                    graph = result.graph;
                     init(graph);
                     graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
                     graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
@@ -127,6 +138,31 @@ export class Template extends Component< {}, State> {
         let matrix  = JSON.parse(data.matrix);
         store.dispatch(matrixActionCreators.fillMatrix(matrix));
         return matrix;
+    }
+
+    protected nGraphsManager(data: any) {
+        const ngraphs: INGraphsView = []; 
+        const namesForVertices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "g", "k", "l", "m", "n", "o", "p"];
+        let graph:IGraph<IVertex, IEdge> = = new Graph() as unknown as IGraph<IVertex, IEdge>;
+        if (data) {
+            let numberOfGraphs = JSON.parse(data.count);
+            for (let i = 0; i < numberOfGraphs; i++) {
+                let graphInCashe: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
+                let vertices = data.graphs[i].vertices;
+                let edges  = data.graphs[i].edges;
+                vertices.forEach((v: any) => {
+                    graphInCashe.addVertex(new Vertex(namesForVertices[i] + v));
+                    graph.addVertex(new Vertex(namesForVertices[i] + v));
+                });
+                edges.forEach((e: any) => {
+                    graphInCashe.addEdge(new Edge(graphInCashe.getVertex(namesForVertices[i] + e.source)[0], graphInCashe.getVertex(namesForVertices[i] + e.target)[0]));
+                    graph.addEdge(new Edge(graph.getVertex(namesForVertices[i] + e.source)[0], graph.getVertex(namesForVertices[i] + e.target)[0]));
+                });
+                ngraphs.push(graphInCashe);
+            }
+            store.dispatch(nGraphsActionCreators.fillnGraphs(ngraphs));
+        }
+        return {ngraphs : ngraphs, graph : graph};
     }
 
     protected getTaskToolbar() {

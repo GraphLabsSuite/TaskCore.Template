@@ -1,5 +1,5 @@
 import {IGraph, IVertex, IEdge} from "graphlabs.core.graphs";
 
-export type INGraphsView = IGraph<IVertex, IEdge>[];
+export type INGraphsView = Array<IGraph<IVertex, IEdge>>;
 
 export const ngraphs = 'ngraphs';

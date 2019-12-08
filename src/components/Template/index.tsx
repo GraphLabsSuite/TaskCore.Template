@@ -53,12 +53,9 @@ export class Template extends Component< {}, State> {
                     graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
                     break;
                 case 'n-graphs':
-                    let result = this.nGraphsManager(objectData.data[0].value);
-                    ngraphs = result.ngraphs;
-                    graph = result.graph;
+                    ngraphs = this.nGraphsManager(objectData.data[0].value);
+                    graph = GraphGenerator.generate(0);
                     init(graph);
-                    graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
-                    graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
                     break;
                 default:
                     break;
@@ -142,27 +139,25 @@ export class Template extends Component< {}, State> {
 
     protected nGraphsManager(data: any) {
         const ngraphs: INGraphsView = []; 
-        const namesForVertices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "g", "k", "l", "m", "n", "o", "p"];
-        let graph:IGraph<IVertex, IEdge> = = new Graph() as unknown as IGraph<IVertex, IEdge>;
         if (data) {
             let numberOfGraphs = JSON.parse(data.count);
-            for (let i = 0; i < numberOfGraphs; i++) {
-                let graphInCashe: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
-                let vertices = data.graphs[i].vertices;
-                let edges  = data.graphs[i].edges;
-                vertices.forEach((v: any) => {
-                    graphInCashe.addVertex(new Vertex(namesForVertices[i] + v));
-                    graph.addVertex(new Vertex(namesForVertices[i] + v));
-                });
-                edges.forEach((e: any) => {
-                    graphInCashe.addEdge(new Edge(graphInCashe.getVertex(namesForVertices[i] + e.source)[0], graphInCashe.getVertex(namesForVertices[i] + e.target)[0]));
-                    graph.addEdge(new Edge(graph.getVertex(namesForVertices[i] + e.source)[0], graph.getVertex(namesForVertices[i] + e.target)[0]));
-                });
-                ngraphs.push(graphInCashe);
-            }
+            if (numberOfGraphs){
+                for (let i = 0; i < numberOfGraphs; i++) {
+                    let graphInCaсhe: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
+                    let vertices = data.graphs[i].vertices;
+                    let edges  = data.graphs[i].edges;
+                    vertices.forEach((v: any) => {
+                        graphInCaсhe.addVertex(new Vertex(v));
+                    });
+                    edges.forEach((e: any) => {
+                        graphInCaсhe.addEdge(new Edge(graphInCaсhe.getVertex(e.source)[0], graphInCaсhe.getVertex(e.target)[0]));
+                    });
+                    ngraphs.push(graphInCaсhe);
+                }
             store.dispatch(nGraphsActionCreators.fillnGraphs(ngraphs));
+            }
         }
-        return {ngraphs : ngraphs, graph : graph};
+        return ngraphs;
     }
 
     protected getTaskToolbar() {

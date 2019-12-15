@@ -39,7 +39,7 @@ export class Template extends Component< {}, State> {
         } catch (err) {
             console.log("Error while JSON parsing");
         }
-        if (objectData && objectData.data[0].type) {
+        if (objectData && objectData.data[0] && objectData.data[0].type) {
             switch (objectData.data[0].type) {
                 case 'matrix':
                     matrix = this.matrixManager(objectData.data[0].value);
@@ -139,17 +139,17 @@ export class Template extends Component< {}, State> {
 
     protected nGraphsManager(data: any) {
         const ngraphs: INGraphsView = []; 
-        if (data) {
-            let numberOfGraphs = JSON.parse(data.count);
-            if (numberOfGraphs){
-                for (let i = 0; i < numberOfGraphs; i++) {
-                    let graphInCaсhe: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
-                    let vertices = data.graphs[i].vertices;
-                    let edges  = data.graphs[i].edges;
-                    vertices.forEach((v: any) => {
+        if (data && data.count) {
+            const numberOfGraphs = parseInt(data.count, 10);
+            for (let i = 0; i < numberOfGraphs; i++) {
+                if (data.graphs[i]){
+                    const graphInCaсhe: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
+                    const vertices = data.graphs[i].vertices;
+                    const edges  = data.graphs[i].edges;
+                    vertices.forEach((v: string) => {
                         graphInCaсhe.addVertex(new Vertex(v));
                     });
-                    edges.forEach((e: any) => {
+                    edges.forEach((e: IEdge) => {
                         graphInCaсhe.addEdge(new Edge(graphInCaсhe.getVertex(e.source)[0], graphInCaсhe.getVertex(e.target)[0]));
                     });
                     ngraphs.push(graphInCaсhe);

@@ -5,13 +5,13 @@ import { Console } from '../Console';
 import { GraphGenerator, IGraph, IVertex, IEdge, Graph, Vertex, Edge } from 'graphlabs.core.graphs';
 import { StudentMark } from '../StudentMark';
 import { graphActionCreators, store } from '../..';
-import {matrixActionCreators} from "../../redux/matrix";
-import { IMatrixView } from "../../models";
+import { matrixActionCreators } from '../../redux/matrix';
+import { IMatrixView } from '../../models';
 import { Component, SFC } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Promise } from 'bluebird';
 import styles from './Template.module.scss';
-import {init, graphModel} from "../..";
+import { init, graphModel } from '../..';
 import { nGraphsActionCreators } from '../../redux/ngraphs';
 import { INGraphsView } from '../../models';
 
@@ -22,7 +22,7 @@ interface State {
 }
 
 
-export class Template extends Component< {}, State> {
+export class Template extends Component<{}, State> {
 
     public state = {
         status: store.getState().app.status,
@@ -30,14 +30,14 @@ export class Template extends Component< {}, State> {
 
     componentWillMount() {
         const data = sessionStorage.getItem('variant');
-        let graph:IGraph<IVertex, IEdge>;
+        let graph: IGraph<IVertex, IEdge>;
         let matrix: IMatrixView;
         let ngraphs: INGraphsView;
         let objectData;
         try {
-            objectData = JSON.parse(data||"null");
+            objectData = JSON.parse(data || 'null');
         } catch (err) {
-            console.log("Error while JSON parsing");
+            console.log('Error while JSON parsing');
         }
         if (objectData && objectData.data[0] && objectData.data[0].type) {
             switch (objectData.data[0].type) {
@@ -60,12 +60,11 @@ export class Template extends Component< {}, State> {
                 default:
                     break;
             }
-        }
-        else {
+        } else {
             graph = GraphGenerator.generate(5);
             graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
             graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
-             init(graph);
+            init(graph);
         }
     }
 
@@ -94,7 +93,7 @@ export class Template extends Component< {}, State> {
                         <div>
                             <div className={styles.MainRow}>
                                 <div className={styles.GraphCell}>
-                                    <Area />
+                                    <Area/>
                                 </div>
                                 <div className={styles.TaskCell}>
                                     <p>Задание</p>
@@ -120,7 +119,7 @@ export class Template extends Component< {}, State> {
         const graph: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
         if (data) {
             let vertices = data.vertices;
-            let edges  = data.edges;
+            let edges = data.edges;
             vertices.forEach((v: any) => {
                 graph.addVertex(new Vertex(v));
             });
@@ -132,29 +131,34 @@ export class Template extends Component< {}, State> {
     }
 
     protected matrixManager(data: any) {
-        let matrix  = JSON.parse(data.matrix);
+        let matrix = JSON.parse(data.matrix);
         store.dispatch(matrixActionCreators.fillMatrix(matrix));
         return matrix;
     }
 
     protected nGraphsManager(data: any) {
-        const ngraphs: INGraphsView = []; 
+        const ngraphs: INGraphsView = [];
         if (data && data.count) {
             const numberOfGraphs = parseInt(data.count, 10);
             for (let i = 0; i < numberOfGraphs; i++) {
-                if (data.graphs[i]){
-                    const graphInCaсhe: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
+                if (data.graphs[i]) {
+                    const graphCache: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
                     const vertices = data.graphs[i].vertices;
-                    const edges  = data.graphs[i].edges;
+                    const edges = data.graphs[i].edges;
                     vertices.forEach((v: string) => {
-                        graphInCaсhe.addVertex(new Vertex(v));
+                        graphCache.addVertex(new Vertex(v));
                     });
-                    edges.forEach((e: IEdge) => {
-                        graphInCaсhe.addEdge(new Edge(graphInCaсhe.getVertex(e.source)[0], graphInCaсhe.getVertex(e.target)[0]));
+                    edges.forEach((e: { source: string; target: string; }) => {
+                        graphCache.addEdge(
+                            new Edge(
+                                graphCache.getVertex(e.source)[0],
+                                graphCache.getVertex(e.target)[0],
+                            )
+                        );
                     });
-                    ngraphs.push(graphInCaсhe);
+                    ngraphs.push(graphCache);
                 }
-            store.dispatch(nGraphsActionCreators.fillnGraphs(ngraphs));
+                store.dispatch(nGraphsActionCreators.fillnGraphs(ngraphs));
             }
         }
         return ngraphs;
@@ -166,7 +170,7 @@ export class Template extends Component< {}, State> {
 
     protected getArea(): SFC<{}> {
         return () => <GraphVisualizer
-            graph = {graphModel}
+            graph={graphModel}
             adapterType={'readable'}
         />;
 

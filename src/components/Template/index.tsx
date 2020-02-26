@@ -61,7 +61,7 @@ export class Template extends Component<{}, State> {
                     break;
             }
         } else {
-            graph = GraphGenerator.generate(5);
+            graph = GraphGenerator.generate(0);
             graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
             graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
             init(graph);

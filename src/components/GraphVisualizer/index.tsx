@@ -23,6 +23,7 @@ export class GraphVisualizer extends React.Component<GVProps> {
             return <WritableAdapter
                 graph={this.props.graph}
                 ref={(i: WritableAdapter) => adapter = i}
+                namedEdges={this.props.namedEdges}
             />;
         } else if (this.props.adapterType == 'readable' || this.props.adapterType == null) {
             return <ReadableAdapter

@@ -7,6 +7,7 @@ import { IGraph, IEdge, IVertex } from "graphlabs.core.graphs";
 export interface GVProps {
     adapterType?: string;
     graph: IGraph<IVertex, IEdge>;
+    namedEdges?: boolean;
 }
 
 let adapter: WritableAdapter;
@@ -22,10 +23,12 @@ export class GraphVisualizer extends React.Component<GVProps> {
             return <WritableAdapter
                 graph={this.props.graph}
                 ref={(i: WritableAdapter) => adapter = i}
+                namedEdges={this.props.namedEdges}
             />;
         } else if (this.props.adapterType == 'readable' || this.props.adapterType == null) {
             return <ReadableAdapter
                 graph={this.props.graph}
+                namedEdges={this.props.namedEdges}
             />;
             console.log(ReadableAdapter.prototype.props.graph);
         }

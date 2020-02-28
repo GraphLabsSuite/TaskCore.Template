@@ -1,19 +1,19 @@
 import * as React from 'react';
-import { GraphVisualizer } from '../GraphVisualizer';
-import { Toolbar } from '../Toolbar';
-import { Console } from '../Console';
-import { GraphGenerator, IGraph, IVertex, IEdge, Graph, Vertex, Edge } from 'graphlabs.core.graphs';
-import { StudentMark } from '../StudentMark';
-import { graphActionCreators, store } from '../..';
-import { matrixActionCreators } from '../../redux/matrix';
-import { IMatrixView } from '../../models';
-import { Component, SFC } from 'react';
+import {GraphVisualizer} from '../GraphVisualizer';
+import {Toolbar} from '../Toolbar';
+import {Console} from '../Console';
+import {GraphGenerator, IGraph, IVertex, IEdge, Graph, Vertex, Edge} from 'graphlabs.core.graphs';
+import {StudentMark} from '../StudentMark';
+import {graphActionCreators, store} from '../..';
+import {matrixActionCreators} from '../../redux/matrix';
+import {IMatrixView} from '../../models';
+import {Component, SFC} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Promise } from 'bluebird';
+import {Promise} from 'bluebird';
 import styles from './Template.module.scss';
-import { init, graphModel } from '../..';
-import { nGraphsActionCreators } from '../../redux/ngraphs';
-import { INGraphsView } from '../../models';
+import {init, graphModel} from '../..';
+import {nGraphsActionCreators} from '../../redux/ngraphs';
+import {INGraphsView} from '../../models';
 
 global.Promise = Promise;
 
@@ -61,7 +61,7 @@ export class Template extends Component<{}, State> {
                     break;
             }
         } else {
-            graph = GraphGenerator.generate(5);
+            graph = GraphGenerator.generate(0);
             graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
             graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
             init(graph);
@@ -124,8 +124,13 @@ export class Template extends Component<{}, State> {
                 graph.addVertex(new Vertex(v));
             });
             edges.forEach((e: any) => {
-                graph.addEdge(new Edge(graph.getVertex(e.source)[0], graph.getVertex(e.target)[0]));
+                if (e.name) {
+                    graph.addEdge(new Edge(graph.getVertex(e.source)[0], graph.getVertex(e.target)[0], e.name[0]));
+                } else {
+                    graph.addEdge(new Edge(graph.getVertex(e.source)[0], graph.getVertex(e.target)[0]));
+                }
             });
+
         }
         return graph;
     }
@@ -172,6 +177,7 @@ export class Template extends Component<{}, State> {
         return () => <GraphVisualizer
             graph={graphModel}
             adapterType={'readable'}
+            namedEdges={false}
         />;
 
     }

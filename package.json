@@ -1,6 +1,6 @@
 {
   "name": "graphlabs.core.template",
-  "version": "1.0.42",
+  "version": "1.0.43",
   "dependencies": {
     "@babel/core": "^7.7.5",
     "@svgr/webpack": "^4.3.3",
@@ -32,9 +32,13 @@
     "eslint-plugin-react": "7.12.4",
     "file-loader": "2.0.0",
     "fs-extra": "7.0.1",
-    "graphlabs.core.graphs": "^0.1.2",
+    "graphlabs.core.graphs": "0.1.2",
     "graphlabs.core.notifier": "0.0.29",
+<<<<<<< HEAD
     "graphlabs.core.visualizer": "0.0.54",
+=======
+    "graphlabs.core.visualizer": "0.0.51",
+>>>>>>> 8dc85a42f5a37dc746b8518c3ea20078d3697c4b
     "html-webpack-plugin": "4.0.0-alpha.2",
     "identity-obj-proxy": "3.0.0",
     "jest": "^24.9.0",

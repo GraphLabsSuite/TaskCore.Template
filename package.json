@@ -34,7 +34,7 @@
     "fs-extra": "7.0.1",
     "graphlabs.core.graphs": "0.1.2",
     "graphlabs.core.notifier": "0.0.29",
-    "graphlabs.core.visualizer": "0.0.54",
+    "graphlabs.core.visualizer": "0.0.55",
     "html-webpack-plugin": "4.0.0-alpha.2",
     "identity-obj-proxy": "3.0.0",
     "jest": "^24.9.0",

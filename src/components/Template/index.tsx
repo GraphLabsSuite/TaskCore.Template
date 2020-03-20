@@ -179,6 +179,7 @@ export class Template extends Component<{}, State> {
             adapterType={'readable'}
             namedEdges={false}
             vertexNaming={false}
+            withoutDragging={false}
         />;
 
     }

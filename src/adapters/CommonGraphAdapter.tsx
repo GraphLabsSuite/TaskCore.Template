@@ -87,22 +87,21 @@ export class CommonGraphAdapter extends Component<CGAProps, State> {
                 .style('fill', 'none')
                 .on('click', this.clickEdge);
         }
-
         for (const elem of this.graphVisualizer.geometric.vertices) {
-            select<SVGSVGElement, {}>(this.ref)
-                .append('circle')
-                //.datum([this.vertex,this.vert])
-                .attr('id', `vertex_${elem.label}`)
-                .attr('cx', elem.center.X)
-                .attr('cy', elem.center.Y)
-                .attr('label', elem.label)
-                .attr('r', elem.radius)
-                .style('fill', '#eee')
-                .style('stroke', '#000')
-                .style('stroke-width', 5)
-                .classed('dragging', true)
-                .call(d3.drag<SVGCircleElement, {}>().on('start', startDrag))
-                .on('click', this.clickVertex);
+                select<SVGSVGElement, {}>(this.ref)
+                    .append('circle')
+                    //.datum([this.vertex,this.vert])
+                    .attr('id', `vertex_${elem.label}`)
+                    .attr('cx', elem.center.X)
+                    .attr('cy', elem.center.Y)
+                    .attr('label', elem.label)
+                    .attr('r', elem.radius)
+                    .style('fill', '#eee')
+                    .style('stroke', '#000')
+                    .style('stroke-width', 5)
+                    .classed('dragging', true)
+                    .call(d3.drag<SVGCircleElement, {}>().on('start', startDrag))
+                    .on('click', this.clickVertex);
             select(this.ref)
                 .append('text')
                 .attr('id', `label_${elem.label}`)

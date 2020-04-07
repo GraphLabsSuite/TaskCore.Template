@@ -180,6 +180,7 @@ export class Template extends Component<{}, State> {
             namedEdges={false}
             vertexNaming={false}
             withoutDragging={false}
+            edgeNaming={false}
         />;
 
     }

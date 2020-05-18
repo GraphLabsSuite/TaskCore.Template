@@ -1,6 +1,6 @@
 {
   "name": "graphlabs.core.template",
-  "version": "1.0.53",
+  "version": "1.0.54",
   "dependencies": {
     "@babel/core": "^7.7.5",
     "@svgr/webpack": "^4.3.3",

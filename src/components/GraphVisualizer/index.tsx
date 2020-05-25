@@ -11,6 +11,7 @@ export interface GVProps {
     vertexNaming?: boolean;
     withoutDragging?: boolean;
     edgeNaming?: boolean;
+    incidentEdges?: boolean;
 }
 
 let adapter: WritableAdapter;

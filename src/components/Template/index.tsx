@@ -2,7 +2,7 @@ import * as React from 'react';
 import {GraphVisualizer} from '../GraphVisualizer';
 import {Toolbar} from '../Toolbar';
 import {Console} from '../Console';
-import {GraphGenerator, IGraph, IVertex, IEdge, Graph, Vertex, Edge} from 'graphlabs.core.graphs';
+import {GraphGenerator, IGraph, IVertex, IEdge, Graph, Vertex, Edge, SccBuilder} from 'graphlabs.core.graphs';
 import {StudentMark} from '../StudentMark';
 import {graphActionCreators, store} from '../..';
 import {matrixActionCreators} from '../../redux/matrix';
@@ -23,6 +23,8 @@ interface State {
 
 
 export class Template extends Component<{}, State> {
+    
+    public scc_count = 0;
 
     public state = {
         status: store.getState().app.status,
@@ -65,6 +67,7 @@ export class Template extends Component<{}, State> {
             graph.vertices.forEach(v => this.dispatch(graphActionCreators.addVertex(v.name)));
             graph.edges.forEach(e => this.dispatch(graphActionCreators.addEdge(e.vertexOne.name, e.vertexTwo.name)));
             init(graph);
+            this.scc_count = SccBuilder.findComponents(graph).length;
         }
     }
 

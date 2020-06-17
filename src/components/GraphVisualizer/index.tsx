@@ -31,6 +31,7 @@ export class GraphVisualizer extends React.Component<GVProps> {
                 vertexNaming={this.props.vertexNaming}
                 withoutDragging={this.props.withoutDragging}
                 edgeNaming={this.props.edgeNaming}
+                incidentEdges={this.props.incidentEdges}
             />;
         } else if (this.props.adapterType == 'readable' || this.props.adapterType == null) {
             return <ReadableAdapter
@@ -39,6 +40,7 @@ export class GraphVisualizer extends React.Component<GVProps> {
                 vertexNaming={this.props.vertexNaming}
                 withoutDragging={this.props.withoutDragging}
                 edgeNaming={this.props.edgeNaming}
+                incidentEdges={this.props.incidentEdges}
             />;
             console.log(ReadableAdapter.prototype.props.graph);
         }

@@ -184,6 +184,7 @@ export class Template extends Component<{}, State> {
             vertexNaming={false}
             withoutDragging={false}
             edgeNaming={false}
+            incidentEdges={false}
         />;
 
     }

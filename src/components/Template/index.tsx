@@ -61,6 +61,7 @@ export class Template extends Component<{}, State> {
                     break;
                 default:
                     break;
+                this.scc_count = SccBuilder.findComponents(graph).length;
             }
         } else {
             graph = GraphGenerator.generate(5);

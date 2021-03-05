@@ -181,12 +181,12 @@ export class Template extends Component<{}, State> {
         return () => <GraphVisualizer
             graph={graphModel}
             adapterType={'readable'}
-            namedEdges={true}
+            namedEdges={false}
             vertexNaming={false}
             withoutDragging={false}
             edgeNaming={false}
             incidentEdges={false}
-            weightedEdges={true}
+            weightedEdges={false}
             isDirected={false}
         />;
 
